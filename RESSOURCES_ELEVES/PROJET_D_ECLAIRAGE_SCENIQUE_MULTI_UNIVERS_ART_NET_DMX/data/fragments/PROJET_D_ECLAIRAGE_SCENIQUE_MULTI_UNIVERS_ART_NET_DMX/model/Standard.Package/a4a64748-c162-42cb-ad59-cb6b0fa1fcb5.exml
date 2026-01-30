@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="projet_d_eclairage_scenique_multi_univers_art_net_dmx" version="4">
+  <OBJECT>
+    <ID name="projet_d_eclairage_scenique_multi_univers_art_net_dmx" mc="Standard.Package" uid="a4a64748-c162-42cb-ad59-cb6b0fa1fcb5"/>
+    <PID name="PROJET_D_ECLAIRAGE_SCENIQUE_MULTI_UNIVERS_ART_NET_DMX" mc="Standard.Project" uid="5c6e2236-8453-415d-ade4-eb5aaded55e9"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[projet_d_eclairage_scenique_multi_univers_art_net_dmx]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="Convertir ART-NET en DMX512" mc="Standard.UseCase" uid="d231c3e4-9a46-4a5a-9c19-ac9c75623707"/>
+        <COMPID name="piloter le ruban LED à partir du protocole DMX512" mc="Standard.UseCase" uid="52cb2088-63ab-4b3a-b70d-0e550e175297"/>
+        <COMPID name="ESP32" mc="Standard.Class" uid="e564253b-3ecb-49dc-9a7a-770d0a65e487"/>
+        <COMPID name="RASPBERRY" mc="Standard.Class" uid="b27b41d8-92a7-4967-889c-5fc1f344ae49"/>
+        <COMPID name="DMX" mc="Standard.Class" uid="fdeb4612-d5d6-4215-b48f-822c94cfeab5"/>
+      </COMP>
+      <COMP relation="Product">
+        <COMPID name="Diagramme de cas d'utilisation projet_d_eclairage_scenique_multi_univers_art_net_dmx" mc="Standard.UseCaseDiagram" uid="b15c3612-6c0e-4542-9680-9bddbc8f5163"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
