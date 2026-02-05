@@ -1,0 +1,7 @@
+#Mon Feb 02 17:55:02 CET 2026
+org.modelio.app.diagram.editor.OpenedDiagrams0='Lancer une sc\u00E8ne' {19bf5595-4bec-4c9f-a6bb-1fa1e6a01547} Standard.SequenceDiagram
+org.modelio.app.diagram.editor.OpenedDiagrams3='Diagramme de classe f2' {c5ef375c-a7ba-4672-848d-4f8f896ba208} Standard.ClassDiagram
+org.modelio.app.diagram.editor.OpenedDiagrams4='Diagramme d'\u00E9tat State Machine' {28557dab-24cf-4225-b915-331fe35380d8} Standard.StateMachineDiagram
+org.modelio.app.diagram.editor.OpenedDiagrams1='Tester un projecteur' {56bbf156-f030-4412-a29a-c5b528642528} Standard.SequenceDiagram
+org.modelio.app.diagram.editor.OpenedDiagrams2='Obtenir la liste des sc\u00E8nes' {dfa3cb7d-063e-4fac-b444-c81a7360df2b} Standard.SequenceDiagram
+org.modelio.app.diagram.editor.OpenedDiagrams5='Diagramme de cas d'utilisation f2' {a96d5ae0-1d2e-4b56-bb58-803963fb0c4a} Standard.UseCaseDiagram

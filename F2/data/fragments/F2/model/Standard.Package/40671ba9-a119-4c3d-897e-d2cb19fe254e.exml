@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="f2" version="4">
+  <OBJECT>
+    <ID name="f2" mc="Standard.Package" uid="40671ba9-a119-4c3d-897e-d2cb19fe254e"/>
+    <PID name="F2" mc="Standard.Project" uid="2751d38a-2703-4df8-a811-42994cd31131"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[f2]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedBehavior">
+        <COMPID name="Process" mc="Standard.BpmnProcess" uid="aab57829-d7da-494f-b15e-d6ea8d3870fa"/>
+      </COMP>
+      <COMP relation="OwnedElement">
+        <COMPID name="lancer une scène" mc="Standard.UseCase" uid="1fd2da50-04a2-4a01-a4d3-5065dbdb287d"/>
+        <COMPID name="Tester un équipement DMX" mc="Standard.UseCase" uid="6f86484a-a4f9-41a3-8c4c-1d0891516026"/>
+        <COMPID name="Obtenir la liste des scènes" mc="Standard.UseCase" uid="b5d84f7b-6ee0-4559-9b9b-f29087b384ab"/>
+        <COMPID name="technicien lumière" mc="Standard.Actor" uid="1dec7e70-07f3-41c2-9b3e-3d1372c27925"/>
+        <COMPID name="opérateur lumière" mc="Standard.Actor" uid="87b314c7-1044-4484-b47a-f5d4958e7717"/>
+        <COMPID name="console IHM" mc="Standard.Class" uid="d66d020d-1cbd-41c3-8adb-66d257cf53ac"/>
+        <COMPID name="Contrôleur (Rasberry Pi)" mc="Standard.Class" uid="5e3c18a2-f17e-4597-8dfe-dc9ed4256ec8"/>
+        <COMPID name="Accès BDD" mc="Standard.Class" uid="39c66d27-3854-452d-9e34-2a2ae3261387"/>
+      </COMP>
+      <COMP relation="Product">
+        <COMPID name="Diagramme de cas d'utilisation f2" mc="Standard.UseCaseDiagram" uid="a96d5ae0-1d2e-4b56-bb58-803963fb0c4a"/>
+        <COMPID name="Diagramme de classe f2" mc="Standard.ClassDiagram" uid="c5ef375c-a7ba-4672-848d-4f8f896ba208"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

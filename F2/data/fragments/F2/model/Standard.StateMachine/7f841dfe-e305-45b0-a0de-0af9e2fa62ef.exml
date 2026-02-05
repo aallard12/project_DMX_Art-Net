@@ -1,0 +1,826 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="State Machine" version="4">
+  <OBJECT>
+    <ID name="State Machine" mc="Standard.StateMachine" uid="7f841dfe-e305-45b0-a0de-0af9e2fa62ef"/>
+    <PID name="console IHM" mc="Standard.Class" uid="d66d020d-1cbd-41c3-8adb-66d257cf53ac"/>
+    <ATTRIBUTES>
+      <ATT name="Kind">Dynamic</ATT>
+      <ATT name="IsReentrant">false</ATT>
+      <ATT name="Name"><![CDATA[State Machine]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="Top">
+        <OBJECT>
+          <ID name="" mc="Standard.Region" uid="2fc9cc7b-21e1-4f26-b995-df70c4b2b8f9"/>
+          <ATTRIBUTES>
+            <ATT name="Name"></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="Sub">
+              <OBJECT>
+                <ID name="Initial State" mc="Standard.InitialPseudoState" uid="65c67f63-1da7-44c2-99ec-8cb401fc6861"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Initial State]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="OutGoing">
+                    <OBJECT>
+                      <ID name="Transition" mc="Standard.Transition" uid="b7900922-dac1-4752-acc2-14048b0e6629"/>
+                      <ATTRIBUTES>
+                        <ATT name="Effect"></ATT>
+                        <ATT name="ReceivedEvents"></ATT>
+                        <ATT name="SentEvents"></ATT>
+                        <ATT name="Guard"></ATT>
+                        <ATT name="PostCondition"></ATT>
+                        <ATT name="Name"><![CDATA[Transition]]></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <LINK relation="Target">
+                          <REFOBJ>
+                            <ID name="interface" mc="Standard.State" uid="69af3210-fe33-4db3-94b3-bc99042375cb"/>
+                          </REFOBJ>
+                        </LINK>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="interface" mc="Standard.State" uid="69af3210-fe33-4db3-94b3-bc99042375cb"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[interface]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="OutGoing">
+                    <OBJECT>
+                      <ID name="Transition" mc="Standard.Transition" uid="7f987717-a165-421c-8748-640957dae9d6"/>
+                      <ATTRIBUTES>
+                        <ATT name="Effect"></ATT>
+                        <ATT name="ReceivedEvents"></ATT>
+                        <ATT name="SentEvents"></ATT>
+                        <ATT name="Guard"></ATT>
+                        <ATT name="PostCondition"></ATT>
+                        <ATT name="Name"><![CDATA[Transition]]></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <LINK relation="Target">
+                          <REFOBJ>
+                            <ID name="Choix mode" mc="Standard.ExitPointPseudoState" uid="41c1845c-6453-45db-9569-f6a502427848"/>
+                          </REFOBJ>
+                        </LINK>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Obtenir Liste Scènes" mc="Standard.State" uid="d7198f74-ad85-47b0-a55b-cd5f29b40af4"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Obtenir Liste Scènes]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="OutGoing">
+                    <OBJECT>
+                      <ID name="Transition" mc="Standard.Transition" uid="a72327ae-5deb-4f1e-bf90-714d0462d3f4"/>
+                      <ATTRIBUTES>
+                        <ATT name="Effect"></ATT>
+                        <ATT name="ReceivedEvents"></ATT>
+                        <ATT name="SentEvents"></ATT>
+                        <ATT name="Guard"></ATT>
+                        <ATT name="PostCondition"></ATT>
+                        <ATT name="Name"><![CDATA[Transition]]></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <LINK relation="Target">
+                          <REFOBJ>
+                            <ID name="Vérifier liste" mc="Standard.ExitPointPseudoState" uid="f753aac5-6c6e-4d5a-9a3c-bf1be4fd3321"/>
+                          </REFOBJ>
+                        </LINK>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Obtenir liste des équipement dmx" mc="Standard.State" uid="124ff5d2-e417-4f56-a20a-fc62ceb6d4be"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Obtenir liste des équipement dmx]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="OutGoing">
+                    <OBJECT>
+                      <ID name="Transition" mc="Standard.Transition" uid="889cc74f-995b-4f0c-af33-e5d2813fc277"/>
+                      <ATTRIBUTES>
+                        <ATT name="Effect"></ATT>
+                        <ATT name="ReceivedEvents"></ATT>
+                        <ATT name="SentEvents"></ATT>
+                        <ATT name="Guard"></ATT>
+                        <ATT name="PostCondition"></ATT>
+                        <ATT name="Name"><![CDATA[Transition]]></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <LINK relation="Target">
+                          <REFOBJ>
+                            <ID name="Vérifier équipement" mc="Standard.ExitPointPseudoState" uid="2c32b859-a825-46b9-b30b-033d517f71c6"/>
+                          </REFOBJ>
+                        </LINK>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Afficher erreur" mc="Standard.State" uid="a7b4e544-e586-415e-8a73-cb77e4db8c7c"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Afficher erreur]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="OutGoing">
+                    <OBJECT>
+                      <ID name="Transition" mc="Standard.Transition" uid="b4dcabf5-87fa-410e-b828-fa959d7cd3f8"/>
+                      <ATTRIBUTES>
+                        <ATT name="Effect"></ATT>
+                        <ATT name="ReceivedEvents"></ATT>
+                        <ATT name="SentEvents"></ATT>
+                        <ATT name="Guard"></ATT>
+                        <ATT name="PostCondition"></ATT>
+                        <ATT name="Name"><![CDATA[Transition]]></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <LINK relation="Target">
+                          <REFOBJ>
+                            <ID name="Choix mode" mc="Standard.ExitPointPseudoState" uid="41c1845c-6453-45db-9569-f6a502427848"/>
+                          </REFOBJ>
+                        </LINK>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Afficher liste scènes" mc="Standard.State" uid="b408ec82-9cad-49e3-a799-00b5d8e9a5f5"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Afficher liste scènes]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="OutGoing">
+                    <OBJECT>
+                      <ID name="Transition" mc="Standard.Transition" uid="ca5ef3de-0241-451d-bd6b-32b7ff804b63"/>
+                      <ATTRIBUTES>
+                        <ATT name="Effect"></ATT>
+                        <ATT name="ReceivedEvents"></ATT>
+                        <ATT name="SentEvents"></ATT>
+                        <ATT name="Guard"></ATT>
+                        <ATT name="PostCondition"></ATT>
+                        <ATT name="Name"><![CDATA[Transition]]></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <LINK relation="Target">
+                          <REFOBJ>
+                            <ID name="Sélectionner une scène" mc="Standard.State" uid="8b96b917-2652-4f09-8f02-e4a0605f38f1"/>
+                          </REFOBJ>
+                        </LINK>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Sélectionner une scène" mc="Standard.State" uid="8b96b917-2652-4f09-8f02-e4a0605f38f1"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Sélectionner une scène]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="OutGoing">
+                    <OBJECT>
+                      <ID name="Transition" mc="Standard.Transition" uid="acea1038-1b32-4ab9-8b5a-244cdb1ce8b2"/>
+                      <ATTRIBUTES>
+                        <ATT name="Effect"></ATT>
+                        <ATT name="ReceivedEvents"></ATT>
+                        <ATT name="SentEvents"></ATT>
+                        <ATT name="Guard"></ATT>
+                        <ATT name="PostCondition"></ATT>
+                        <ATT name="Name"><![CDATA[Transition]]></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <LINK relation="Target">
+                          <REFOBJ>
+                            <ID name="Obtenir Scène id" mc="Standard.State" uid="3999955a-68f6-485e-b430-50706568135d"/>
+                          </REFOBJ>
+                        </LINK>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Obtenir Scène id" mc="Standard.State" uid="3999955a-68f6-485e-b430-50706568135d"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Obtenir Scène id]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="OutGoing">
+                    <OBJECT>
+                      <ID name="Transition" mc="Standard.Transition" uid="87da2388-4698-4e96-b1fe-e9447569dbd7"/>
+                      <ATTRIBUTES>
+                        <ATT name="Effect"></ATT>
+                        <ATT name="ReceivedEvents"></ATT>
+                        <ATT name="SentEvents"></ATT>
+                        <ATT name="Guard"></ATT>
+                        <ATT name="PostCondition"></ATT>
+                        <ATT name="Name"><![CDATA[Transition]]></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <LINK relation="Target">
+                          <REFOBJ>
+                            <ID name="Vérifier scène" mc="Standard.ExitPointPseudoState" uid="18f2e7d8-3a87-4138-afeb-d747db8a95cd"/>
+                          </REFOBJ>
+                        </LINK>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Appuyer sur lancer" mc="Standard.State" uid="919bfc6b-b2e2-43a2-8672-401e4ffd6acf"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Appuyer sur lancer]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="OutGoing">
+                    <OBJECT>
+                      <ID name="Transition" mc="Standard.Transition" uid="53baf309-ed24-4b61-a7d5-b0222921389c"/>
+                      <ATTRIBUTES>
+                        <ATT name="Effect"></ATT>
+                        <ATT name="ReceivedEvents"></ATT>
+                        <ATT name="SentEvents"></ATT>
+                        <ATT name="Guard"></ATT>
+                        <ATT name="PostCondition"></ATT>
+                        <ATT name="Name"><![CDATA[Transition]]></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <LINK relation="Target">
+                          <REFOBJ>
+                            <ID name="Envoyer Commande ExecuterScene" mc="Standard.State" uid="b5ac3744-0d01-4a5a-b08d-8191898ea79e"/>
+                          </REFOBJ>
+                        </LINK>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Envoyer Commande ExecuterScene" mc="Standard.State" uid="b5ac3744-0d01-4a5a-b08d-8191898ea79e"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Envoyer Commande ExecuterScene]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="OutGoing">
+                    <OBJECT>
+                      <ID name="Transition" mc="Standard.Transition" uid="39688039-3f07-4332-a600-028c5e2d2d4c"/>
+                      <ATTRIBUTES>
+                        <ATT name="Effect"></ATT>
+                        <ATT name="ReceivedEvents"></ATT>
+                        <ATT name="SentEvents"></ATT>
+                        <ATT name="Guard"></ATT>
+                        <ATT name="PostCondition"></ATT>
+                        <ATT name="Name"><![CDATA[Transition]]></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <LINK relation="Target">
+                          <REFOBJ>
+                            <ID name="choix d'action" mc="Standard.ExitPointPseudoState" uid="8352f956-5e0b-496a-a68d-6bb2390f62b3"/>
+                          </REFOBJ>
+                        </LINK>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Retour ok" mc="Standard.State" uid="d3669c45-c58c-407b-806d-7d385783aaa2"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Retour ok]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="OutGoing">
+                    <OBJECT>
+                      <ID name="Transition" mc="Standard.Transition" uid="b2cbdf8d-58ba-41b8-b79b-c7fcc96594f5"/>
+                      <ATTRIBUTES>
+                        <ATT name="Effect"></ATT>
+                        <ATT name="ReceivedEvents"></ATT>
+                        <ATT name="SentEvents"></ATT>
+                        <ATT name="Guard"></ATT>
+                        <ATT name="PostCondition"></ATT>
+                        <ATT name="Name"><![CDATA[Transition]]></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <LINK relation="Target">
+                          <REFOBJ>
+                            <ID name="interface" mc="Standard.State" uid="69af3210-fe33-4db3-94b3-bc99042375cb"/>
+                          </REFOBJ>
+                        </LINK>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Choisir équipement" mc="Standard.State" uid="0f7abe04-8b36-4851-9968-510ba28b3c72"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Choisir équipement]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="OutGoing">
+                    <OBJECT>
+                      <ID name="Transition" mc="Standard.Transition" uid="30939965-e965-474c-ae9e-d080d2890824"/>
+                      <ATTRIBUTES>
+                        <ATT name="Effect"></ATT>
+                        <ATT name="ReceivedEvents"></ATT>
+                        <ATT name="SentEvents"></ATT>
+                        <ATT name="Guard"></ATT>
+                        <ATT name="PostCondition"></ATT>
+                        <ATT name="Name"><![CDATA[Transition]]></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <LINK relation="Target">
+                          <REFOBJ>
+                            <ID name="Récupération des canaux DMX" mc="Standard.State" uid="0062ecfd-ba10-4960-9e50-f0b6a9f3b1b5"/>
+                          </REFOBJ>
+                        </LINK>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Récupération des canaux DMX" mc="Standard.State" uid="0062ecfd-ba10-4960-9e50-f0b6a9f3b1b5"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Récupération des canaux DMX]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="OutGoing">
+                    <OBJECT>
+                      <ID name="Transition" mc="Standard.Transition" uid="3508a960-291f-4a48-819c-ace74a9d39d1"/>
+                      <ATTRIBUTES>
+                        <ATT name="Effect"></ATT>
+                        <ATT name="ReceivedEvents"></ATT>
+                        <ATT name="SentEvents"></ATT>
+                        <ATT name="Guard"></ATT>
+                        <ATT name="PostCondition"></ATT>
+                        <ATT name="Name"><![CDATA[Transition]]></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <LINK relation="Target">
+                          <REFOBJ>
+                            <ID name="Afficher les sliders des canaux" mc="Standard.State" uid="5ec9b25f-bbf1-4c9d-b640-de8c1e5cedb3"/>
+                          </REFOBJ>
+                        </LINK>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Afficher les sliders des canaux" mc="Standard.State" uid="5ec9b25f-bbf1-4c9d-b640-de8c1e5cedb3"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Afficher les sliders des canaux]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="OutGoing">
+                    <OBJECT>
+                      <ID name="Transition" mc="Standard.Transition" uid="aaf586f6-a9d5-4577-8d57-868f754a4df3"/>
+                      <ATTRIBUTES>
+                        <ATT name="Effect"></ATT>
+                        <ATT name="ReceivedEvents"></ATT>
+                        <ATT name="SentEvents"></ATT>
+                        <ATT name="Guard"></ATT>
+                        <ATT name="PostCondition"></ATT>
+                        <ATT name="Name"><![CDATA[Transition]]></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <LINK relation="Target">
+                          <REFOBJ>
+                            <ID name="Choix d'action" mc="Standard.ExitPointPseudoState" uid="5f47f85f-0818-47f3-9e34-78298f9d4292"/>
+                          </REFOBJ>
+                        </LINK>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Envoyer valeur canal" mc="Standard.State" uid="4a00a2d7-394e-4a3e-b4a3-435e7329943e"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Envoyer valeur canal]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="OutGoing">
+                    <OBJECT>
+                      <ID name="Transition" mc="Standard.Transition" uid="0633d864-2ec3-427e-a5af-a53979e7a518"/>
+                      <ATTRIBUTES>
+                        <ATT name="Effect"></ATT>
+                        <ATT name="ReceivedEvents"></ATT>
+                        <ATT name="SentEvents"></ATT>
+                        <ATT name="Guard"></ATT>
+                        <ATT name="PostCondition"></ATT>
+                        <ATT name="Name"><![CDATA[Transition]]></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <LINK relation="Target">
+                          <REFOBJ>
+                            <ID name="Afficher les sliders des canaux" mc="Standard.State" uid="5ec9b25f-bbf1-4c9d-b640-de8c1e5cedb3"/>
+                          </REFOBJ>
+                        </LINK>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Réinitialiser les canaux" mc="Standard.State" uid="9a0b90f9-8d23-4ec1-9e53-55f7c0ef4eb3"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Réinitialiser les canaux]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="OutGoing">
+                    <OBJECT>
+                      <ID name="Transition" mc="Standard.Transition" uid="6e15a074-451e-468a-b747-67dc40be1e51"/>
+                      <ATTRIBUTES>
+                        <ATT name="Effect"></ATT>
+                        <ATT name="ReceivedEvents"></ATT>
+                        <ATT name="SentEvents"></ATT>
+                        <ATT name="Guard"></ATT>
+                        <ATT name="PostCondition"></ATT>
+                        <ATT name="Name"><![CDATA[Transition]]></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <LINK relation="Target">
+                          <REFOBJ>
+                            <ID name="Afficher les sliders des canaux" mc="Standard.State" uid="5ec9b25f-bbf1-4c9d-b640-de8c1e5cedb3"/>
+                          </REFOBJ>
+                        </LINK>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
+      <COMP relation="ExitPoint">
+        <OBJECT>
+          <ID name="Vérifier liste" mc="Standard.ExitPointPseudoState" uid="f753aac5-6c6e-4d5a-9a3c-bf1be4fd3321"/>
+          <ATTRIBUTES>
+            <ATT name="Name"><![CDATA[Vérifier liste]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="OutGoing">
+              <OBJECT>
+                <ID name="Transition" mc="Standard.Transition" uid="89c356a2-2a5e-4207-a40e-d807ec394d32"/>
+                <ATTRIBUTES>
+                  <ATT name="Effect"></ATT>
+                  <ATT name="ReceivedEvents"></ATT>
+                  <ATT name="SentEvents"></ATT>
+                  <ATT name="Guard"></ATT>
+                  <ATT name="PostCondition"><![CDATA[liste pas trouver]]></ATT>
+                  <ATT name="Name"><![CDATA[Transition]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Target">
+                    <REFOBJ>
+                      <ID name="Afficher erreur" mc="Standard.State" uid="a7b4e544-e586-415e-8a73-cb77e4db8c7c"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Transition1" mc="Standard.Transition" uid="4deb929d-a5e2-462a-a4fd-c66d3b164bd0"/>
+                <ATTRIBUTES>
+                  <ATT name="Effect"></ATT>
+                  <ATT name="ReceivedEvents"></ATT>
+                  <ATT name="SentEvents"></ATT>
+                  <ATT name="Guard"></ATT>
+                  <ATT name="PostCondition"><![CDATA[liste trouver]]></ATT>
+                  <ATT name="Name"><![CDATA[Transition1]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Target">
+                    <REFOBJ>
+                      <ID name="Afficher liste scènes" mc="Standard.State" uid="b408ec82-9cad-49e3-a799-00b5d8e9a5f5"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Vérifier scène" mc="Standard.ExitPointPseudoState" uid="18f2e7d8-3a87-4138-afeb-d747db8a95cd"/>
+          <ATTRIBUTES>
+            <ATT name="Name"><![CDATA[Vérifier scène]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="OutGoing">
+              <OBJECT>
+                <ID name="Transition" mc="Standard.Transition" uid="d4683411-8a60-4741-9b83-8ffea0276405"/>
+                <ATTRIBUTES>
+                  <ATT name="Effect"></ATT>
+                  <ATT name="ReceivedEvents"></ATT>
+                  <ATT name="SentEvents"></ATT>
+                  <ATT name="Guard"></ATT>
+                  <ATT name="PostCondition"><![CDATA[Scène trouver]]></ATT>
+                  <ATT name="Name"><![CDATA[Transition]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Target">
+                    <REFOBJ>
+                      <ID name="Appuyer sur lancer" mc="Standard.State" uid="919bfc6b-b2e2-43a2-8672-401e4ffd6acf"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Transition1" mc="Standard.Transition" uid="f0868b03-c747-400e-abc1-0338b8772fac"/>
+                <ATTRIBUTES>
+                  <ATT name="Effect"></ATT>
+                  <ATT name="ReceivedEvents"></ATT>
+                  <ATT name="SentEvents"></ATT>
+                  <ATT name="Guard"></ATT>
+                  <ATT name="PostCondition"><![CDATA[Scène pas trouver]]></ATT>
+                  <ATT name="Name"><![CDATA[Transition1]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Target">
+                    <REFOBJ>
+                      <ID name="Afficher erreur" mc="Standard.State" uid="a7b4e544-e586-415e-8a73-cb77e4db8c7c"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="choix d'action" mc="Standard.ExitPointPseudoState" uid="8352f956-5e0b-496a-a68d-6bb2390f62b3"/>
+          <ATTRIBUTES>
+            <ATT name="Name"><![CDATA[choix d'action]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="OutGoing">
+              <OBJECT>
+                <ID name="Transition" mc="Standard.Transition" uid="c1ddcf81-73be-44f5-84aa-d00f6b9cacbd"/>
+                <ATTRIBUTES>
+                  <ATT name="Effect"></ATT>
+                  <ATT name="ReceivedEvents"></ATT>
+                  <ATT name="SentEvents"></ATT>
+                  <ATT name="Guard"><![CDATA[Jouer une autre scène]]></ATT>
+                  <ATT name="PostCondition"></ATT>
+                  <ATT name="Name"><![CDATA[Transition]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Target">
+                    <REFOBJ>
+                      <ID name="Afficher liste scènes" mc="Standard.State" uid="b408ec82-9cad-49e3-a799-00b5d8e9a5f5"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Transition1" mc="Standard.Transition" uid="1f45a300-3249-4e14-96cc-c945b8cd2402"/>
+                <ATTRIBUTES>
+                  <ATT name="Effect"></ATT>
+                  <ATT name="ReceivedEvents"></ATT>
+                  <ATT name="SentEvents"></ATT>
+                  <ATT name="Guard"><![CDATA[Bouton quitter]]></ATT>
+                  <ATT name="PostCondition"></ATT>
+                  <ATT name="Name"><![CDATA[Transition1]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Target">
+                    <REFOBJ>
+                      <ID name="Retour ok" mc="Standard.State" uid="d3669c45-c58c-407b-806d-7d385783aaa2"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Vérifier équipement" mc="Standard.ExitPointPseudoState" uid="2c32b859-a825-46b9-b30b-033d517f71c6"/>
+          <ATTRIBUTES>
+            <ATT name="Name"><![CDATA[Vérifier équipement]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="OutGoing">
+              <OBJECT>
+                <ID name="Transition" mc="Standard.Transition" uid="3b9a3e5b-8d44-4a47-8d0e-3315819e681e"/>
+                <ATTRIBUTES>
+                  <ATT name="Effect"></ATT>
+                  <ATT name="ReceivedEvents"></ATT>
+                  <ATT name="SentEvents"></ATT>
+                  <ATT name="Guard"><![CDATA[équipement pas trouver]]></ATT>
+                  <ATT name="PostCondition"></ATT>
+                  <ATT name="Name"><![CDATA[Transition]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Target">
+                    <REFOBJ>
+                      <ID name="Afficher erreur" mc="Standard.State" uid="a7b4e544-e586-415e-8a73-cb77e4db8c7c"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Transition1" mc="Standard.Transition" uid="b005ecf9-d48a-460e-a444-f253dc5ecb00"/>
+                <ATTRIBUTES>
+                  <ATT name="Effect"></ATT>
+                  <ATT name="ReceivedEvents"></ATT>
+                  <ATT name="SentEvents"></ATT>
+                  <ATT name="Guard"><![CDATA[équipement trouver]]></ATT>
+                  <ATT name="PostCondition"></ATT>
+                  <ATT name="Name"><![CDATA[Transition1]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Target">
+                    <REFOBJ>
+                      <ID name="Choisir équipement" mc="Standard.State" uid="0f7abe04-8b36-4851-9968-510ba28b3c72"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Choix d'action" mc="Standard.ExitPointPseudoState" uid="5f47f85f-0818-47f3-9e34-78298f9d4292"/>
+          <ATTRIBUTES>
+            <ATT name="Name"><![CDATA[Choix d'action]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="OutGoing">
+              <OBJECT>
+                <ID name="Transition" mc="Standard.Transition" uid="1745c83c-5ef0-4060-a880-dd24148f31ba"/>
+                <ATTRIBUTES>
+                  <ATT name="Effect"></ATT>
+                  <ATT name="ReceivedEvents"></ATT>
+                  <ATT name="SentEvents"></ATT>
+                  <ATT name="Guard"></ATT>
+                  <ATT name="PostCondition"><![CDATA[Changer valeur]]></ATT>
+                  <ATT name="Name"><![CDATA[Transition]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Target">
+                    <REFOBJ>
+                      <ID name="Envoyer valeur canal" mc="Standard.State" uid="4a00a2d7-394e-4a3e-b4a3-435e7329943e"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Transition1" mc="Standard.Transition" uid="2895cb48-7bd2-4788-ae5e-6c160439655b"/>
+                <ATTRIBUTES>
+                  <ATT name="Effect"></ATT>
+                  <ATT name="ReceivedEvents"></ATT>
+                  <ATT name="SentEvents"></ATT>
+                  <ATT name="Guard"><![CDATA[Boutton blackout]]></ATT>
+                  <ATT name="PostCondition"></ATT>
+                  <ATT name="Name"><![CDATA[Transition1]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Target">
+                    <REFOBJ>
+                      <ID name="Réinitialiser les canaux" mc="Standard.State" uid="9a0b90f9-8d23-4ec1-9e53-55f7c0ef4eb3"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Transition2" mc="Standard.Transition" uid="5851e54c-c3b4-4b0f-a677-c8bc30e43ae4"/>
+                <ATTRIBUTES>
+                  <ATT name="Effect"></ATT>
+                  <ATT name="ReceivedEvents"></ATT>
+                  <ATT name="SentEvents"></ATT>
+                  <ATT name="Guard"></ATT>
+                  <ATT name="PostCondition"><![CDATA[Bouton quitter]]></ATT>
+                  <ATT name="Name"><![CDATA[Transition2]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Target">
+                    <REFOBJ>
+                      <ID name="Retour ok" mc="Standard.State" uid="d3669c45-c58c-407b-806d-7d385783aaa2"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Choix mode" mc="Standard.ExitPointPseudoState" uid="41c1845c-6453-45db-9569-f6a502427848"/>
+          <ATTRIBUTES>
+            <ATT name="Name"><![CDATA[Choix mode]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="OutGoing">
+              <OBJECT>
+                <ID name="Transition" mc="Standard.Transition" uid="d8358367-d1e5-4e4c-845b-8634cbb2b472"/>
+                <ATTRIBUTES>
+                  <ATT name="Effect"></ATT>
+                  <ATT name="ReceivedEvents"></ATT>
+                  <ATT name="SentEvents"></ATT>
+                  <ATT name="Guard"><![CDATA[Gestion scènes]]></ATT>
+                  <ATT name="PostCondition"></ATT>
+                  <ATT name="Name"><![CDATA[Transition]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Target">
+                    <REFOBJ>
+                      <ID name="Obtenir Liste Scènes" mc="Standard.State" uid="d7198f74-ad85-47b0-a55b-cd5f29b40af4"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Transition1" mc="Standard.Transition" uid="752fbaaf-eaf0-4610-a985-ae4bc9df9c4f"/>
+                <ATTRIBUTES>
+                  <ATT name="Effect"></ATT>
+                  <ATT name="ReceivedEvents"></ATT>
+                  <ATT name="SentEvents"></ATT>
+                  <ATT name="Guard"><![CDATA[Mode test]]></ATT>
+                  <ATT name="PostCondition"></ATT>
+                  <ATT name="Name"><![CDATA[Transition1]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Target">
+                    <REFOBJ>
+                      <ID name="Obtenir liste des équipement dmx" mc="Standard.State" uid="124ff5d2-e417-4f56-a20a-fc62ceb6d4be"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
+      <COMP relation="Product">
+        <COMPID name="Diagramme d'état State Machine" mc="Standard.StateMachineDiagram" uid="28557dab-24cf-4225-b915-331fe35380d8"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
