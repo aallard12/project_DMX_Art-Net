@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="fiche_f2_projet" version="4">
+  <OBJECT>
+    <ID name="fiche_f2_projet" mc="Standard.Package" uid="20e7f116-49bb-42db-8b60-b1268e409362"/>
+    <PID name="Fiche_F2_Projet" mc="Standard.Project" uid="96673d30-80e9-4cc1-b1da-380a5c3b0f26"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[fiche_f2_projet]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedBehavior">
+        <COMPID name="InteractionTab" mc="Standard.Interaction" uid="1fb83f95-89ef-438b-801c-e428ea960e25"/>
+        <COMPID name="InteractionPc" mc="Standard.Interaction" uid="a49fb67a-5c4d-4138-a218-0509beae23cb"/>
+      </COMP>
+      <COMP relation="OwnedElement">
+        <COMPID name="Enregistrer une scène" mc="Standard.UseCase" uid="f5fde514-799f-4c05-940e-6d1b8c403139"/>
+        <COMPID name="Diffuser une scène" mc="Standard.UseCase" uid="01c9263e-00f3-41dd-8b6e-dac4dcc58c7d"/>
+        <COMPID name="ActeurTablette" mc="Standard.Actor" uid="c9b83de0-7ecd-4634-b595-2163c2de09db"/>
+        <COMPID name="ActeurPC" mc="Standard.Actor" uid="8fdf7b65-5580-44fd-9812-194e41365aae"/>
+        <COMPID name="Transmetteur" mc="Standard.Class" uid="612babe0-8e5d-4696-992c-6003f556bdf8"/>
+        <COMPID name="RasberryPI" mc="Standard.Class" uid="505bc47b-f153-4880-8b09-0196c9a3a653"/>
+        <COMPID name="BDD" mc="Standard.Class" uid="ceb1e19b-69b8-44e6-9f86-4edc8ae3b6ac"/>
+      </COMP>
+      <COMP relation="Product">
+        <COMPID name="Diagramme de cas d'utilisation fiche_f2_projet" mc="Standard.UseCaseDiagram" uid="e03b6ddf-3786-4683-8dce-8b6fb3d46734"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

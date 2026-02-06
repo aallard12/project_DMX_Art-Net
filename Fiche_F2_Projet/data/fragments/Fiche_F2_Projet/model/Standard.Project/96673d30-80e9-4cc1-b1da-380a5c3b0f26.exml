@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Fiche_F2_Projet" version="4">
+  <OBJECT>
+    <ID name="Fiche_F2_Projet" mc="Standard.Project" uid="96673d30-80e9-4cc1-b1da-380a5c3b0f26"/>
+    <ATTRIBUTES>
+      <ATT name="ProjectContext"></ATT>
+      <ATT name="ProjectDescr"></ATT>
+      <ATT name="Name"><![CDATA[Fiche_F2_Projet]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="Model">
+        <COMPID name="fiche_f2_projet" mc="Standard.Package" uid="20e7f116-49bb-42db-8b60-b1268e409362"/>
+        <COMPID name="fiche_F3_projet" mc="Standard.Package" uid="dfc66285-ddb7-449b-8d76-003d1fb2446f"/>
+      </COMP>
+      <COMP relation="DiagramRoot">
+        <COMPID name="Fiche_F2_Projet" mc="Infrastructure.DiagramSet" uid="d7705ee1-b345-4d5a-ad4b-f6886d1e3890"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

@@ -1,0 +1,4 @@
+#Mon Feb 02 17:55:19 CET 2026
+org.modelio.app.diagram.editor.OpenedDiagrams0='Diagramme de cas d'utilisation fiche_f2_projet' {e03b6ddf-3786-4683-8dce-8b6fb3d46734} Standard.UseCaseDiagram
+org.modelio.app.diagram.editor.OpenedDiagrams1='Diagramme de s\u00E9quence Interaction tablette' {9466b562-7f87-456a-a03a-458acd8f960c} Standard.SequenceDiagram
+org.modelio.app.diagram.editor.OpenedDiagrams2='Diagramme de classe fiche_F3_projet' {6b947ee1-c602-49e7-9bf4-5bc351482463} Standard.ClassDiagram

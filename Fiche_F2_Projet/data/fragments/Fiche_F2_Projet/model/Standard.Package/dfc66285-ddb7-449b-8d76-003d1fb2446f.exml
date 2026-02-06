@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="fiche_F3_projet" version="4">
+  <OBJECT>
+    <ID name="fiche_F3_projet" mc="Standard.Package" uid="dfc66285-ddb7-449b-8d76-003d1fb2446f"/>
+    <PID name="Fiche_F2_Projet" mc="Standard.Project" uid="96673d30-80e9-4cc1-b1da-380a5c3b0f26"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[fiche_F3_projet]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="Product">
+        <COMPID name="Diagramme de classe fiche_F3_projet" mc="Standard.ClassDiagram" uid="6b947ee1-c602-49e7-9bf4-5bc351482463"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
