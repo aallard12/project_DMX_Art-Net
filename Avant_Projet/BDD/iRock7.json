@@ -1,0 +1,96 @@
+{
+  "equipement": {
+    "nom": "iRock 7S/7B",
+    "nb_canaux": "7",
+    "canaux": [
+      {
+        "numero": "1",
+        "description": "Pan",
+        "fonctions": [
+          { "nom": "Mouvement Horizontal", "min": "0", "max": "255" }
+        ]
+      },
+      {
+        "numero": "2",
+        "description": "Tilt / Barrel",
+        "fonctions": [
+          { "nom": "Tilt (iRock 7S)", "min": "0", "max": "255" },
+          { "nom": "Stopped (7B)", "min": "0", "max": "9" },
+          { "nom": "Fastest speed counterclockwise (7B)", "min": "10", "max": "10" },
+          { "nom": "Slowest speed counterclockwise (7B)", "min": "120", "max": "120" },
+          { "nom": "Stopped (7B)", "min": "121", "max": "134" },
+          { "nom": "Slowest speed clockwise (7B)", "min": "135", "max": "135" },
+          { "nom": "Fastest speed clockwise (7B)", "min": "245", "max": "245" },
+          { "nom": "Stopped (7B)", "min": "246", "max": "255" }
+        ]
+      },
+      {
+        "numero": "3",
+        "description": "Shutter / Shaking",
+        "fonctions": [
+          { "nom": "Blackout", "min": "0", "max": "7" },
+          { "nom": "Open", "min": "8", "max": "15" },
+          { "nom": "Slowest speed shutter", "min": "16", "max": "16" },
+          { "nom": "Fastest speed shutter", "min": "131", "max": "131" },
+          { "nom": "Slowest speed shaking", "min": "132", "max": "132" },
+          { "nom": "Fastest speed shaking", "min": "247", "max": "247" },
+          { "nom": "Open", "min": "248", "max": "255" }
+        ]
+      },
+      {
+        "numero": "4",
+        "description": "Gobo",
+        "fonctions": [
+          { "nom": "Open / White", "min": "0", "max": "15" },
+          { "nom": "Gobo 1", "min": "16", "max": "31" },
+          { "nom": "Gobo 2", "min": "32", "max": "47" },
+          { "nom": "Gobo 3", "min": "48", "max": "63" },
+          { "nom": "Gobo 4", "min": "64", "max": "79" },
+          { "nom": "Gobo 5", "min": "80", "max": "95" },
+          { "nom": "Gobo 6", "min": "96", "max": "111" },
+          { "nom": "Gobo 7", "min": "112", "max": "127" },
+          { "nom": "Slowest speed Gobo change", "min": "128", "max": "128" },
+          { "nom": "Fastest speed Gobo change", "min": "255", "max": "255" }
+        ]
+      },
+      {
+        "numero": "5",
+        "description": "Color",
+        "fonctions": [
+          { "nom": "White", "min": "0", "max": "12" },
+          { "nom": "Green", "min": "13", "max": "25" },
+          { "nom": "Magenta", "min": "26", "max": "38" },
+          { "nom": "Light Blue", "min": "39", "max": "51" },
+          { "nom": "Yellow", "min": "52", "max": "63" },
+          { "nom": "Orange", "min": "64", "max": "76" },
+          { "nom": "Blue", "min": "77", "max": "89" },
+          { "nom": "UV Purple", "min": "90", "max": "102" },
+          { "nom": "Light Green", "min": "103", "max": "115" },
+          { "nom": "Pink", "min": "116", "max": "127" },
+          { "nom": "Slowest speed Rainbow effect", "min": "128", "max": "128" },
+          { "nom": "Fastest speed Rainbow effect", "min": "255", "max": "255" }
+        ]
+      },
+      {
+        "numero": "6",
+        "description": "Gobo Rotation",
+        "fonctions": [
+          { "nom": "Stopped", "min": "0", "max": "9" },
+          { "nom": "Fastest speed counterclockwise", "min": "10", "max": "10" },
+          { "nom": "Slowest speed counterclockwise", "min": "120", "max": "120" },
+          { "nom": "Stopped", "min": "121", "max": "134" },
+          { "nom": "Slowest speed clockwise", "min": "135", "max": "135" },
+          { "nom": "Fastest speed clockwise", "min": "245", "max": "245" },
+          { "nom": "Stopped", "min": "246", "max": "255" }
+        ]
+      },
+      {
+        "numero": "7",
+        "description": "Dimmer",
+        "fonctions": [
+          { "nom": "Intensity 0-100%", "min": "0", "max": "255" }
+        ]
+      }
+    ]
+  }
+}

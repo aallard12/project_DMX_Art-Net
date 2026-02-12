@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Qt::CheckState" version="4">
+  <OBJECT>
+    <ID name="Qt::CheckState" mc="Standard.DataType" uid="6ec7d90f-0188-4ea6-9023-eecda60a1115"/>
+    <PID name="InterfacePcClient" mc="Standard.Class" uid="decf94c9-be1f-4b9c-8ebf-8c5a47aa10cc"/>
+    <ATTRIBUTES>
+      <ATT name="IsElementary">true</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[Qt::CheckState]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES></DEPENDENCIES>
+  </OBJECT>
+</EXT>

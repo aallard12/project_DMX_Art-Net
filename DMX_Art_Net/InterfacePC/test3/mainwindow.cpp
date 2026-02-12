@@ -1,206 +1,255 @@
 #include "mainwindow.h"
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QFormLayout>
-#include <QGroupBox>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonArray>
+#include <QSqlError>
+#include <QDebug>
 #include <QMessageBox>
 
+// --- CHANNEL WIDGET IMPLEMENTATION ---
+ChannelWidget::ChannelWidget(QString function, int addr, int val, QWidget *parent)
+    : QWidget(parent), address(addr) {
+
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    setFixedWidth(65);
+
+    QLabel *lblFunc = new QLabel(function);
+    lblFunc->setAlignment(Qt::AlignCenter);
+    lblFunc->setStyleSheet("font-weight: bold; color: #FFA500; font-size: 10px;");
+
+    QLabel *lblAddr = new QLabel(QString("%1").arg(addr));
+    lblAddr->setAlignment(Qt::AlignCenter);
+    lblAddr->setStyleSheet("color: #888; font-size: 9px;");
+
+    slider = new QSlider(Qt::Vertical);
+    slider->setRange(0, 255);
+    slider->setValue(val);
+    slider->setStyleSheet("QSlider::handle:vertical { background: #666; height: 15px; }");
+
+    spin = new QSpinBox();
+    spin->setRange(0, 255);
+    spin->setValue(val);
+    spin->setButtonSymbols(QAbstractSpinBox::NoButtons);
+    spin->setAlignment(Qt::AlignCenter);
+
+    layout->addWidget(lblFunc);
+    layout->addWidget(lblAddr);
+    layout->addWidget(slider, 0, Qt::AlignCenter);
+    layout->addWidget(spin);
+
+    connect(slider, &QSlider::valueChanged, this, &ChannelWidget::onSliderMoved);
+    connect(spin, QOverload<int>::of(&QSpinBox::valueChanged), this, &ChannelWidget::onSpinChanged);
+}
+
+void ChannelWidget::onSliderMoved(int val) {
+    spin->blockSignals(true);
+    spin->setValue(val);
+    spin->blockSignals(false);
+    emit valueChanged(address, val);
+}
+
+void ChannelWidget::onSpinChanged(int val) {
+    slider->blockSignals(true);
+    slider->setValue(val);
+    slider->blockSignals(false);
+    emit valueChanged(address, val);
+}
+
+// --- FIXTURE WIDGET IMPLEMENTATION ---
+FixtureWidget::FixtureWidget(QString name, QWidget *parent) : QGroupBox(name, parent) {
+    setStyleSheet("QGroupBox { border: 2px solid #444; margin-top: 15px; color: white; font-weight: bold; }"
+                  "QGroupBox::title { subcontrol-origin: margin; left: 10px; }");
+    QHBoxLayout *layout = new QHBoxLayout(this);
+    layout->setContentsMargins(5, 20, 5, 5);
+}
+
+// --- MAINWINDOW IMPLEMENTATION ---
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
-    this->setWindowTitle("Console Art-Net");
-    this->resize(950, 750);
+    for(int i=0; i<513; i++) dmxBuffer[i] = 0;
 
-    socketClient = new QTcpSocket(this);
-    initialiserIHM();
-
-    connect(socketClient, &QTcpSocket::readyRead, this, &MainWindow::gestionReception);
+    initDatabase();
+    setupUI();
+    loadScene(0); // Charger la première scène par défaut
 }
 
-void MainWindow::initialiserIHM() {
-    onglets = new QTabWidget(this);
+MainWindow::~MainWindow() {
+    db.close();
+}
 
-    // --- UC1 : RÉSEAU ---
-    QWidget *tab1 = new QWidget();
-    QFormLayout *fLayout = new QFormLayout(tab1);
-    editIP = new QLineEdit("192.168.1.10");
-    QPushButton *btnConnect = new QPushButton("Connexion au RPI");
-    fLayout->addRow("IP Serveur (RPi) :", editIP);
-    fLayout->addRow(btnConnect);
-    connect(btnConnect, &QPushButton::clicked, this, &MainWindow::cas_configurerReseau);
+void MainWindow::initDatabase() {
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("dmx_project.db");
 
-    // ------------- ENREGISTRER ------------- //
-    QWidget *tab2 = new QWidget();
-    QFormLayout * fLayout2 = new QFormLayout(tab2);
-    editNomEquipment = new QLineEdit();
-    editNomEquipment->setPlaceholderText("Nom de l'équipement");
-    spinNbCanaux = new QSpinBox();
-    spinNbCanaux->setMinimum(1);
-    buttonEnregistrer = new QPushButton();
-    buttonEnregistrer->setText("Enregistrer l'équipement");
-    editIPEquipment = new QLineEdit();
-    editIPEquipment->setPlaceholderText("Adresse IP de l'équipement");
-
-    fLayout2->addRow(editNomEquipment);
-    fLayout2->addRow(spinNbCanaux);
-    fLayout2->addRow(editIPEquipment);
-    fLayout2->addRow(buttonEnregistrer);
-
-    // hLayout2->addWidget(editNomEquipment);
-    // hLayout2->addWidget(spinNbCanaux);
-    // vLayout2->addLayout(hLayout2);
-    // vLayout2->addWidget(btnSave);
-
-
-
-    // --- UC2 : COMPOSITION (Sliders 1-255) ---
-    QWidget *tab3 = new QWidget();
-    QVBoxLayout *vLayout3 = new QVBoxLayout(tab3);
-    editNomScene = new QLineEdit();
-    editNomScene->setPlaceholderText("Nom de la scène...");
-
-    QGroupBox *boxDMX = new QGroupBox("Contrôle des canaux");
-    QVBoxLayout *vBoxSliders = new QVBoxLayout(boxDMX);
-
-    for(int i=1; i<=8; ++i) { // 8 Sliders pour correspondre à la logique JSON
-        QHBoxLayout *hRow = new QHBoxLayout();
-        QLabel *name = new QLabel(QString("Canal %1 :").arg(i));
-        QSlider *s = new QSlider(Qt::Horizontal);
-        s->setRange(0, 255); // "0 et 256 exclus"
-        s->setObjectName(QString("slider_%1").arg(i));
-
-        QLabel *valLabel = new QLabel("0");
-        valLabel->setFixedWidth(30);
-        valLabel->setStyleSheet("font-weight: bold; color: #e67e22;");
-
-        connect(s, &QSlider::valueChanged, [valLabel](int v){
-            valLabel->setText(QString::number(v));
-        });
-
-        hRow->addWidget(name);
-        hRow->addWidget(s);
-        hRow->addWidget(valLabel);
-        vBoxSliders->addLayout(hRow);
+    if (!db.open()) {
+        QMessageBox::critical(this, "Erreur BDD", db.lastError().text());
+        return;
     }
 
-    QPushButton *btnReset = new QPushButton("Réinitialiser les canaux");
-    btnReset->setStyleSheet("background-color: #e74c3c; color: white; font: bold;");
-    connect(btnReset, &QPushButton::clicked, this, &MainWindow::réinitialiserSliders);
+    QSqlQuery q;
+    // Table des scènes
+    q.exec("CREATE TABLE IF NOT EXISTS scenes (id INTEGER PRIMARY KEY, name TEXT)");
+    // Table des équipements dans une scène
+    q.exec("CREATE TABLE IF NOT EXISTS scene_fixtures (id INTEGER PRIMARY KEY, scene_id INTEGER, name TEXT, start_addr INTEGER, type_id INTEGER)");
+    // Table des fonctions de canaux (Library)
+    q.exec("CREATE TABLE IF NOT EXISTS channel_defs (type_id INTEGER, offset INTEGER, function_name TEXT)");
+    // Table des valeurs enregistrées
+    q.exec("CREATE TABLE IF NOT EXISTS scene_values (scene_id INTEGER, address INTEGER, value INTEGER, PRIMARY KEY(scene_id, address))");
 
-    QPushButton *btnSave = new QPushButton("Enregistrer la scène (JSON)");
-    btnSave->setStyleSheet("background-color: #00648c; color: white; font: bold;");
-
-    vLayout3->addWidget(editNomScene);
-    vLayout3->addWidget(boxDMX);
-    vLayout3->addWidget(btnReset);
-    vLayout3->addWidget(btnSave);
-    connect(btnSave, &QPushButton::clicked, this, &MainWindow::cas_composerScene);
-
-    // --- UC3 & UC4 : LIVE (Combo + Confirmation) ---
-    QWidget *tab4 = new QWidget();
-    QVBoxLayout *vLayout4 = new QVBoxLayout(tab4);
-
-    QGroupBox *boxSelect = new QGroupBox("Sélection et Sécurité");
-    QFormLayout *formSelect = new QFormLayout(boxSelect);
-
-    comboScenes = new QComboBox();
-    btnConfirmer = new QPushButton("Confirmer la sélection");
-    btnConfirmer->setStyleSheet("background-color: #f1c40f; color: black; font-weight: bold;");
-
-    formSelect->addRow("Choisir une scène :", comboScenes);
-    formSelect->addRow(btnConfirmer);
-
-    QPushButton *btnRefresh = new QPushButton("Actualiser la liste (UC4)");
-    btnPlay = new QPushButton("LANCER LA SCÈNE (UC3)");
-    btnPlay->setEnabled(false); // Désactivé par défaut
-    btnPlay->setMinimumHeight(60);
-    btnPlay->setStyleSheet("background-color: gray; color: white; font-weight: bold; font-size: 16px;");
-
-    vLayout4->addWidget(btnRefresh);
-    vLayout4->addWidget(boxSelect);
-    vLayout4->addStretch();
-    vLayout4->addWidget(btnPlay);
-
-    connect(btnRefresh, &QPushButton::clicked, this, &MainWindow::cas_obtenirListeScenes);
-    connect(btnConfirmer, &QPushButton::clicked, this, &MainWindow::cas_confirmerSelection);
-    connect(btnPlay, &QPushButton::clicked, this, &MainWindow::cas_lancerScene);
-
-    onglets->addTab(tab1, "1. Réseau");
-    onglets->addTab(tab2, "2. Enregistrer une scène");
-    onglets->addTab(tab3, "3. Composition");
-    onglets->addTab(tab4, "4. Live");
-    setCentralWidget(onglets);
-}
-
-// --- LOGIQUE MÉTIER ---
-
-void MainWindow::cas_configurerReseau() {
-    socketClient->connectToHost(editIP->text(), 8888);
-    if(socketClient->waitForConnected(2000)) {
-        statusBar()->showMessage("Serveur Art-Net connecté", 5000);
+    // Données de test (si vide)
+    q.exec("SELECT count(*) FROM scenes");
+    if (q.next() && q.value(0).toInt() == 0) {
+        q.exec("INSERT INTO scenes VALUES (1, 'Spectacle Ouverture')");
+        q.exec("INSERT INTO channel_defs VALUES (1, 0, 'Dimmer'), (1, 1, 'Pan'), (1, 2, 'Tilt'), (1, 3, 'Strobe')");
+        q.exec("INSERT INTO scene_fixtures VALUES (1, 1, 'Lyre 1', 1, 1), (2, 1, 'Lyre 2', 10, 1)");
     }
 }
 
-void MainWindow::cas_composerScene() {
-    QJsonObject obj;
-    obj["commande"] = "SAVE_SCENE";
-    obj["nom"] = editNomScene->text();
-    QJsonArray dmx;
-    for(int i=1; i<=8; ++i) {
-        QSlider *s = findChild<QSlider*>(QString("slider_%1").arg(i));
-        if(s) dmx.append(s->value());
+void MainWindow::setupUI() {
+    centralWidget = new QWidget();
+    setCentralWidget(centralWidget);
+    setStyleSheet("background-color: #222; color: white;");
+    resize(1000, 600);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
+
+    // Barre du haut
+    QHBoxLayout *topBar = new QHBoxLayout();
+    universeCombo = new QComboBox();
+    universeCombo->addItems({"Univers 1", "Univers 2"});
+
+    sceneCombo = new QComboBox();
+    QSqlQuery q("SELECT id, name FROM scenes");
+    while(q.next()) sceneCombo->addItem(q.value(1).toString(), q.value(0));
+
+    sceneNameEdit = new QLineEdit();
+    sceneNameEdit->setPlaceholderText("Nom de la nouvelle scène...");
+    sceneNameEdit->setFixedWidth(200);
+
+    QPushButton *btnSave = new QPushButton("💾 Sauvegarder");
+    QPushButton *btnAdd = new QPushButton("＋ Ajouter Fixture");
+
+    topBar->addWidget(new QLabel("Scène :"));
+    topBar->addWidget(sceneCombo);
+    topBar->addWidget(new QLabel("Univers :"));
+    topBar->addWidget(universeCombo);
+    topBar->addStretch();
+    topBar->addWidget(btnAdd);
+    topBar->addWidget(btnSave);
+
+    // Zone de défilement pour les Fixtures
+    QScrollArea *scroll = new QScrollArea();
+    scroll->setWidgetResizable(true);
+    scroll->setStyleSheet("border: none; background: transparent;");
+
+    QWidget *scrollContent = new QWidget();
+    fixtureLayout = new QHBoxLayout(scrollContent);
+    fixtureLayout->setAlignment(Qt::AlignLeft);
+    scroll->setWidget(scrollContent);
+
+    mainLayout->addLayout(topBar);
+    mainLayout->addWidget(scroll);
+
+    connect(sceneCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::loadScene);
+    connect(btnSave, &QPushButton::clicked, this, &MainWindow::saveCurrentScene);
+    connect(btnAdd, &QPushButton::clicked, this, &MainWindow::addFixtureDialog);
+}
+
+void MainWindow::loadScene(int index) {
+    clearInterface();
+    currentSceneId = sceneCombo->itemData(index).toInt();
+
+    // 1. Charger les valeurs DMX de la scène en mémoire
+    QSqlQuery qVal;
+    qVal.prepare("SELECT address, value FROM scene_values WHERE scene_id = ?");
+    qVal.addBindValue(currentSceneId);
+    qVal.exec();
+    while(qVal.next()) dmxBuffer[qVal.value(0).toInt()] = qVal.value(1).toInt();
+
+    // 2. Construire l'interface des équipements
+    QSqlQuery qFix;
+    qFix.prepare("SELECT id, name, start_addr, type_id FROM scene_fixtures WHERE scene_id = ?");
+    qFix.addBindValue(currentSceneId);
+    qFix.exec();
+
+    while(qFix.next()) {
+        FixtureWidget *fw = new FixtureWidget(qFix.value(1).toString());
+        QHBoxLayout *fwLayout = qobject_cast<QHBoxLayout*>(fw->layout());
+
+        int startAddr = qFix.value(2).toInt();
+        int typeId = qFix.value(3).toInt();
+
+        // Chercher les fonctions des canaux pour ce type
+        QSqlQuery qChan;
+        qChan.prepare("SELECT offset, function_name FROM channel_defs WHERE type_id = ?");
+        qChan.addBindValue(typeId);
+        qChan.exec();
+
+        while(qChan.next()) {
+            int addr = startAddr + qChan.value(0).toInt();
+            ChannelWidget *cw = new ChannelWidget(qChan.value(1).toString(), addr, dmxBuffer[addr]);
+            connect(cw, &ChannelWidget::valueChanged, this, &MainWindow::onChannelChanged);
+            fwLayout->addWidget(cw);
+        }
+        fixtureLayout->addWidget(fw);
     }
-    obj["valeurs"] = dmx;
-    socketClient->write(QJsonDocument(obj).toJson());
-    statusBar()->showMessage("Scène enregistrée avec succès", 3000);
 }
 
-void MainWindow::cas_obtenirListeScenes() {
-    socketClient->write("{\"commande\":\"GET_LIST\"}");
+void MainWindow::onChannelChanged(int addr, int val) {
+    if (addr >= 1 && addr <= 512) dmxBuffer[addr] = (unsigned char)val;
 }
 
-void MainWindow::cas_confirmerSelection() {
-    if(comboScenes->currentText().isEmpty()) return;
+void MainWindow::saveCurrentScene() {
+    QString newName = sceneNameEdit->text();
 
-    sceneValidee = comboScenes->currentText();
-    btnPlay->setEnabled(true);
-    btnPlay->setStyleSheet("background-color: #03822C; color: white; font-weight: bold; font-size: 16px;");
-    statusBar()->showMessage("Sélection validée : " + sceneValidee + ". Prêt à lancer.", 5000);
-}
-
-void MainWindow::cas_lancerScene() {
-    if(sceneValidee.isEmpty()) return;
-
-    QJsonObject obj;
-    obj["commande"] = "PLAY_SCENE";
-    obj["nom"] = sceneValidee;
-    socketClient->write(QJsonDocument(obj).toJson());
-
-    // Sécurité : on redésactive après le lancement
-    btnPlay->setEnabled(false);
-    btnPlay->setStyleSheet("background-color: gray; color: white;");
-    statusBar()->showMessage("Scène " + sceneValidee + " lancée !", 3000);
-}
-
-void MainWindow::réinitialiserSliders() {
-    for(int i=1; i<=8; ++i) {
-        QSlider *s = findChild<QSlider*>(QString("slider_%1").arg(i));
-        if(s) s->setValue(0);
+    if (newName.isEmpty()) {
+        QMessageBox::warning(this, "Attention", "Veuillez saisir un nom pour la scène avant de sauvegarder.");
+        return;
     }
-    statusBar()->showMessage("Canaux réinitialisés à 1", 2000);
-}
 
-void MainWindow::gestionReception() {
-    QByteArray data = socketClient->readAll();
-    QJsonDocument doc = QJsonDocument::fromJson(data);
-    if(doc.isObject() && doc.object().contains("liste")) {
-        comboScenes->clear();
-        QJsonArray liste = doc.object()["liste"].toArray();
-        for(auto v : liste) comboScenes->addItem(v.toString());
-        btnPlay->setEnabled(false); // Reset sécurité si la liste change
-        btnPlay->setStyleSheet("background-color: gray; color: white;");
+    db.transaction();
+    QSqlQuery q;
+
+    // 1. Créer la nouvelle scène dans la table SCENES
+    q.prepare("INSERT INTO scenes (name) VALUES (?)");
+    q.addBindValue(newName);
+    if (!q.exec()) {
+        db.rollback();
+        qDebug() << "Erreur création scène :" << q.lastError().text();
+        return;
+    }
+
+    // Récupérer l'ID de la scène qu'on vient de créer
+    int newSceneId = q.lastInsertId().toInt();
+
+    // 2. Enregistrer les valeurs DMX dans la table scene_values
+    for(int i=1; i<=512; i++) {
+        if(dmxBuffer[i] > 0) {
+            q.prepare("INSERT INTO scene_values (scene_id, address, value) VALUES (?, ?, ?)");
+            q.addBindValue(newSceneId);
+            q.addBindValue(i);
+            q.addBindValue(dmxBuffer[i]);
+            q.exec();
+        }
+    }
+
+    if (db.commit()) {
+        QMessageBox::information(this, "Succès", QString("Scène '%1' enregistrée !").arg(newName));
+
+        // Optionnel : Mettre à jour la liste des scènes dans le ComboBox
+        sceneCombo->addItem(newName, newSceneId);
+        sceneNameEdit->clear();
+    } else {
+        db.rollback();
+        QMessageBox::critical(this, "Erreur", "Impossible de valider la transaction.");
     }
 }
 
-MainWindow::~MainWindow() {}
+void MainWindow::addFixtureDialog() {
+    // Ici tu pourrais ouvrir un QDialog pour choisir dans la BDD
+    qDebug() << "Ouverture du dialogue d'ajout...";
+}
+
+void MainWindow::clearInterface() {
+    QLayoutItem *item;
+    while ((item = fixtureLayout->takeAt(0)) != nullptr) {
+        if (item->widget()) delete item->widget();
+        delete item;
+    }
+}

@@ -1,0 +1,471 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Configurer le réseau Art-Net" version="4">
+  <OBJECT>
+    <ID name="Configurer le réseau Art-Net" mc="Standard.BpmnProcess" uid="0d5a968e-4ca6-4d0e-b8b4-ab93dc01ff8c"/>
+    <PID name="DiagrammeProcessus" mc="Standard.Package" uid="be4b52ec-81be-4c9a-bc1a-058fece2f15c"/>
+    <ATTRIBUTES>
+      <ATT name="ProcessType">NoneProcess</ATT>
+      <ATT name="IsClosed">false</ATT>
+      <ATT name="IsExecutable">OUndefined</ATT>
+      <ATT name="IsReentrant">false</ATT>
+      <ATT name="Name"><![CDATA[Configurer le réseau Art-Net]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="LaneSet">
+        <OBJECT>
+          <ID name="" mc="Standard.BpmnLaneSet" uid="62ca95e2-1a12-4871-bbb3-d8b41e02fb22"/>
+          <ATTRIBUTES>
+            <ATT name="Name"></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="Lane">
+              <OBJECT>
+                <ID name="Technicien Lumière" mc="Standard.BpmnLane" uid="63c4715d-6334-4078-bbb7-4ac63130f44d"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Technicien Lumière]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="FlowElementRef">
+                    <REFOBJ>
+                      <ID name="Saisie de l'IP, Masque et l'Univers" mc="Standard.BpmnTask" uid="64473c1c-abfe-48e2-9c26-91aee6b643ee"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Configurer le réseau Art-Net" mc="Standard.BpmnStartEvent" uid="47d272b1-ccb2-4a3c-a3bc-836e71d40f25"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Appui du bouton &quot;Connexion&quot;" mc="Standard.BpmnTask" uid="23f8b8c7-d2f5-466c-9bb7-7eaca35b83cb"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="DMX Pilot" mc="Standard.BpmnLane" uid="acfb849c-82b3-42f8-a2f1-350cdaba4dde"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[DMX Pilot]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="FlowElementRef">
+                    <REFOBJ>
+                      <ID name="Format donnée correct ?" mc="Standard.BpmnExclusiveGateway" uid="44b9992a-09c7-4d20-911a-5f8a2e9df92f"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Vérification du format de donnée" mc="Standard.BpmnTask" uid="38d27877-fd1e-42fc-bc2a-a3dcc8e65ff2"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Affiche : &quot;Équipement indisponible&quot;" mc="Standard.BpmnEndEvent" uid="044d71ab-6cc6-41a9-83ce-c3144ac857fa"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Affichage : &quot;Équipement connecté&quot;" mc="Standard.BpmnEndEvent" uid="4bff98f9-3db1-45b3-b10e-d71f1fcc00f6"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Serveur Art-Net" mc="Standard.BpmnLane" uid="fb18f2f8-46c6-46ca-ac46-ff257b4d0889"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Serveur Art-Net]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="FlowElementRef">
+                    <REFOBJ>
+                      <ID name="Tentative de communication réseau" mc="Standard.BpmnTask" uid="a2a3c3b9-729a-4833-b9e6-af404e1a26d9"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Équipement répond ?" mc="Standard.BpmnExclusiveGateway" uid="d6b2fcf0-fb47-4778-964c-95ae9fdfae98"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="L'équipement est connecté" mc="Standard.BpmnTask" uid="77ffa6d9-a6a6-4412-adfa-e72a32838b2f"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
+      <COMP relation="FlowElement">
+        <OBJECT>
+          <ID name="Saisie de l'IP, Masque et l'Univers" mc="Standard.BpmnTask" uid="64473c1c-abfe-48e2-9c26-91aee6b643ee"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Saisie de l'IP, Masque et l'Univers]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Configurer le réseau Art-Net" mc="Standard.BpmnStartEvent" uid="47d272b1-ccb2-4a3c-a3bc-836e71d40f25"/>
+          <ATTRIBUTES>
+            <ATT name="IsInterrupting">true</ATT>
+            <ATT name="ParallelMultiple">false</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Configurer le réseau Art-Net]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow" mc="Standard.BpmnSequenceFlow" uid="b3dd8458-663b-41dc-95ee-2b8ce782c864"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Configurer le réseau Art-Net" mc="Standard.BpmnStartEvent" uid="47d272b1-ccb2-4a3c-a3bc-836e71d40f25"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Saisie de l'IP, Masque et l'Univers" mc="Standard.BpmnTask" uid="64473c1c-abfe-48e2-9c26-91aee6b643ee"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Appui du bouton &quot;Connexion&quot;" mc="Standard.BpmnTask" uid="23f8b8c7-d2f5-466c-9bb7-7eaca35b83cb"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Appui du bouton "Connexion"]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow1" mc="Standard.BpmnSequenceFlow" uid="67abfbb0-4216-4b2c-a3e3-f3aa3add2e55"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow1]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Saisie de l'IP, Masque et l'Univers" mc="Standard.BpmnTask" uid="64473c1c-abfe-48e2-9c26-91aee6b643ee"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Appui du bouton &quot;Connexion&quot;" mc="Standard.BpmnTask" uid="23f8b8c7-d2f5-466c-9bb7-7eaca35b83cb"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Format donnée correct ?" mc="Standard.BpmnExclusiveGateway" uid="44b9992a-09c7-4d20-911a-5f8a2e9df92f"/>
+          <ATTRIBUTES>
+            <ATT name="GatewayDirection">UnspecifiedDirection</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Format donnée correct ?]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="Descriptor">
+              <OBJECT>
+                <ID name="" mc="Infrastructure.Note" uid="b9b50c5b-7364-4b83-88be-8263c452c17d"/>
+                <ATTRIBUTES>
+                  <ATT name="Content"><![CDATA[<Saisir le texte de la note ici>]]></ATT>
+                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+                  <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Model">
+                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow2" mc="Standard.BpmnSequenceFlow" uid="d922757c-854e-42d4-8d55-5fb827a090a3"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"><![CDATA[non]]></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow2]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Format donnée correct ?" mc="Standard.BpmnExclusiveGateway" uid="44b9992a-09c7-4d20-911a-5f8a2e9df92f"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Saisie de l'IP, Masque et l'Univers" mc="Standard.BpmnTask" uid="64473c1c-abfe-48e2-9c26-91aee6b643ee"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Vérification du format de donnée" mc="Standard.BpmnTask" uid="38d27877-fd1e-42fc-bc2a-a3dcc8e65ff2"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Vérification du format de donnée]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow3" mc="Standard.BpmnSequenceFlow" uid="158d34ca-c4da-4f9a-83bc-9c8d62854c72"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow3]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Appui du bouton &quot;Connexion&quot;" mc="Standard.BpmnTask" uid="23f8b8c7-d2f5-466c-9bb7-7eaca35b83cb"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Vérification du format de donnée" mc="Standard.BpmnTask" uid="38d27877-fd1e-42fc-bc2a-a3dcc8e65ff2"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow4" mc="Standard.BpmnSequenceFlow" uid="75532920-4212-4b1c-a638-781ba02e32e7"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow4]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Vérification du format de donnée" mc="Standard.BpmnTask" uid="38d27877-fd1e-42fc-bc2a-a3dcc8e65ff2"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Format donnée correct ?" mc="Standard.BpmnExclusiveGateway" uid="44b9992a-09c7-4d20-911a-5f8a2e9df92f"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Tentative de communication réseau" mc="Standard.BpmnTask" uid="a2a3c3b9-729a-4833-b9e6-af404e1a26d9"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Tentative de communication réseau]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow5" mc="Standard.BpmnSequenceFlow" uid="13f876b2-1476-43b0-8eda-2c16b78b7fa4"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"><![CDATA[oui]]></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow5]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Format donnée correct ?" mc="Standard.BpmnExclusiveGateway" uid="44b9992a-09c7-4d20-911a-5f8a2e9df92f"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Tentative de communication réseau" mc="Standard.BpmnTask" uid="a2a3c3b9-729a-4833-b9e6-af404e1a26d9"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Équipement répond ?" mc="Standard.BpmnExclusiveGateway" uid="d6b2fcf0-fb47-4778-964c-95ae9fdfae98"/>
+          <ATTRIBUTES>
+            <ATT name="GatewayDirection">UnspecifiedDirection</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Équipement répond ?]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow6" mc="Standard.BpmnSequenceFlow" uid="cc452f80-f749-41dc-9093-e8c1457042c8"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow6]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Tentative de communication réseau" mc="Standard.BpmnTask" uid="a2a3c3b9-729a-4833-b9e6-af404e1a26d9"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Équipement répond ?" mc="Standard.BpmnExclusiveGateway" uid="d6b2fcf0-fb47-4778-964c-95ae9fdfae98"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Affiche : &quot;Équipement indisponible&quot;" mc="Standard.BpmnEndEvent" uid="044d71ab-6cc6-41a9-83ce-c3144ac857fa"/>
+          <ATTRIBUTES>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Affiche : "Équipement indisponible"]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="EventDefinitions">
+              <OBJECT>
+                <ID name="" mc="Standard.BpmnTerminateEventDefinition" uid="7f0fc73e-b783-456f-90be-09e5f91a00de"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="non" mc="Standard.BpmnSequenceFlow" uid="f6704c00-5ae9-4c0d-a301-b3a41474dd20"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"><![CDATA[non]]></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[non]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Équipement répond ?" mc="Standard.BpmnExclusiveGateway" uid="d6b2fcf0-fb47-4778-964c-95ae9fdfae98"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Affiche : &quot;Équipement indisponible&quot;" mc="Standard.BpmnEndEvent" uid="044d71ab-6cc6-41a9-83ce-c3144ac857fa"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Affichage : &quot;Équipement connecté&quot;" mc="Standard.BpmnEndEvent" uid="4bff98f9-3db1-45b3-b10e-d71f1fcc00f6"/>
+          <ATTRIBUTES>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Affichage : "Équipement connecté"]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="EventDefinitions">
+              <OBJECT>
+                <ID name="" mc="Standard.BpmnTerminateEventDefinition" uid="b1a4cdc2-d534-4732-b75e-fa0a794897f5"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="L'équipement est connecté" mc="Standard.BpmnTask" uid="77ffa6d9-a6a6-4412-adfa-e72a32838b2f"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[L'équipement est connecté]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow7" mc="Standard.BpmnSequenceFlow" uid="ca1af8d2-0936-4ba2-beaf-bdc19c38a93f"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"><![CDATA[oui]]></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow7]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Équipement répond ?" mc="Standard.BpmnExclusiveGateway" uid="d6b2fcf0-fb47-4778-964c-95ae9fdfae98"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="L'équipement est connecté" mc="Standard.BpmnTask" uid="77ffa6d9-a6a6-4412-adfa-e72a32838b2f"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow8" mc="Standard.BpmnSequenceFlow" uid="b3b19c1b-d9d1-4abc-85f5-f3a85faec30f"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow8]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="L'équipement est connecté" mc="Standard.BpmnTask" uid="77ffa6d9-a6a6-4412-adfa-e72a32838b2f"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Affichage : &quot;Équipement connecté&quot;" mc="Standard.BpmnEndEvent" uid="4bff98f9-3db1-45b3-b10e-d71f1fcc00f6"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
+      <COMP relation="Product">
+        <COMPID name="Configurer le réseau Art-Net" mc="Standard.BpmnProcessDesignDiagram" uid="adf2807c-8310-447f-8a42-b0188b36d1cf"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

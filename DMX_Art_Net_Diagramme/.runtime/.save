@@ -1,0 +1,6 @@
+#Thu Feb 12 16:49:09 CET 2026
+org.modelio.app.diagram.editor.OpenedDiagrams0='Diagramme de classe DiagrammeClasse' {f29a2d5e-ea47-42c8-bc60-2c5481f0b4ef} Standard.ClassDiagram
+org.modelio.app.diagram.editor.OpenedDiagrams3='Composer une sc\u00E8ne' {a3e18d10-d17f-4250-b2e2-6a115f778f6a} Standard.BpmnProcessDesignDiagram
+org.modelio.app.diagram.editor.OpenedDiagrams4='Configurer le r\u00E9seau Art-Net' {adf2807c-8310-447f-8a42-b0188b36d1cf} Standard.BpmnProcessDesignDiagram
+org.modelio.app.diagram.editor.OpenedDiagrams1='Enregistrer un \u00E9quipement' {a82802ed-656a-485f-ba5c-03badb901526} Standard.BpmnProcessDesignDiagram
+org.modelio.app.diagram.editor.OpenedDiagrams2='Obtenir/Lancer des sc\u00E8nes' {81196ae8-a4c4-4efd-8bbf-0c185380ed7f} Standard.BpmnProcessDesignDiagram

@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="DiagrammeProcessus" version="4">
+  <OBJECT>
+    <ID name="DiagrammeProcessus" mc="Standard.Package" uid="be4b52ec-81be-4c9a-bc1a-058fece2f15c"/>
+    <PID name="DiagrammeSequence" mc="Standard.Project" uid="2c7fa4d9-3b51-4c03-93d3-7b4006dfddf5"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[DiagrammeProcessus]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedBehavior">
+        <COMPID name="Interaction" mc="Standard.Interaction" uid="7a8e4641-5889-4ebb-a589-97f938b5e459"/>
+        <COMPID name="Configurer le réseau Art-Net" mc="Standard.BpmnProcess" uid="0d5a968e-4ca6-4d0e-b8b4-ab93dc01ff8c"/>
+        <COMPID name="Composer une scène" mc="Standard.BpmnProcess" uid="9d3b83ca-2441-4f10-a1dc-b51c7dab97c3"/>
+        <COMPID name="Obtenir/Lancer des scènes" mc="Standard.BpmnProcess" uid="b3d51b16-6e7e-4565-95b4-7538d96d2191"/>
+        <COMPID name="Enregistrer un équipement" mc="Standard.BpmnProcess" uid="cbdbf036-3e8b-4c8a-9891-2c92de16ea7c"/>
+      </COMP>
+      <COMP relation="OwnedElement">
+        <COMPID name="Technicien lumière" mc="Standard.Actor" uid="55c812ac-c44a-4c30-b75d-43ad0698926f"/>
+        <COMPID name="Opérateur lumière" mc="Standard.Actor" uid="8c6a3b10-db13-4b71-998d-b116031bd428"/>
+        <COMPID name="Configurer réseau Art-Net" mc="Standard.UseCase" uid="6f2da850-4b81-41e4-b4b9-15f59e8d90b4"/>
+        <COMPID name="Composer une scène" mc="Standard.UseCase" uid="84b87808-9b25-4c27-93b9-011632315ec5"/>
+        <COMPID name="Lancer une scène" mc="Standard.UseCase" uid="02dabd8e-f80e-4434-8f5d-df749d17f9bb"/>
+        <COMPID name="Obtenir la liste des scènes" mc="Standard.UseCase" uid="c4592c53-0c2a-4df8-a9ea-70b7faa65cda"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

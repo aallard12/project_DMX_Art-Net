@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="DiagrammeClasse" version="4">
+  <OBJECT>
+    <ID name="DiagrammeClasse" mc="Standard.Package" uid="43bd425f-202e-4fae-8687-d9d893d7870e"/>
+    <PID name="DiagrammeSequence" mc="Standard.Project" uid="2c7fa4d9-3b51-4c03-93d3-7b4006dfddf5"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[DiagrammeClasse]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="InterfacePcClient" mc="Standard.Class" uid="decf94c9-be1f-4b9c-8ebf-8c5a47aa10cc"/>
+        <COMPID name="AccessBDD" mc="Standard.Class" uid="b98a9ee6-ebb0-46e4-8e4b-809d31548896"/>
+        <COMPID name="QTcpSocket" mc="Standard.Class" uid="916d8dbc-7894-4ec6-8b79-196402bfd6fe"/>
+        <COMPID name="QWidget" mc="Standard.Class" uid="eb4f7104-9ae5-4306-a5b4-8899abaa17b1"/>
+        <COMPID name="QComboBox" mc="Standard.Class" uid="65e3b702-521c-435f-b594-c49340f68c66"/>
+        <COMPID name="QAbstractButton" mc="Standard.Class" uid="30487b39-2895-4c8e-b037-e2f408c32c35"/>
+        <COMPID name="QPushButton" mc="Standard.Class" uid="25abd5b5-edbb-4cbb-8856-0f2ca88430c6"/>
+        <COMPID name="QAbstractSlider" mc="Standard.Class" uid="32e84dd3-119e-4633-a920-554ad5d989ec"/>
+        <COMPID name="QSlider" mc="Standard.Class" uid="3393482f-a402-413f-b291-aa89e0f54f1b"/>
+        <COMPID name="QFrame" mc="Standard.Class" uid="f075c4b2-0526-46d2-afa3-2a6646308570"/>
+        <COMPID name="QLabel" mc="Standard.Class" uid="b9f2f151-d61a-4047-b77f-5592040d0081"/>
+        <COMPID name="QAbstractSpinBox" mc="Standard.Class" uid="11ab37c8-1dc9-40b9-9a10-295cac033657"/>
+        <COMPID name="QSpinBox" mc="Standard.Class" uid="7e1e8c98-ac01-4c0c-83f2-537735a6501b"/>
+        <COMPID name="QObject" mc="Standard.Class" uid="76f066ac-62a3-458e-9221-ce5ea19cd8ac"/>
+        <COMPID name="QLayout" mc="Standard.Class" uid="d0a11c90-b123-4bd9-a783-09be7e88362b"/>
+        <COMPID name="QBoxLayout" mc="Standard.Class" uid="eeae05f1-77de-464c-8438-3e605792524d"/>
+        <COMPID name="QVBoxLayout" mc="Standard.Class" uid="9da2fe29-7ed5-4f59-8130-3f91dd41ec44"/>
+        <COMPID name="QHBoxLayout" mc="Standard.Class" uid="9ca94f07-fe16-445d-a782-cc19ee37926c"/>
+        <COMPID name="QAbstractScrollArea" mc="Standard.Class" uid="7a0f52fe-b112-4ab9-b9f2-eb8ff7b48fc4"/>
+        <COMPID name="QScrollArea" mc="Standard.Class" uid="dceed538-3821-4048-9eee-17d67d019c47"/>
+        <COMPID name="QGroupBox" mc="Standard.Class" uid="14e2cfb9-c265-4507-9985-f11dfc3593ee"/>
+        <COMPID name="QLineEdit" mc="Standard.Class" uid="d39ddd7b-438b-4e06-aff9-f01f905d3780"/>
+        <COMPID name="QSqlDatabase" mc="Standard.Class" uid="1a74d5cb-f9b4-4fdc-942c-e2e76b5ede30"/>
+      </COMP>
+      <COMP relation="Product">
+        <COMPID name="Diagramme de classe DiagrammeClasse" mc="Standard.ClassDiagram" uid="f29a2d5e-ea47-42c8-bc60-2c5481f0b4ef"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

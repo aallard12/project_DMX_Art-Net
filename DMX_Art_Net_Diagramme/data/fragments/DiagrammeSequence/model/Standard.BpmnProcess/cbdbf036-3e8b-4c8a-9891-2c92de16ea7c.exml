@@ -1,0 +1,412 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Enregistrer un équipement" version="4">
+  <OBJECT>
+    <ID name="Enregistrer un équipement" mc="Standard.BpmnProcess" uid="cbdbf036-3e8b-4c8a-9891-2c92de16ea7c"/>
+    <PID name="DiagrammeProcessus" mc="Standard.Package" uid="be4b52ec-81be-4c9a-bc1a-058fece2f15c"/>
+    <ATTRIBUTES>
+      <ATT name="ProcessType">NoneProcess</ATT>
+      <ATT name="IsClosed">false</ATT>
+      <ATT name="IsExecutable">OUndefined</ATT>
+      <ATT name="IsReentrant">false</ATT>
+      <ATT name="Name"><![CDATA[Enregistrer un équipement]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="LaneSet">
+        <OBJECT>
+          <ID name="" mc="Standard.BpmnLaneSet" uid="ed1b4af3-371c-4917-b5d4-be7405a184fa"/>
+          <ATTRIBUTES>
+            <ATT name="Name"></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="Lane">
+              <OBJECT>
+                <ID name="Opérateur lumière" mc="Standard.BpmnLane" uid="33e7f2cd-c77d-4926-958d-233353f050e4"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Opérateur lumière]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="FlowElementRef">
+                    <REFOBJ>
+                      <ID name="Renseigner le nom de l'équipement" mc="Standard.BpmnTask" uid="12e7d379-2bc7-4a2c-8c39-f5e7457de453"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Renseigner le nombre de canaux" mc="Standard.BpmnTask" uid="a651ae20-ba4e-4261-aff6-fddafdd82abc"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="L'ajouter à un univers parmi ceux connus" mc="Standard.BpmnTask" uid="e84ad5f1-8a95-4d12-96b8-8cfcd4330612"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Enregistrer un équipement" mc="Standard.BpmnStartEvent" uid="fc63577e-ff4a-42f4-b959-c97eea7d1e87"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Renseigner une adresse Ip" mc="Standard.BpmnTask" uid="7bfbcb73-832b-4a02-8dd2-81d9ae506d1d"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Bouton enregistrer un équipement" mc="Standard.BpmnTask" uid="6edd4304-37eb-4f6d-9320-f067786636dd"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="DMX Pilot" mc="Standard.BpmnLane" uid="184dfda9-e3d8-445f-a741-fe5c9198d487"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[DMX Pilot]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="FlowElementRef">
+                    <REFOBJ>
+                      <ID name="Format donnée correct ?" mc="Standard.BpmnExclusiveGateway" uid="ed2a5917-24bd-4d12-b28f-a8f353408b68"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Envoi des données à la RPI" mc="Standard.BpmnTask" uid="4cd6776b-d3a7-44dd-8064-d1d76ecf9c08"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Serveur Art-Net" mc="Standard.BpmnLane" uid="d6310177-2cff-42bd-9da2-2d0d9a57eb93"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Serveur Art-Net]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="FlowElementRef">
+                    <REFOBJ>
+                      <ID name="Réception des données" mc="Standard.BpmnEndEvent" uid="51cd047f-a801-45ce-9c98-1ab51d6c5e71"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
+      <COMP relation="FlowElement">
+        <OBJECT>
+          <ID name="Sequence Flow" mc="Standard.BpmnSequenceFlow" uid="ac1ae4dd-0abd-4793-bae8-5f531da2940d"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Renseigner le nom de l'équipement" mc="Standard.BpmnTask" uid="12e7d379-2bc7-4a2c-8c39-f5e7457de453"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Renseigner le nombre de canaux" mc="Standard.BpmnTask" uid="a651ae20-ba4e-4261-aff6-fddafdd82abc"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow1" mc="Standard.BpmnSequenceFlow" uid="b45f5928-c99a-494f-9557-d5434c103265"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow1]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Renseigner le nombre de canaux" mc="Standard.BpmnTask" uid="a651ae20-ba4e-4261-aff6-fddafdd82abc"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="L'ajouter à un univers parmi ceux connus" mc="Standard.BpmnTask" uid="e84ad5f1-8a95-4d12-96b8-8cfcd4330612"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow2" mc="Standard.BpmnSequenceFlow" uid="c4754d57-778f-42f9-882f-53446fb8e948"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow2]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Enregistrer un équipement" mc="Standard.BpmnStartEvent" uid="fc63577e-ff4a-42f4-b959-c97eea7d1e87"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Renseigner le nom de l'équipement" mc="Standard.BpmnTask" uid="12e7d379-2bc7-4a2c-8c39-f5e7457de453"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Renseigner le nom de l'équipement" mc="Standard.BpmnTask" uid="12e7d379-2bc7-4a2c-8c39-f5e7457de453"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Renseigner le nom de l'équipement]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Renseigner le nombre de canaux" mc="Standard.BpmnTask" uid="a651ae20-ba4e-4261-aff6-fddafdd82abc"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Renseigner le nombre de canaux]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="L'ajouter à un univers parmi ceux connus" mc="Standard.BpmnTask" uid="e84ad5f1-8a95-4d12-96b8-8cfcd4330612"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[L'ajouter à un univers parmi ceux connus]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Enregistrer un équipement" mc="Standard.BpmnStartEvent" uid="fc63577e-ff4a-42f4-b959-c97eea7d1e87"/>
+          <ATTRIBUTES>
+            <ATT name="IsInterrupting">true</ATT>
+            <ATT name="ParallelMultiple">false</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Enregistrer un équipement]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Renseigner une adresse Ip" mc="Standard.BpmnTask" uid="7bfbcb73-832b-4a02-8dd2-81d9ae506d1d"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Renseigner une adresse Ip]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow3" mc="Standard.BpmnSequenceFlow" uid="ee197285-4901-484a-8510-c6442453a06c"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow3]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="L'ajouter à un univers parmi ceux connus" mc="Standard.BpmnTask" uid="e84ad5f1-8a95-4d12-96b8-8cfcd4330612"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Renseigner une adresse Ip" mc="Standard.BpmnTask" uid="7bfbcb73-832b-4a02-8dd2-81d9ae506d1d"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Format donnée correct ?" mc="Standard.BpmnExclusiveGateway" uid="ed2a5917-24bd-4d12-b28f-a8f353408b68"/>
+          <ATTRIBUTES>
+            <ATT name="GatewayDirection">UnspecifiedDirection</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Format donnée correct ?]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Bouton enregistrer un équipement" mc="Standard.BpmnTask" uid="6edd4304-37eb-4f6d-9320-f067786636dd"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Bouton enregistrer un équipement]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow4" mc="Standard.BpmnSequenceFlow" uid="062fffaf-94ad-43ba-9bf0-d54c6176c4d2"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow4]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Renseigner une adresse Ip" mc="Standard.BpmnTask" uid="7bfbcb73-832b-4a02-8dd2-81d9ae506d1d"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Bouton enregistrer un équipement" mc="Standard.BpmnTask" uid="6edd4304-37eb-4f6d-9320-f067786636dd"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow5" mc="Standard.BpmnSequenceFlow" uid="6b18cb45-2c65-492b-8bf2-306669f68b3a"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow5]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Bouton enregistrer un équipement" mc="Standard.BpmnTask" uid="6edd4304-37eb-4f6d-9320-f067786636dd"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Format donnée correct ?" mc="Standard.BpmnExclusiveGateway" uid="ed2a5917-24bd-4d12-b28f-a8f353408b68"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow6" mc="Standard.BpmnSequenceFlow" uid="a24adf9d-4baa-4738-b108-fbc40e7735c2"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"><![CDATA[non]]></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow6]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Format donnée correct ?" mc="Standard.BpmnExclusiveGateway" uid="ed2a5917-24bd-4d12-b28f-a8f353408b68"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Renseigner le nom de l'équipement" mc="Standard.BpmnTask" uid="12e7d379-2bc7-4a2c-8c39-f5e7457de453"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Envoi des données à la RPI" mc="Standard.BpmnTask" uid="4cd6776b-d3a7-44dd-8064-d1d76ecf9c08"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Envoi des données à la RPI]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow7" mc="Standard.BpmnSequenceFlow" uid="57496e50-6ca3-4c01-b8df-19336f0b6ea1"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"><![CDATA[oui]]></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow7]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Format donnée correct ?" mc="Standard.BpmnExclusiveGateway" uid="ed2a5917-24bd-4d12-b28f-a8f353408b68"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Envoi des données à la RPI" mc="Standard.BpmnTask" uid="4cd6776b-d3a7-44dd-8064-d1d76ecf9c08"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Réception des données" mc="Standard.BpmnEndEvent" uid="51cd047f-a801-45ce-9c98-1ab51d6c5e71"/>
+          <ATTRIBUTES>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Réception des données]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="EventDefinitions">
+              <OBJECT>
+                <ID name="" mc="Standard.BpmnTerminateEventDefinition" uid="44eaa8d7-487a-48a2-8861-cd50e3cc59da"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow8" mc="Standard.BpmnSequenceFlow" uid="022ea434-0039-45e5-b5c3-5b288d271662"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow8]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Envoi des données à la RPI" mc="Standard.BpmnTask" uid="4cd6776b-d3a7-44dd-8064-d1d76ecf9c08"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Réception des données" mc="Standard.BpmnEndEvent" uid="51cd047f-a801-45ce-9c98-1ab51d6c5e71"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
+      <COMP relation="Product">
+        <COMPID name="Enregistrer un équipement" mc="Standard.BpmnProcessDesignDiagram" uid="a82802ed-656a-485f-ba5c-03badb901526"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

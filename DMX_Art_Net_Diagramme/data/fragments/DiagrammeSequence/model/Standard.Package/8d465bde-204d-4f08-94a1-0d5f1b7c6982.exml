@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="DiagrammeCasUtilisation" version="4">
+  <OBJECT>
+    <ID name="DiagrammeCasUtilisation" mc="Standard.Package" uid="8d465bde-204d-4f08-94a1-0d5f1b7c6982"/>
+    <PID name="DiagrammeSequence" mc="Standard.Project" uid="2c7fa4d9-3b51-4c03-93d3-7b4006dfddf5"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[DiagrammeCasUtilisation]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="Product">
+        <COMPID name="Diagramme de cas d'utilisation diagrammesequence" mc="Standard.UseCaseDiagram" uid="48035bb2-21be-42bb-b635-c8be61607e54"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

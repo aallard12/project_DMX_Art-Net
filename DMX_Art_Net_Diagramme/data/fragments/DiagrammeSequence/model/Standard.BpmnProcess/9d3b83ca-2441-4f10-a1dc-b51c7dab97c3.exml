@@ -1,0 +1,769 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Composer une scène" version="4">
+  <OBJECT>
+    <ID name="Composer une scène" mc="Standard.BpmnProcess" uid="9d3b83ca-2441-4f10-a1dc-b51c7dab97c3"/>
+    <PID name="DiagrammeProcessus" mc="Standard.Package" uid="be4b52ec-81be-4c9a-bc1a-058fece2f15c"/>
+    <ATTRIBUTES>
+      <ATT name="ProcessType">NoneProcess</ATT>
+      <ATT name="IsClosed">false</ATT>
+      <ATT name="IsExecutable">OUndefined</ATT>
+      <ATT name="IsReentrant">false</ATT>
+      <ATT name="Name"><![CDATA[Composer une scène]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="LaneSet">
+        <OBJECT>
+          <ID name="" mc="Standard.BpmnLaneSet" uid="85bab6d2-c5cc-4598-999f-59257fb600c3"/>
+          <ATTRIBUTES>
+            <ATT name="Name"></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="Lane">
+              <OBJECT>
+                <ID name="Opérateur Lumière" mc="Standard.BpmnLane" uid="8020b663-a2ad-4c39-8423-6ff81e51fad1"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Opérateur Lumière]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="FlowElementRef">
+                    <REFOBJ>
+                      <ID name="Équipment choisi ?" mc="Standard.BpmnExclusiveGateway" uid="bdf7525a-d3bf-460b-9ee5-ae3d02b2d044"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Univers choisi ?" mc="Standard.BpmnExclusiveGateway" uid="97549521-a7ca-4c69-83c4-c01c799adeec"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Définir de nouveaux paramètres (si besoin)" mc="Standard.BpmnTask" uid="58c3afb8-518a-4982-836c-ffa984df1d2d"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Ajouter un nom à la scène (en possède une par défaut)" mc="Standard.BpmnTask" uid="cb4fa590-1177-4f17-8afd-ff3db94be90e"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Enregistrer une scène" mc="Standard.BpmnTask" uid="fe40c9e0-b442-49d1-b1f2-c3ed0e150f91"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="DMX Pilot" mc="Standard.BpmnLane" uid="dd65915c-a7b1-4862-a336-03d279e854d0"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[DMX Pilot]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="FlowElementRef">
+                    <REFOBJ>
+                      <ID name="Mettre les paramètres des canaux de la scène enregistrée" mc="Standard.BpmnTask" uid="6a7d45ea-0488-44d3-8ed5-be3f7a96f8b7"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Mettre les paramètres des canaux à 0" mc="Standard.BpmnTask" uid="02d5680b-e66d-4a68-a07a-3e7a6e801a54"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Appui sur le bouton d'enregistrement" mc="Standard.BpmnTask" uid="f8c8017e-5926-49bd-9a9c-ec4218f0015c"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Nom de scène présent ?" mc="Standard.BpmnExclusiveGateway" uid="289e9fb3-d894-4fdf-9cdb-c24a600825be"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Composer une scène" mc="Standard.BpmnStartEvent" uid="92a1ffce-7d1f-4e65-9dad-73d435ca481c"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Choix de l'univers" mc="Standard.BpmnTask" uid="43c21783-21a0-43a9-bee6-bd48fcc37c2c"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Choisir un ou plusieurs équipements" mc="Standard.BpmnTask" uid="fb47b813-d30c-468f-8372-138415412129"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Choisir une scène à enregistrer" mc="Standard.BpmnTask" uid="f7f59a74-372d-4b20-b4a6-826a9afe4a94"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Une scène est déjà enregistrée ?" mc="Standard.BpmnExclusiveGateway" uid="22af5c3e-b2f7-4ebe-b092-6b7b57c8a11c"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Serveur Art-Net" mc="Standard.BpmnLane" uid="5c534159-282d-4c57-91cd-c1cc593f080b"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Serveur Art-Net]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="FlowElementRef">
+                    <REFOBJ>
+                      <ID name="Informations envoyées à la RPI sous le format JSON" mc="Standard.BpmnTask" uid="02f68817-369a-4b05-8c43-f5d3cd55aa7c"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Informations envoyées" mc="Standard.BpmnEndEvent" uid="3c30296f-1ef1-4b31-a92c-56c25d08e2f1"/>
+                    </REFOBJ>
+                    <REFOBJ>
+                      <ID name="Store" mc="Standard.BpmnDataStore" uid="0f007816-c8ee-453a-806b-12abf5d547a2"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
+      <COMP relation="FlowElement">
+        <OBJECT>
+          <ID name="Équipment choisi ?" mc="Standard.BpmnExclusiveGateway" uid="bdf7525a-d3bf-460b-9ee5-ae3d02b2d044"/>
+          <ATTRIBUTES>
+            <ATT name="GatewayDirection">UnspecifiedDirection</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Équipment choisi ?]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow3" mc="Standard.BpmnSequenceFlow" uid="38814592-389d-4a21-b2e5-21cefa63f4bd"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"><![CDATA[non]]></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow3]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Équipment choisi ?" mc="Standard.BpmnExclusiveGateway" uid="bdf7525a-d3bf-460b-9ee5-ae3d02b2d044"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Choisir un ou plusieurs équipements" mc="Standard.BpmnTask" uid="fb47b813-d30c-468f-8372-138415412129"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Univers choisi ?" mc="Standard.BpmnExclusiveGateway" uid="97549521-a7ca-4c69-83c4-c01c799adeec"/>
+          <ATTRIBUTES>
+            <ATT name="GatewayDirection">UnspecifiedDirection</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Univers choisi ?]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow4" mc="Standard.BpmnSequenceFlow" uid="34dc7354-4d5d-4747-b936-08408aecfb17"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"><![CDATA[oui]]></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow4]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Univers choisi ?" mc="Standard.BpmnExclusiveGateway" uid="97549521-a7ca-4c69-83c4-c01c799adeec"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Choisir un ou plusieurs équipements" mc="Standard.BpmnTask" uid="fb47b813-d30c-468f-8372-138415412129"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow2" mc="Standard.BpmnSequenceFlow" uid="9fefbc40-fef7-429b-bf88-18819ebd8cf4"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow2]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Choisir un ou plusieurs équipements" mc="Standard.BpmnTask" uid="fb47b813-d30c-468f-8372-138415412129"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Équipment choisi ?" mc="Standard.BpmnExclusiveGateway" uid="bdf7525a-d3bf-460b-9ee5-ae3d02b2d044"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow6" mc="Standard.BpmnSequenceFlow" uid="31d12c11-eed5-4b8c-a428-bbc323c42fac"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"><![CDATA[oui]]></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow6]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Équipment choisi ?" mc="Standard.BpmnExclusiveGateway" uid="bdf7525a-d3bf-460b-9ee5-ae3d02b2d044"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Choisir une scène à enregistrer" mc="Standard.BpmnTask" uid="f7f59a74-372d-4b20-b4a6-826a9afe4a94"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow7" mc="Standard.BpmnSequenceFlow" uid="dd7f2a28-6c1d-451b-a6a5-8c227611735f"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow7]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Choisir une scène à enregistrer" mc="Standard.BpmnTask" uid="f7f59a74-372d-4b20-b4a6-826a9afe4a94"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Une scène est déjà enregistrée ?" mc="Standard.BpmnExclusiveGateway" uid="22af5c3e-b2f7-4ebe-b092-6b7b57c8a11c"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Mettre les paramètres des canaux de la scène enregistrée" mc="Standard.BpmnTask" uid="6a7d45ea-0488-44d3-8ed5-be3f7a96f8b7"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Mettre les paramètres des canaux de la scène enregistrée]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow8" mc="Standard.BpmnSequenceFlow" uid="41fc1b05-311e-4948-b6a0-b9141d633c0d"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"><![CDATA[non]]></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow8]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Une scène est déjà enregistrée ?" mc="Standard.BpmnExclusiveGateway" uid="22af5c3e-b2f7-4ebe-b092-6b7b57c8a11c"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Mettre les paramètres des canaux à 0" mc="Standard.BpmnTask" uid="02d5680b-e66d-4a68-a07a-3e7a6e801a54"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Mettre les paramètres des canaux à 0" mc="Standard.BpmnTask" uid="02d5680b-e66d-4a68-a07a-3e7a6e801a54"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Mettre les paramètres des canaux à 0]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Définir de nouveaux paramètres (si besoin)" mc="Standard.BpmnTask" uid="58c3afb8-518a-4982-836c-ffa984df1d2d"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Définir de nouveaux paramètres (si besoin)]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow10" mc="Standard.BpmnSequenceFlow" uid="1e365fa9-b47c-4bba-afe2-dc73210a0684"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow10]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Mettre les paramètres des canaux à 0" mc="Standard.BpmnTask" uid="02d5680b-e66d-4a68-a07a-3e7a6e801a54"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Définir de nouveaux paramètres (si besoin)" mc="Standard.BpmnTask" uid="58c3afb8-518a-4982-836c-ffa984df1d2d"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow11" mc="Standard.BpmnSequenceFlow" uid="d1edacbc-f6f3-4ec8-9bcc-f08aac73be97"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow11]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Mettre les paramètres des canaux de la scène enregistrée" mc="Standard.BpmnTask" uid="6a7d45ea-0488-44d3-8ed5-be3f7a96f8b7"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Définir de nouveaux paramètres (si besoin)" mc="Standard.BpmnTask" uid="58c3afb8-518a-4982-836c-ffa984df1d2d"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Ajouter un nom à la scène (en possède une par défaut)" mc="Standard.BpmnTask" uid="cb4fa590-1177-4f17-8afd-ff3db94be90e"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Ajouter un nom à la scène (en possède une par défaut)]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow12" mc="Standard.BpmnSequenceFlow" uid="e3ce815d-abd1-49e6-b212-ff92b088bab1"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow12]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Définir de nouveaux paramètres (si besoin)" mc="Standard.BpmnTask" uid="58c3afb8-518a-4982-836c-ffa984df1d2d"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Ajouter un nom à la scène (en possède une par défaut)" mc="Standard.BpmnTask" uid="cb4fa590-1177-4f17-8afd-ff3db94be90e"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Appui sur le bouton d'enregistrement" mc="Standard.BpmnTask" uid="f8c8017e-5926-49bd-9a9c-ec4218f0015c"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Appui sur le bouton d'enregistrement]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow13" mc="Standard.BpmnSequenceFlow" uid="874085c0-5beb-4230-b33f-d5803b971e6f"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow13]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Enregistrer une scène" mc="Standard.BpmnTask" uid="fe40c9e0-b442-49d1-b1f2-c3ed0e150f91"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Appui sur le bouton d'enregistrement" mc="Standard.BpmnTask" uid="f8c8017e-5926-49bd-9a9c-ec4218f0015c"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Nom de scène présent ?" mc="Standard.BpmnExclusiveGateway" uid="289e9fb3-d894-4fdf-9cdb-c24a600825be"/>
+          <ATTRIBUTES>
+            <ATT name="GatewayDirection">UnspecifiedDirection</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Nom de scène présent ?]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow14" mc="Standard.BpmnSequenceFlow" uid="93e1c1c0-c0d5-436d-839b-fae1904ace3f"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow14]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Appui sur le bouton d'enregistrement" mc="Standard.BpmnTask" uid="f8c8017e-5926-49bd-9a9c-ec4218f0015c"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Nom de scène présent ?" mc="Standard.BpmnExclusiveGateway" uid="289e9fb3-d894-4fdf-9cdb-c24a600825be"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow15" mc="Standard.BpmnSequenceFlow" uid="881b8112-e916-4909-9c8d-508daf06d712"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"><![CDATA[non]]></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow15]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Nom de scène présent ?" mc="Standard.BpmnExclusiveGateway" uid="289e9fb3-d894-4fdf-9cdb-c24a600825be"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Ajouter un nom à la scène (en possède une par défaut)" mc="Standard.BpmnTask" uid="cb4fa590-1177-4f17-8afd-ff3db94be90e"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Enregistrer une scène" mc="Standard.BpmnTask" uid="fe40c9e0-b442-49d1-b1f2-c3ed0e150f91"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Enregistrer une scène]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow16" mc="Standard.BpmnSequenceFlow" uid="bbd4adf4-710a-4009-9676-3146d5bd0dfc"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow16]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Ajouter un nom à la scène (en possède une par défaut)" mc="Standard.BpmnTask" uid="cb4fa590-1177-4f17-8afd-ff3db94be90e"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Enregistrer une scène" mc="Standard.BpmnTask" uid="fe40c9e0-b442-49d1-b1f2-c3ed0e150f91"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Informations envoyées à la RPI sous le format JSON" mc="Standard.BpmnTask" uid="02f68817-369a-4b05-8c43-f5d3cd55aa7c"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Informations envoyées à la RPI sous le format JSON]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="DataInputAssociation">
+              <OBJECT>
+                <ID name="" mc="Standard.BpmnDataAssociation" uid="89805029-e3ea-43cc-95fe-446c05749dfb"/>
+                <ATTRIBUTES>
+                  <ATT name="Assignment"></ATT>
+                  <ATT name="Transfomation"></ATT>
+                  <ATT name="Language"></ATT>
+                  <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="TargetRef">
+                    <REFOBJ>
+                      <ID name="Store" mc="Standard.BpmnDataStore" uid="0f007816-c8ee-453a-806b-12abf5d547a2"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow17" mc="Standard.BpmnSequenceFlow" uid="c0a71237-a27e-4c6b-890a-42a733630273"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"><![CDATA[oui]]></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow17]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Nom de scène présent ?" mc="Standard.BpmnExclusiveGateway" uid="289e9fb3-d894-4fdf-9cdb-c24a600825be"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Informations envoyées à la RPI sous le format JSON" mc="Standard.BpmnTask" uid="02f68817-369a-4b05-8c43-f5d3cd55aa7c"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Informations envoyées" mc="Standard.BpmnEndEvent" uid="3c30296f-1ef1-4b31-a92c-56c25d08e2f1"/>
+          <ATTRIBUTES>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Informations envoyées]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="EventDefinitions">
+              <OBJECT>
+                <ID name="" mc="Standard.BpmnTerminateEventDefinition" uid="8f722eca-40bb-4180-9f69-baa734717191"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow18" mc="Standard.BpmnSequenceFlow" uid="39473541-a897-4887-9fb5-faf68fcf83ee"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow18]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Informations envoyées à la RPI sous le format JSON" mc="Standard.BpmnTask" uid="02f68817-369a-4b05-8c43-f5d3cd55aa7c"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Informations envoyées" mc="Standard.BpmnEndEvent" uid="3c30296f-1ef1-4b31-a92c-56c25d08e2f1"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Store" mc="Standard.BpmnDataStore" uid="0f007816-c8ee-453a-806b-12abf5d547a2"/>
+          <ATTRIBUTES>
+            <ATT name="Capacity">0</ATT>
+            <ATT name="IsUnlimited">false</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Store]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Composer une scène" mc="Standard.BpmnStartEvent" uid="92a1ffce-7d1f-4e65-9dad-73d435ca481c"/>
+          <ATTRIBUTES>
+            <ATT name="IsInterrupting">true</ATT>
+            <ATT name="ParallelMultiple">false</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Composer une scène]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Choix de l'univers" mc="Standard.BpmnTask" uid="43c21783-21a0-43a9-bee6-bd48fcc37c2c"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Choix de l'univers]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow" mc="Standard.BpmnSequenceFlow" uid="6af4e3b0-ff88-496c-85e0-eb7ff84f1e22"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Composer une scène" mc="Standard.BpmnStartEvent" uid="92a1ffce-7d1f-4e65-9dad-73d435ca481c"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Choix de l'univers" mc="Standard.BpmnTask" uid="43c21783-21a0-43a9-bee6-bd48fcc37c2c"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow1" mc="Standard.BpmnSequenceFlow" uid="df4c5116-cd84-4c1a-92d6-c5e1f87be248"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow1]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Choix de l'univers" mc="Standard.BpmnTask" uid="43c21783-21a0-43a9-bee6-bd48fcc37c2c"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Univers choisi ?" mc="Standard.BpmnExclusiveGateway" uid="97549521-a7ca-4c69-83c4-c01c799adeec"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Choisir un ou plusieurs équipements" mc="Standard.BpmnTask" uid="fb47b813-d30c-468f-8372-138415412129"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Choisir un ou plusieurs équipements]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Choisir une scène à enregistrer" mc="Standard.BpmnTask" uid="f7f59a74-372d-4b20-b4a6-826a9afe4a94"/>
+          <ATTRIBUTES>
+            <ATT name="IsGlobal">false</ATT>
+            <ATT name="IsForCompensation">false</ATT>
+            <ATT name="StartQuantity">1</ATT>
+            <ATT name="CompletionQuantity">1</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Choisir une scène à enregistrer]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow5" mc="Standard.BpmnSequenceFlow" uid="94396778-1884-478e-af51-86875de59e23"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"><![CDATA[non]]></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow5]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Univers choisi ?" mc="Standard.BpmnExclusiveGateway" uid="97549521-a7ca-4c69-83c4-c01c799adeec"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Choix de l'univers" mc="Standard.BpmnTask" uid="43c21783-21a0-43a9-bee6-bd48fcc37c2c"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Une scène est déjà enregistrée ?" mc="Standard.BpmnExclusiveGateway" uid="22af5c3e-b2f7-4ebe-b092-6b7b57c8a11c"/>
+          <ATTRIBUTES>
+            <ATT name="GatewayDirection">UnspecifiedDirection</ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Une scène est déjà enregistrée ?]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="Sequence Flow9" mc="Standard.BpmnSequenceFlow" uid="29c1d4d9-0071-451f-8760-369f1f155090"/>
+          <ATTRIBUTES>
+            <ATT name="IsImmediate">false</ATT>
+            <ATT name="ConditionExpression"><![CDATA[oui]]></ATT>
+            <ATT name="TriggeredByEvent">false</ATT>
+            <ATT name="Name"><![CDATA[Sequence Flow9]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SourceRef">
+              <REFOBJ>
+                <ID name="Une scène est déjà enregistrée ?" mc="Standard.BpmnExclusiveGateway" uid="22af5c3e-b2f7-4ebe-b092-6b7b57c8a11c"/>
+              </REFOBJ>
+            </LINK>
+            <LINK relation="TargetRef">
+              <REFOBJ>
+                <ID name="Mettre les paramètres des canaux de la scène enregistrée" mc="Standard.BpmnTask" uid="6a7d45ea-0488-44d3-8ed5-be3f7a96f8b7"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
+      <COMP relation="Product">
+        <COMPID name="Composer une scène" mc="Standard.BpmnProcessDesignDiagram" uid="a3e18d10-d17f-4250-b2e2-6a115f778f6a"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
