@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="fr" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DMX Equipment Manager</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #2b2b2b;
+      --bg-secondary: #3c3c3c;
+      --bg-tertiary: #454545;
+      --border-color: #555555;
+      --text-primary: #e0e0e0;
+      --text-secondary: #b0b0b0;
+      --accent: #0d7377;
+      --accent-light: #14a085;
+      --error: #d32f2f;
+      --success: #388e3c;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .qt-panel { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 4px; }
+    .qt-input { background-color: var(--bg-tertiary); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 12px; border-radius: 4px; font-size: 13px; }
+    .qt-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(13, 115, 119, 0.2); }
+
+    .qt-button { background-color: var(--accent); color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500; transition: all 0.2s; }
+    .qt-button:hover { background-color: var(--accent-light); }
+    .qt-button:active { transform: scale(0.98); }
+    .qt-button-danger { background-color: var(--error); }
+    .qt-button-danger:hover { background-color: #f44336; }
+    .qt-button-success { background-color: var(--success); }
+    .qt-button-success:hover { background-color: #43a047; }
+
+    .channel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+    .channel-card { background-color: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 4px; padding: 8px; }
+    .channel-header { font-weight: 600; margin-bottom: 4px; color: var(--accent); font-size: 12px; }
+
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); z-index: 1000; align-items: center; justify-content: center; }
+    .modal-overlay.active { display: flex; }
+    .modal-content { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 4px; padding: 24px; max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto; }
+    .modal-title { font-size: 16px; font-weight: 600; margin-bottom: 20px; color: var(--accent); }
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--text-secondary); text-transform: uppercase; }
+
+    .badge { display: inline-block; padding: 4px 8px; border-radius: 3px; font-size: 11px; font-weight: 500; }
+    .badge-channels { background-color: rgba(56, 142, 60, 0.3); color: var(--success); }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="h-full bg-[#2b2b2b]">
+  <div class="h-full flex flex-col overflow-hidden">
+   <div class="bg-[#1a1a1a] border-b border-[#555555] px-6 py-4 shadow-lg">
+    <div class="flex items-center justify-between">
+     <div>
+      <h1 class="text-2xl font-bold text-[#e0e0e0]">DMX Equipment Manager</h1>
+      <p class="text-sm text-[#b0b0b0] mt-1">Gestionnaire d'équipements DMX avec canaux et fonctions personnalisées</p>
+     </div><button id="addEquipmentBtn" class="qt-button">+ Ajouter Équipement</button>
+    </div>
+   </div>
+   <div class="flex-1 overflow-auto px-6 py-6">
+    <div id="equipmentList" class="space-y-4">
+     <div class="text-center py-12">
+      <p class="text-[#b0b0b0]">Aucun équipement enregistré.</p>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div id="equipmentModal" class="modal-overlay">
+   <div class="modal-content">
+    <div class="modal-title">
+     Ajouter/Modifier Équipement DMX
+    </div>
+    <form id="equipmentForm">
+     <div class="form-group">
+      <label class="form-label">Nom de l'équipement</label> <input type="text" id="equipmentName" class="qt-input w-full" placeholder="Ex: Projecteur LED 1" required>
+     </div>
+     <div class="form-group">
+      <label class="form-label">Adresse IP</label> <input type="text" id="ipAddress" class="qt-input w-full" placeholder="192.168.1.100">
+     </div>
+     <div class="form-group">
+      <label class="form-label">Canaux: <span id="channelCount" style="color: var(--accent);">0</span></label>
+      <div id="channelsContainer" class="space-y-4 mt-3"></div><button type="button" class="qt-button" onclick="addChannel()" style="margin-top: 12px; width: 100%; background-color: var(--bg-tertiary); color: var(--accent); border: 1px dashed var(--accent);">+ Ajouter un canal</button>
+     </div>
+     <div class="flex gap-3 justify-end mt-6">
+      <button type="button" class="qt-button" style="background-color: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border-color);" onclick="closeModal()">Annuler</button> <button type="submit" class="qt-button-success qt-button">Enregistrer</button>
+     </div>
+    </form>
+   </div>
+  </div>
+  <div id="detailsModal" class="modal-overlay">
+   <div class="modal-content">
+    <div class="modal-title" id="detailsTitle">
+     Détails de l'équipement
+    </div>
+    <div id="detailsContent"></div>
+    <div class="flex gap-3 justify-end mt-6">
+     <button type="button" class="qt-button" style="background-color: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border-color);" onclick="closeDetailsModal()">Fermer</button>
+    </div>
+   </div>
+  </div>
+  <script>
+    let currentEditingId = null;
+    let allEquipment = [];
+    let channelIdCounter = 0;
+    let functionIdCounter = 0;
+
+    const dataHandler = {
+      onDataChanged(data) {
+        allEquipment = data;
+        renderEquipmentList();
+      }
+    };
+
+    async function initializeApp() {
+      const initResult = await window.dataSdk.init(dataHandler);
+      if (!initResult.isOk) console.error('Failed to initialize SDK');
+    }
+
+    function renderEquipmentList() {
+      const container = document.getElementById('equipmentList');
+      if (allEquipment.length === 0) {
+        container.innerHTML = '<div class="text-center py-12"><p class="text-[#b0b0b0]">Aucun équipement enregistré. Créez votre premier équipement DMX.</p></div>';
+        return;
+      }
+
+      container.innerHTML = allEquipment.map(equipment => {
+        const channels = JSON.parse(equipment.channels || '[]');
+        return `
+          <div class="qt-panel p-6">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h2 class="text-lg font-bold text-[#e0e0e0]">${equipment.equipment_name}</h2>
+                <div class="flex gap-3 mt-2">
+                  <span class="badge badge-channels">${channels.length} canaux</span>
+                </div>
+              </div>
+              <div class="flex gap-2">
+                <button class="qt-button" onclick="editEquipment('${equipment.__backendId}')">Modifier</button>
+                <button class="qt-button qt-button-danger" onclick="deleteEquipment('${equipment.__backendId}')">Supprimer</button>
+                <button class="qt-button qt-button-success" onclick="viewDetails('${equipment.__backendId}')">Détails</button>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 text-sm mb-4">
+              <div>
+                <span class="text-[#b0b0b0]">IP Address:</span>
+                <p class="text-[#e0e0e0] font-mono">${equipment.ip_address || 'Non configurée'}</p>
+              </div>
+              <div>
+                <span class="text-[#b0b0b0]">Canaux:</span>
+                <p class="text-[#e0e0e0]">${channels.length}</p>
+              </div>
+            </div>
+            ${channels.length > 0 ? `
+              <div>
+                <h3 class="text-sm font-semibold text-[#b0b0b0] mb-3">Canaux</h3>
+                <div class="channel-grid">
+                  ${channels.map((ch, idx) => `
+                    <div class="channel-card">
+                      <div class="channel-header">Canal ${idx + 1}</div>
+                      <div style="font-size: 12px; color: var(--text-secondary);">
+                        ${ch.functions.map(f => `<div style="margin-bottom: 4px;"><strong>${f.name}</strong><br>Min: ${f.min} | Max: ${f.max}</div>`).join('')}
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function addChannel() {
+      channelIdCounter++;
+      const channelId = channelIdCounter;
+      const container = document.getElementById('channelsContainer');
+      const channelDiv = document.createElement('div');
+      channelDiv.className = 'qt-panel p-4';
+      channelDiv.id = `channel-${channelId}`;
+      channelDiv.innerHTML = `
+        <div class="flex justify-between items-center mb-4">
+          <div class="form-label" style="margin: 0;">Canal #${channelId}</div>
+          <button type="button" class="qt-button qt-button-danger" onclick="removeChannel(${channelId})" style="padding: 4px 8px; font-size: 12px;">Supprimer</button>
+        </div>
+        <div id="functions-${channelId}" class="space-y-3 mb-4"></div>
+        <button type="button" class="qt-button" onclick="addFunction(${channelId})" style="width: 100%; background-color: var(--bg-tertiary); color: var(--accent-light); border: 1px dashed var(--accent-light); padding: 6px;">+ Ajouter fonction</button>
+      `;
+      container.appendChild(channelDiv);
+      updateChannelCount();
+    }
+
+    function removeChannel(channelId) {
+      const el = document.getElementById(`channel-${channelId}`);
+      if (el) el.remove();
+      updateChannelCount();
+    }
+
+    function addFunction(channelId) {
+      functionIdCounter++;
+      const functionId = functionIdCounter;
+      const container = document.getElementById(`functions-${channelId}`);
+      const functionDiv = document.createElement('div');
+      functionDiv.className = 'qt-panel p-3';
+      functionDiv.id = `function-${functionId}`;
+      functionDiv.innerHTML = `
+        <div class="grid grid-cols-3 gap-2">
+          <div class="form-group" style="margin: 0;">
+            <label class="form-label" style="margin-bottom: 2px;">Nom</label>
+            <input type="text" class="qt-input w-full function-name" data-function="${functionId}" placeholder="Ex: Intensité" required>
+          </div>
+          <div class="form-group" style="margin: 0;">
+            <label class="form-label" style="margin-bottom: 2px;">Min</label>
+            <input type="number" class="qt-input w-full function-min" data-function="${functionId}" min="0" max="255" value="0" required>
+          </div>
+          <div class="form-group" style="margin: 0;">
+            <label class="form-label" style="margin-bottom: 2px;">Max</label>
+            <input type="number" class="qt-input w-full function-max" data-function="${functionId}" min="0" max="255" value="255" required>
+          </div>
+        </div>
+        <button type="button" class="qt-button qt-button-danger" onclick="removeFunction(${functionId})" style="margin-top: 6px; width: 100%; padding: 4px; font-size: 12px;">Supprimer</button>
+      `;
+      container.appendChild(functionDiv);
+    }
+
+    function removeFunction(functionId) {
+      const el = document.getElementById(`function-${functionId}`);
+      if (el) el.remove();
+    }
+
+    function updateChannelCount() {
+      const count = document.getElementById('channelsContainer').children.length;
+      document.getElementById('channelCount').textContent = count;
+    }
+
+    function resetForm() {
+      document.getElementById('equipmentForm').reset();
+      document.getElementById('channelsContainer').innerHTML = '';
+      document.getElementById('channelCount').textContent = '0';
+      channelIdCounter = 0;
+      functionIdCounter = 0;
+      currentEditingId = null;
+    }
+
+    document.getElementById('addEquipmentBtn').addEventListener('click', () => {
+      resetForm();
+      document.getElementById('equipmentModal').classList.add('active');
+    });
+
+    document.getElementById('equipmentForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const channels = [];
+      const channelElements = document.getElementById('channelsContainer').children;
+      
+      for (let i = 0; i < channelElements.length; i++) {
+        const channelEl = channelElements[i];
+        const channelId = channelEl.id.replace('channel-', '');
+        const functionsContainer = document.getElementById(`functions-${channelId}`);
+        const functions = [];
+        const functionElements = functionsContainer.children;
+        
+        for (let j = 0; j < functionElements.length; j++) {
+          const functionEl = functionElements[j];
+          const functionId = functionEl.id.replace('function-', '');
+          const name = document.querySelector(`[data-function="${functionId}"].function-name`).value.trim();
+          const min = document.querySelector(`[data-function="${functionId}"].function-min`).value;
+          const max = document.querySelector(`[data-function="${functionId}"].function-max`).value;
+          
+          if (name && min !== '' && max !== '') {
+            functions.push({ name, min: parseInt(min), max: parseInt(max) });
+          }
+        }
+        
+        if (functions.length > 0) {
+          channels.push({ id: i + 1, functions });
+        }
+      }
+
+      if (channels.length === 0) {
+        alert('Veuillez ajouter au moins un canal avec au moins une fonction');
+        return;
+      }
+
+      const equipmentData = {
+        equipment_name: document.getElementById('equipmentName').value,
+        universe: 1,
+        ip_address: document.getElementById('ipAddress').value,
+        channels: JSON.stringify(channels)
+      };
+
+      let result;
+      if (currentEditingId) {
+        result = await window.dataSdk.update({
+          __backendId: currentEditingId,
+          ...equipmentData
+        });
+      } else {
+        result = await window.dataSdk.create(equipmentData);
+      }
+
+      if (result.isOk) {
+        resetForm();
+        closeModal();
+      }
+    });
+
+    function editEquipment(id) {
+      const equipment = allEquipment.find(e => e.__backendId === id);
+      if (!equipment) return;
+
+      currentEditingId = id;
+      document.getElementById('equipmentName').value = equipment.equipment_name;
+      document.getElementById('ipAddress').value = equipment.ip_address || '';
+      resetForm();
+      
+      const channels = JSON.parse(equipment.channels || '[]');
+      channels.forEach(channel => {
+        addChannel();
+        const channelId = channelIdCounter;
+        if (channel.functions) {
+          channel.functions.forEach(func => {
+            addFunction(channelId);
+            const functionId = functionIdCounter;
+            document.querySelector(`[data-function="${functionId}"].function-name`).value = func.name || '';
+            document.querySelector(`[data-function="${functionId}"].function-min`).value = func.min || 0;
+            document.querySelector(`[data-function="${functionId}"].function-max`).value = func.max || 255;
+          });
+        }
+      });
+
+      document.getElementById('equipmentModal').classList.add('active');
+    }
+
+    function deleteEquipment(id) {
+      const equipment = allEquipment.find(e => e.__backendId === id);
+      if (!equipment) return;
+
+      const deleteBtn = event.target;
+      const originalText = deleteBtn.textContent;
+      deleteBtn.textContent = 'Confirmer?';
+      deleteBtn.style.backgroundColor = 'var(--error)';
+      
+      const confirmDelete = async () => {
+        await window.dataSdk.delete(equipment);
+        deleteBtn.textContent = originalText;
+        deleteBtn.style.backgroundColor = '';
+      };
+
+      deleteBtn.removeEventListener('click', arguments.callee);
+      deleteBtn.addEventListener('click', confirmDelete);
+      
+      setTimeout(() => {
+        deleteBtn.textContent = originalText;
+        deleteBtn.style.backgroundColor = '';
+        deleteBtn.removeEventListener('click', confirmDelete);
+        deleteBtn.addEventListener('click', () => deleteEquipment(id));
+      }, 3000);
+    }
+
+    function viewDetails(id) {
+      const equipment = allEquipment.find(e => e.__backendId === id);
+      if (!equipment) return;
+
+      const channels = JSON.parse(equipment.channels || '[]');
+      const detailsHtml = `
+        <div class="space-y-4">
+          <div>
+            <label class="form-label">Nom</label>
+            <p class="text-[#e0e0e0] text-sm">${equipment.equipment_name}</p>
+          </div>
+          <div>
+            <label class="form-label">Adresse IP</label>
+            <p class="text-[#e0e0e0] text-sm font-mono">${equipment.ip_address || 'Non configurée'}</p>
+          </div>
+          <div>
+            <label class="form-label">Canaux (${channels.length})</label>
+            <div class="channel-grid mt-2">
+              ${channels.map((ch, idx) => `
+                <div class="channel-card">
+                  <div class="channel-header">Canal ${idx + 1}</div>
+                  ${ch.functions.map(f => `
+                    <div style="font-size: 12px; margin-bottom: 6px;">
+                      <strong style="color: var(--accent-light);">${f.name}</strong><br>
+                      <span style="color: var(--text-secondary);">Min: ${f.min} | Max: ${f.max}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('detailsTitle').textContent = `Détails: ${equipment.equipment_name}`;
+      document.getElementById('detailsContent').innerHTML = detailsHtml;
+      document.getElementById('detailsModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('equipmentModal').classList.remove('active');
+    }
+
+    function closeDetailsModal() {
+      document.getElementById('detailsModal').classList.remove('active');
+    }
+
+    document.getElementById('equipmentModal').addEventListener('click', (e) => {
+      if (e.target.id === 'equipmentModal') closeModal();
+    });
+
+    document.getElementById('detailsModal').addEventListener('click', (e) => {
+      if (e.target.id === 'detailsModal') closeDetailsModal();
+    });
+
+    initializeApp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d2e7ebcd4010277',t:'MTc3MTkzMTIwMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
