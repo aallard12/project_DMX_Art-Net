@@ -16,29 +16,6 @@
 #include <QComboBox>
 #include <QListWidget>
 
-// --- STRUCTURES DE DONNÉES (MCD) ---
-struct UniversData {
-    int numero;
-    QString ip;
-};
-
-struct FunctionData {
-    QString nom;
-    QString min;
-    QString max;
-};
-
-struct ChannelData {
-    QString description;
-    QList<FunctionData> fonctions;
-};
-
-struct EquipmentData {
-    QString nom;
-    QString univers;
-    QString dmxStart;
-    QList<ChannelData> canaux;
-};
 // -----------------------------------
 
 class MainWindow : public QMainWindow {

@@ -174,6 +174,7 @@ void MainWindow::setupUi() {
     stackedWidget->addWidget(formPage);
 
     refreshUniversList();
+    refreshEquipmentsGrid();
 }
 
 void MainWindow::setupStyle() {
@@ -223,10 +224,15 @@ void MainWindow::setupStyle() {
 void MainWindow::refreshUniversList() {
     uiUniversList->clear();
     universCombo->clear();
+
+    // NOUVEAU : On récupère la liste directement depuis la BDD
+    universList = bdd.chargerUnivers();
+
     for (const auto& u : universList) {
         QString display = QString("Univers %1 (%2)").arg(u.numero).arg(u.ip);
         uiUniversList->addItem(display);
-        universCombo->addItem(display, u.numero);
+        // On attache l'ID de la BDD au combobox pour les futurs équipements
+        universCombo->addItem(display, u.idUnivers);
     }
     btnEditUnivers->setEnabled(false);
     btnDeleteUnivers->setEnabled(false);
@@ -257,51 +263,72 @@ void MainWindow::addUnivers() {
     connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 
     if (dialog.exec() == QDialog::Accepted && !numEdit->text().isEmpty()) {
-        universList.append({numEdit->text().toInt(), ipEdit->text()});
-        refreshUniversList();
+        // NOUVEAU : On enregistre dans la BDD
+        bool success = bdd.enregistrerUnivers(numEdit->text().toInt(), ipEdit->text());
+
+        if (success) {
+            refreshUniversList(); // On recharge l'affichage depuis la BDD
+        } else {
+            QMessageBox::warning(this, "Erreur", "Impossible d'enregistrer l'univers dans la base de données.");
+        }
     }
 }
 
 void MainWindow::editUnivers() {
     int row = uiUniversList->currentRow();
-    if (row < 0 || row >= universList.size()) return;
 
-    UniversData& u = universList[row];
+    // On englobe tout dans le if plutôt que de faire un "if (erreur) return;"
+    if (row >= 0 && row < universList.size()) {
+        UniversData& u = universList[row];
 
-    QDialog dialog(this);
-    dialog.setWindowTitle("Modifier l'Univers");
-    dialog.setStyleSheet(this->styleSheet());
-    QVBoxLayout layout(&dialog);
+        QDialog dialog(this);
+        dialog.setWindowTitle("Modifier l'Univers");
+        dialog.setStyleSheet(this->styleSheet());
+        QVBoxLayout layout(&dialog);
 
-    QFormLayout form;
-    QLineEdit* numEdit = new QLineEdit(&dialog);
-    numEdit->setText(QString::number(u.numero));
-    QLineEdit* ipEdit = new QLineEdit(&dialog);
-    ipEdit->setText(u.ip);
+        QFormLayout form;
+        QLineEdit* numEdit = new QLineEdit(&dialog);
+        numEdit->setText(QString::number(u.numero));
+        QLineEdit* ipEdit = new QLineEdit(&dialog);
+        ipEdit->setText(u.ip);
 
-    form.addRow("Numéro de l'univers:", numEdit);
-    form.addRow("Adresse IP:", ipEdit);
-    layout.addLayout(&form);
+        form.addRow("Numéro de l'univers:", numEdit);
+        form.addRow("Adresse IP:", ipEdit);
+        layout.addLayout(&form);
 
-    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
-    layout.addWidget(&buttonBox);
-    connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
-    connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+        layout.addWidget(&buttonBox);
+        connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+        connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 
-    if (dialog.exec() == QDialog::Accepted && !numEdit->text().isEmpty()) {
-        u.numero = numEdit->text().toInt();
-        u.ip = ipEdit->text();
-        refreshUniversList();
+        if (dialog.exec() == QDialog::Accepted && !numEdit->text().isEmpty()) {
+            // Envoi de la requête de modification
+            bool succes = bdd.modifierUnivers(u.idUnivers, numEdit->text().toInt(), ipEdit->text());
+
+            if (succes) {
+                refreshUniversList();
+            } else {
+                QMessageBox::warning(this, "Erreur", "Impossible de modifier cet univers en base de données.");
+            }
+        }
     }
 }
 
 void MainWindow::deleteUnivers() {
     int row = uiUniversList->currentRow();
-    if (row < 0 || row >= universList.size()) return;
 
-    if (QMessageBox::question(this, "Confirmation", "Supprimer cet univers ?") == QMessageBox::Yes) {
-        universList.removeAt(row);
-        refreshUniversList();
+    if (row >= 0 && row < universList.size()) {
+        if (QMessageBox::question(this, "Confirmation", "Êtes-vous sûr de vouloir supprimer cet univers ?") == QMessageBox::Yes) {
+
+            // Envoi de la requête de suppression avec l'ID
+            bool succes = bdd.supprimerUnivers(universList[row].idUnivers);
+
+            if (succes) {
+                refreshUniversList();
+            } else {
+                QMessageBox::warning(this, "Erreur", "Impossible de supprimer cet univers. Vérifiez qu'aucun équipement n'y est encore rattaché.");
+            }
+        }
     }
 }
 
@@ -441,14 +468,24 @@ void MainWindow::saveEquipment() {
         eq.canaux.append(cd);
     }
 
+    int idU = universCombo->currentData().toInt();
+    bool resultat = false;
+
     if (currentEditEquipIndex >= 0) {
-        equipmentsList[currentEditEquipIndex] = eq; // Remplacement
+        // MODIFICATION
+        int idEq = equipmentsList[currentEditEquipIndex].idEquipement;
+        resultat = bdd.modifierEquipment(idEq, eq, idU);
     } else {
-        equipmentsList.append(eq); // Ajout
+        // AJOUT
+        resultat = bdd.enregistrerEquipment(eq, idU);
     }
 
-    refreshEquipmentsGrid();
-    showList();
+    if (resultat) {
+        refreshEquipmentsGrid();
+        showList();
+    } else {
+        QMessageBox::critical(this, "Erreur", "Échec de l'opération SQL. Vérifiez les logs.");
+    }
 }
 
 void MainWindow::refreshEquipmentsGrid() {
@@ -459,10 +496,13 @@ void MainWindow::refreshEquipmentsGrid() {
         delete item;
     }
 
+    // NOUVEAU : Charger depuis la BDD
+    equipmentsList = bdd.chargerTousLesEquipements();
+
     // Reconstruire les cartes
     for (int i = 0; i < equipmentsList.size(); ++i) {
         QFrame* card = createEquipmentCard(equipmentsList[i], i);
-        equipmentsGrid->addWidget(card, i / 2, i % 2); // 2 colonnes maximum
+        equipmentsGrid->addWidget(card, i / 2, i % 2);
     }
 }
 
@@ -505,29 +545,37 @@ QFrame* MainWindow::createEquipmentCard(const EquipmentData& eq, int index) {
 }
 
 void MainWindow::editEquipment(int index) {
-    if (index < 0 || index >= equipmentsList.size()) return;
+    if (index >= 0 && index < equipmentsList.size()) {
+        currentEditEquipIndex = index;
+        const EquipmentData& eq = equipmentsList[index];
 
-    currentEditEquipIndex = index;
-    const EquipmentData& eq = equipmentsList[index];
+        clearForm();
+        nameEdit->setText(eq.nom);
+        startAddressEdit->setText(eq.dmxStart);
 
-    clearForm();
+        // Sélectionner le bon univers dans le combo via son ID
+        // On cherche l'ID qui correspond à celui stocké dans l'équipement
+        // (Il faudra que chargerTousLesEquipements remplisse aussi idUnivers dans EquipmentData)
 
-    // Remplissage du formulaire principal
-    nameEdit->setText(eq.nom);
-    universCombo->setCurrentText(eq.univers);
-    startAddressEdit->setText(eq.dmxStart);
-
-    // Remplissage des canaux (et de leurs fonctions) via notre logique modifiée
-    for (const ChannelData& cd : eq.canaux) {
-        addChannelToForm(&cd);
+        for (const ChannelData& cd : eq.canaux) {
+            addChannelToForm(&cd);
+        }
+        stackedWidget->setCurrentWidget(formPage);
     }
-
-    stackedWidget->setCurrentWidget(formPage);
 }
 
 void MainWindow::deleteEquipment(int index) {
-    if (QMessageBox::question(this, "Confirmation", "Supprimer cet équipement ?") == QMessageBox::Yes) {
-        equipmentsList.removeAt(index);
-        refreshEquipmentsGrid();
+    if (index >= 0 && index < equipmentsList.size()) {
+        if (QMessageBox::question(this, "Confirmation", "Supprimer cet équipement et tous ses canaux ?") == QMessageBox::Yes) {
+
+            // Appel à la BDD avec l'ID réel
+            bool succes = bdd.supprimerEquipment(equipmentsList[index].idEquipement);
+
+            if (succes) {
+                refreshEquipmentsGrid(); // Rafraîchit tout depuis le SQL
+            } else {
+                QMessageBox::warning(this, "Erreur", "Impossible de supprimer l'équipement.");
+            }
+        }
     }
 }
