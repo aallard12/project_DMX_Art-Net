@@ -153,16 +153,6 @@ bool AccessBDD::supprimerUnivers(int id)
     return succes;
 }
 
-void AccessBDD::chargerUneScène()
-{
-
-}
-
-void AccessBDD::chargerLesScènes()
-{
-
-}
-
 bool AccessBDD::enregistrerEquipment(const EquipmentData &eq, int idUniversSelectionne)
 {
     bool succes = false;
@@ -223,20 +213,35 @@ bool AccessBDD::enregistrerEquipment(const EquipmentData &eq, int idUniversSelec
 bool AccessBDD::supprimerEquipment(int idEquipement)
 {
     bool succes = false;
-    QSqlQuery query;
 
-    // Grâce aux relations du schéma, il faut supprimer en cascade.
-    // Si ta BDD n'est pas en "ON DELETE CASCADE", il faut supprimer
-    // les fonctionnalités, puis les canaux, puis l'équipement.
+    if (bdd.transaction()) {
+        QSqlQuery query;
 
-    query.prepare("DELETE FROM EQUIPEMENTS WHERE idEquipement = :id");
-    query.bindValue(":id", idEquipement);
+        // 1. Supprimer les fonctionnalités liées aux canaux de cet équipement
+        query.prepare("DELETE FROM FONCTIONNALITE_CANAL WHERE idCanal IN "
+                      "(SELECT idCanal FROM CANAUX WHERE idEquipement = :idEq)");
+        query.bindValue(":idEq", idEquipement);
+        bool okFunc = query.exec();
 
-    if (query.exec()) {
-        succes = true;
+        // 2. Supprimer les canaux liés à l'équipement
+        query.prepare("DELETE FROM CANAUX WHERE idEquipement = :idEq");
+        query.bindValue(":idEq", idEquipement);
+        bool okChan = query.exec();
+
+        // 3. Supprimer l'équipement lui-même
+        query.prepare("DELETE FROM EQUIPEMENTS WHERE idEquipement = :idEq");
+        query.bindValue(":idEq", idEquipement);
+        bool okEq = query.exec();
+
+        if (okFunc && okChan && okEq && bdd.commit()) {
+            succes = true;
+        } else {
+            qDebug() << "Erreur suppression cascade:" << query.lastError().text();
+            bdd.rollback();
+        }
     }
-
     return succes;
+
 }
 
 bool AccessBDD::modifierEquipment(int idEquipement, const EquipmentData &eq, int idUniversSelectionne)
@@ -343,4 +348,156 @@ QList<EquipmentData> AccessBDD::chargerTousLesEquipements()
         liste.append(eq);
     }
     return liste;
+}
+
+QMap<int, DmxChannelInfo> AccessBDD::chargerMapUnivers(int idUnivers)
+{
+    QMap<int, DmxChannelInfo> map;
+    QSqlQuery query;
+
+    // 1. On récupère les canaux comme avant
+    query.prepare("SELECT C.idCanal, C.numeroCanal, C.description, E.adresseDepart, E.nomEquipement "
+                  "FROM CANAUX C "
+                  "JOIN EQUIPEMENTS E ON C.idEquipement = E.idEquipement "
+                  "WHERE E.idUnivers = :idU");
+    query.bindValue(":idU", idUnivers);
+
+    if (query.exec()) {
+        while (query.next()) {
+            int addrDepart = query.value("adresseDepart").toInt();
+            int numCanal = query.value("numeroCanal").toInt();
+            int canalAbsolu = addrDepart + numCanal - 1;
+
+            DmxChannelInfo info;
+            info.idCanal = query.value("idCanal").toInt();
+            info.nomEquipement = query.value("nomEquipement").toString();
+            info.description = query.value("description").toString();
+
+            map.insert(canalAbsolu, info);
+        }
+    } else {
+        qDebug() << "Erreur Map Univers:" << query.lastError().text();
+    }
+
+    // 2. NOUVEAU : On charge les fonctionnalités pour chaque canal trouvé
+    for (auto it = map.begin(); it != map.end(); ++it) {
+        QSqlQuery qFunc;
+        qFunc.prepare("SELECT valeurMin, valeurMax, fonction FROM FONCTIONNALITE_CANAL WHERE idCanal = :idC");
+        qFunc.bindValue(":idC", it.value().idCanal);
+
+        if (qFunc.exec()) {
+            while (qFunc.next()) {
+                DmxFunctionInfo f;
+                f.min = qFunc.value("valeurMin").toInt();
+                f.max = qFunc.value("valeurMax").toInt();
+                f.nom = qFunc.value("fonction").toString();
+                it.value().fonctions.append(f);
+            }
+        }
+    }
+
+    return map;
+}
+
+bool AccessBDD::enregistrerScene(const QString &nomScene, const QMap<int, int> &valeursCanaux)
+{
+    bool succes = false;
+
+    if (bdd.transaction()) {
+        QSqlQuery query;
+        // 1. Création de la scène
+        query.prepare("INSERT INTO SCENES (nomScene) VALUES (:nom)");
+        query.bindValue(":nom", nomScene);
+
+        if (query.exec()) {
+            int idScene = query.lastInsertId().toInt();
+            bool erreurPilote = false;
+
+            // 2. Insertion dans PILOTE (uniquement les valeurs filtrées)
+            for (auto it = valeursCanaux.begin(); it != valeursCanaux.end(); ++it) {
+                QSqlQuery qPilote;
+                qPilote.prepare("INSERT INTO PILOTE (idScene, idCanal, valeurCanaux) "
+                                "VALUES (:idS, :idC, :val)");
+                qPilote.bindValue(":idS", idScene);
+                qPilote.bindValue(":idC", it.key());   // it.key() contient l'idCanal
+                qPilote.bindValue(":val", it.value()); // it.value() contient la valeur > 0
+
+                if (!qPilote.exec()) {
+                    qDebug() << "Erreur PILOTE:" << qPilote.lastError().text();
+                    erreurPilote = true;
+                    break; // Inutile de continuer si une ligne plante
+                }
+            }
+
+            if (!erreurPilote && bdd.commit()) {
+                succes = true;
+            } else {
+                bdd.rollback();
+            }
+        } else {
+            qDebug() << "Erreur création SCENE:" << query.lastError().text();
+            bdd.rollback();
+        }
+    }
+
+    return succes;
+}
+
+QList<SceneData> AccessBDD::chargerLesScenes()
+{
+    QList<SceneData> liste;
+    QSqlQuery query("SELECT idScene, nomScene FROM SCENES ORDER BY nomScene ASC");
+
+    while(query.next()) {
+        SceneData s;
+        s.idScene = query.value("idScene").toInt();
+        s.nomScene = query.value("nomScene").toString();
+        liste.append(s);
+    }
+    return liste;
+}
+
+QMap<int, int> AccessBDD::chargerValeursScene(int idScene)
+{
+    QMap<int, int> map;
+    QSqlQuery query;
+    // On récupère uniquement les canaux et leurs valeurs pour cette scène précise
+    query.prepare("SELECT idCanal, valeurCanaux FROM PILOTE WHERE idScene = :idS");
+    query.bindValue(":idS", idScene);
+
+    if(query.exec()) {
+        while(query.next()) {
+            map.insert(query.value("idCanal").toInt(), query.value("valeurCanaux").toInt());
+        }
+    } else {
+        qDebug() << "Erreur Chargement Valeurs Scène:" << query.lastError().text();
+    }
+    return map;
+}
+
+bool AccessBDD::renommerScene(int idScene, const QString& nouveauNom) {
+    QSqlQuery query;
+    query.prepare("UPDATE SCENES SET nomScene = :nom WHERE idScene = :id");
+    query.bindValue(":nom", nouveauNom);
+    query.bindValue(":id", idScene);
+    return query.exec();
+}
+
+bool AccessBDD::supprimerScene(int idScene) {
+    if (bdd.transaction()) {
+        QSqlQuery q1, q2;
+        // Supprimer les valeurs des canaux d'abord
+        q1.prepare("DELETE FROM PILOTE WHERE idScene = :id");
+        q1.bindValue(":id", idScene);
+
+        // Supprimer la scène ensuite
+        q2.prepare("DELETE FROM SCENES WHERE idScene = :id");
+        q2.bindValue(":id", idScene);
+
+        if (q1.exec() && q2.exec()) {
+            return bdd.commit();
+        }
+        bdd.rollback();
+    }
+    return false;
 }

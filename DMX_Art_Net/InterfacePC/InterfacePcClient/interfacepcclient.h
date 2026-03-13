@@ -15,6 +15,9 @@
 #include <QFrame>
 #include <QComboBox>
 #include <QListWidget>
+#include <QSlider>
+#include <QMap>
+#include <QInputDialog>
 
 // -----------------------------------
 
@@ -35,6 +38,16 @@ private slots:
 
     void saveEquipment();
     void clearForm();
+
+    // Créer des scènes
+    void showScenesPage();
+    void onScenesUniversChanged();
+    void saveCurrentScene();
+    void refreshScenesList();
+    void onSceneSelectionChanged();
+    void resetSliders();
+    void onRenameSceneClicked();
+    void onDeleteSceneClicked();
 
 private:
     void setupUi();
@@ -58,6 +71,27 @@ private:
     QStackedWidget* stackedWidget;
     QWidget* listPage;
     QWidget* formPage;
+
+    // Créer des scènes
+    QWidget* scenesPage;
+    QComboBox* scenesUniversCombo;
+    struct SliderWidgetSet {
+        int idCanalDB = -1; // Pour l'enregistrement futur
+        QLabel* labelTitre;
+        QSlider* slider;
+        QLabel* labelValeur;
+        QString nomEquipement;
+        QString descriptionBase;
+        QList<DmxFunctionInfo> fonctions;
+    };
+    QList<SliderWidgetSet> dmxSliders;
+
+    QComboBox* scenesCombo;
+    QPushButton* btnResetSliders;
+    QPushButton* btnRenameScene;
+    QPushButton* btnDeleteScene;
+
+    QList<SceneData> scenesList;
 
     // List Page Elements
     QListWidget* uiUniversList;

@@ -35,6 +35,23 @@ struct EquipmentData {
     QList<ChannelData> canaux;
 };
 
+struct DmxFunctionInfo {
+    int min;
+    int max;
+    QString nom;
+};
+
+struct DmxChannelInfo {
+    int idCanal = -1;
+    QString nomEquipement;
+    QString description; // Description de base (ex: "Roue de couleurs")
+    QList<DmxFunctionInfo> fonctions; // NOUVEAU : La liste des plages de valeurs
+};
+
+struct SceneData {
+    int idScene;
+    QString nomScene;
+};
 
 class AccessBDD
 {
@@ -50,10 +67,15 @@ public:
     bool enregistrerEquipment(const EquipmentData& eq, int idUniversSelectionne);
     bool supprimerEquipment(int idEquipement);
     bool modifierEquipment(int idEquipement, const EquipmentData& eq, int idUniversSelectionne);
-    QList<EquipmentData> chargerTousLesEquipements(); // Pour synchroniser l'affichage
+    QList<EquipmentData> chargerTousLesEquipements();
 
-    void chargerUneScène();
-    void chargerLesScènes();
+
+    QMap<int, DmxChannelInfo> chargerMapUnivers(int idUnivers);
+    bool enregistrerScene(const QString& nomScene, const QMap<int, int>& valeursCanaux);
+    QList<SceneData> chargerLesScenes();
+    QMap<int, int> chargerValeursScene(int idScene);
+    bool renommerScene(int idScene, const QString& nouveauNom);
+    bool supprimerScene(int idScene);
 };
 
 #endif // ACCESSBDD_H

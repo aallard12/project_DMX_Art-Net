@@ -8,8 +8,6 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), currentEditEquipIndex(-1), channelCounter(0) {
 
-    // L'univers par défaut a été supprimé comme demandé.
-
     setupUi();
     setupStyle();
     resize(1100, 750);
@@ -39,8 +37,13 @@ void MainWindow::setupUi() {
     btnAddMain->setObjectName("btnTeal");
     connect(btnAddMain, &QPushButton::clicked, this, &MainWindow::showAddForm);
 
+    QPushButton* btnGoToScenes = new QPushButton("Créer les Scènes");
+    btnGoToScenes->setObjectName("btnGrey"); // Un style différent pour le distinguer
+    connect(btnGoToScenes, &QPushButton::clicked, this, &MainWindow::showScenesPage);
+
     headerLayout->addLayout(titleLayout);
     headerLayout->addStretch();
+    headerLayout->addWidget(btnGoToScenes);
     headerLayout->addWidget(btnAddMain);
     mainLayout->addWidget(header);
 
@@ -141,6 +144,149 @@ void MainWindow::setupUi() {
 
     formLayout->addLayout(infoGrid);
     formLayout->addSpacing(20);
+
+    // --- PAGE 3: SCENES PAGE ---
+    // --- PAGE 3: SCENES PAGE ---
+    scenesPage = new QWidget();
+    QVBoxLayout* scenesPageLayout = new QVBoxLayout(scenesPage);
+    scenesPageLayout->setContentsMargins(20, 20, 20, 20);
+
+    // --- DEBUT DU REMPLACEMENT DE L'EN-TÊTE ---
+    QVBoxLayout* scenesTopLayout = new QVBoxLayout();
+
+    // Ligne 1 : Titre, Choix Univers & Reset
+    QHBoxLayout* scenesHeaderLayout1 = new QHBoxLayout();
+    QLabel* scenesTitle = new QLabel("CRÉATION & GESTION DE SCÈNES"); // Déclaré UNE SEULE FOIS
+    scenesTitle->setObjectName("tealTitle");
+
+    scenesUniversCombo = new QComboBox();
+    scenesUniversCombo->setObjectName("comboBox");
+    connect(scenesUniversCombo, &QComboBox::currentIndexChanged, this, &MainWindow::onScenesUniversChanged);
+
+    btnResetSliders = new QPushButton("Reset 0");
+    btnResetSliders->setObjectName("btnGrey");
+    connect(btnResetSliders, &QPushButton::clicked, this, &MainWindow::resetSliders);
+
+    scenesHeaderLayout1->addWidget(scenesTitle);
+    scenesHeaderLayout1->addStretch();
+    scenesHeaderLayout1->addWidget(new QLabel(" Univers:"));
+    scenesHeaderLayout1->addWidget(scenesUniversCombo);
+    scenesHeaderLayout1->addWidget(btnResetSliders);
+
+    // Ligne 2 : Gestion de la Scène
+    QHBoxLayout* scenesHeaderLayout2 = new QHBoxLayout();
+
+    scenesCombo = new QComboBox();
+    scenesCombo->setObjectName("comboBox");
+    connect(scenesCombo, &QComboBox::currentIndexChanged, this, &MainWindow::onSceneSelectionChanged);
+
+    btnRenameScene = new QPushButton("Renommer");
+    btnRenameScene->setObjectName("btnGrey");
+    btnRenameScene->setEnabled(false); // Désactivé par défaut si aucune scène n'est choisie
+    connect(btnRenameScene, &QPushButton::clicked, this, &MainWindow::onRenameSceneClicked);
+
+    btnDeleteScene = new QPushButton("Supprimer");
+    btnDeleteScene->setObjectName("btnRed");
+    btnDeleteScene->setEnabled(false);
+    connect(btnDeleteScene, &QPushButton::clicked, this, &MainWindow::onDeleteSceneClicked);
+
+    QPushButton* btnSaveScene = new QPushButton("Enregistrer la Scène"); // Déclaré UNE SEULE FOIS
+    btnSaveScene->setObjectName("btnGreen");
+    connect(btnSaveScene, &QPushButton::clicked, this, &MainWindow::saveCurrentScene);
+
+    scenesHeaderLayout2->addWidget(new QLabel("Scène active:"));
+    scenesHeaderLayout2->addWidget(scenesCombo, 1);
+    scenesHeaderLayout2->addWidget(btnRenameScene);
+    scenesHeaderLayout2->addWidget(btnDeleteScene);
+    scenesHeaderLayout2->addWidget(btnSaveScene);
+
+    scenesTopLayout->addLayout(scenesHeaderLayout1);
+    scenesTopLayout->addLayout(scenesHeaderLayout2);
+    scenesPageLayout->addLayout(scenesTopLayout);
+    // --- FIN DU REMPLACEMENT DE L'EN-TÊTE ---
+
+    // Zone des 512 curseurs
+    QScrollArea* slidersScroll = new QScrollArea();
+    slidersScroll->setWidgetResizable(true);
+    slidersScroll->setFrameShape(QFrame::NoFrame);
+
+    QWidget* slidersContainer = new QWidget();
+    QGridLayout* slidersGrid = new QGridLayout(slidersContainer);
+    slidersGrid->setSpacing(10);
+
+    // Création des 512 curseurs une seule fois
+    for (int i = 0; i < 512; ++i) {
+        int dmxChannel = i + 1;
+
+        QFrame* sliderFrame = new QFrame();
+        sliderFrame->setObjectName("card");
+        sliderFrame->setFixedSize(100, 240); // Un peu plus grand pour le texte long
+        QVBoxLayout* sLayout = new QVBoxLayout(sliderFrame);
+        sLayout->setAlignment(Qt::AlignHCenter);
+
+        QLabel* lTitle = new QLabel(QString::number(dmxChannel));
+        lTitle->setAlignment(Qt::AlignCenter);
+        lTitle->setWordWrap(true);
+        lTitle->setStyleSheet("font-size: 10px; color: #aaa;");
+
+        QSlider* slider = new QSlider(Qt::Vertical);
+        slider->setRange(0, 255);
+        slider->setValue(0);
+
+        QLabel* lVal = new QLabel("0");
+        lVal->setAlignment(Qt::AlignCenter);
+        lVal->setStyleSheet("font-weight: bold; color: #107c7c;");
+
+        // === NOUVELLE LOGIQUE DYNAMIQUE ===
+        connect(slider, &QSlider::valueChanged, [this, i, dmxChannel, lVal, lTitle](int val){
+            lVal->setText(QString::number(val));
+
+            // Si le canal est assigné à un équipement (id != -1)
+            if (dmxSliders[i].idCanalDB != -1) {
+                // Par défaut, on affiche la description générale du canal
+                QString textToDisplay = dmxSliders[i].descriptionBase;
+
+                // On cherche si une fonctionnalité spécifique correspond à cette valeur
+                for (const auto& f : dmxSliders[i].fonctions) {
+                    if (val >= f.min && val <= f.max) {
+                        textToDisplay = f.nom; // On a trouvé (ex: "Stroboscope lent")
+                        break;
+                    }
+                }
+
+                // On met à jour l'affichage avec l'équipement + la fonction en cours
+                QString titre = QString("<b>%1</b><br>%2<br><i style='color:#00e5ff;'>%3</i>")
+                        .arg(dmxChannel)
+                        .arg(dmxSliders[i].nomEquipement)
+                        .arg(textToDisplay);
+                lTitle->setText(titre);
+            }
+        });
+
+        sLayout->addWidget(lTitle);
+        sLayout->addWidget(slider, 1, Qt::AlignHCenter);
+        sLayout->addWidget(lVal);
+
+        slidersGrid->addWidget(sliderFrame, i / 16, i % 16);
+
+        // On initialise la structure avec les nouveaux champs vides
+        dmxSliders.append({-1, lTitle, slider, lVal, "", "", {}});
+    }
+
+    slidersScroll->setWidget(slidersContainer);
+    scenesPageLayout->addWidget(slidersScroll);
+    stackedWidget->addWidget(scenesPage);
+
+    // On ajoute un bouton pour revenir à l'accueil
+    QPushButton* btnBackToEquipments = new QPushButton("Retour aux équipements");
+    btnBackToEquipments->setObjectName("btnGrey");
+    connect(btnBackToEquipments, &QPushButton::clicked, this, &MainWindow::showList);
+    scenesPageLayout->addWidget(btnBackToEquipments);
+
+    scenesPageLayout->addStretch(); // Pousse les éléments vers le haut
+
+    // L'Étape la plus importante : on l'ajoute au gestionnaire de pages !
+    stackedWidget->addWidget(scenesPage);
 
     // Canaux
     channelCountLabel = new QLabel("CANAUX: <span style='color:#107c7c;'>0</span>");
@@ -361,6 +507,199 @@ void MainWindow::clearForm() {
     }
 }
 
+void MainWindow::showScenesPage()
+{
+    scenesUniversCombo->blockSignals(true); // Evite de déclencher le changed tout de suite
+    scenesUniversCombo->clear();
+    for (const auto& u : universList) {
+        scenesUniversCombo->addItem(QString("Univers %1 (%2)").arg(u.numero).arg(u.ip), u.idUnivers);
+    }
+    scenesUniversCombo->blockSignals(false);
+
+    if (scenesUniversCombo->count() > 0) {
+        onScenesUniversChanged(); // Charge les canaux du premier univers
+    }
+
+    refreshScenesList();
+
+    stackedWidget->setCurrentWidget(scenesPage);
+}
+
+void MainWindow::onScenesUniversChanged()
+{
+    int index = scenesUniversCombo->currentIndex();
+    if (index < 0) return;
+
+    int idUnivers = scenesUniversCombo->currentData().toInt();
+    QMap<int, DmxChannelInfo> mapCanaux = bdd.chargerMapUnivers(idUnivers);
+
+    for (int i = 0; i < 512; ++i) {
+        int dmxChannel = i + 1;
+
+        // Remise à zéro totale du curseur en mémoire
+        dmxSliders[i].idCanalDB = -1;
+        dmxSliders[i].nomEquipement = "";
+        dmxSliders[i].descriptionBase = "";
+        dmxSliders[i].fonctions.clear();
+
+        if (mapCanaux.contains(dmxChannel)) {
+            const DmxChannelInfo& info = mapCanaux[dmxChannel];
+
+            // On charge les données dans le curseur
+            dmxSliders[i].idCanalDB = info.idCanal;
+            dmxSliders[i].nomEquipement = info.nomEquipement;
+            dmxSliders[i].descriptionBase = info.description;
+            dmxSliders[i].fonctions = info.fonctions;
+
+            // On déclenche manuellement la mise à jour visuelle pour la valeur 0
+            emit dmxSliders[i].slider->valueChanged(dmxSliders[i].slider->value());
+            dmxSliders[i].labelTitre->setStyleSheet("font-size: 10px; color: white;");
+        } else {
+            // Si le canal est vide (sans équipement)
+            dmxSliders[i].labelTitre->setText(QString::number(dmxChannel));
+            dmxSliders[i].labelTitre->setStyleSheet("font-size: 10px; color: #555;");
+            dmxSliders[i].slider->setValue(0);
+        }
+    }
+}
+
+void MainWindow::saveCurrentScene()
+{
+    if (scenesUniversCombo->count() == 0) return;
+
+    // Demander le nom de la scène via une petite fenêtre de dialogue
+    bool ok;
+    QString sceneName = QInputDialog::getText(this, "Nouvelle Scène",
+                                              "Entrez le nom de la scène :", QLineEdit::Normal,
+                                              "", &ok);
+
+    // Si l'utilisateur annule ou laisse vide, on arrête
+    if (!ok || sceneName.trimmed().isEmpty()) {
+        return;
+    }
+
+    QMap<int, int> valeursAEnregistrer;
+
+    // Le filtrage strict !
+    for (int i = 0; i < 512; ++i) {
+        int idCanalDB = dmxSliders[i].idCanalDB;
+        int valeur = dmxSliders[i].slider->value();
+
+        // Règle 1 : idCanalDB != -1 (le canal existe en base / est rattaché à un équipement)
+        // Règle 2 : valeur != 0 (on n'encombre pas la base avec des zéros)
+        if (idCanalDB != -1 && valeur != 0) {
+            valeursAEnregistrer.insert(idCanalDB, valeur);
+        }
+    }
+
+    // Vérification : s'il n'y a rien à sauvegarder (tout est à 0)
+    if (valeursAEnregistrer.isEmpty()) {
+        QMessageBox::information(this, "Info", "Aucun canal enregistré n'a de valeur supérieure à 0.\nLa scène n'a pas été sauvegardée pour éviter d'encombrer la base de données.");
+        return;
+    }
+
+    // Envoi à la base de données
+    if (bdd.enregistrerScene(sceneName, valeursAEnregistrer)) {
+        QMessageBox::information(this, "Succès", "La scène '" + sceneName + "' a été sauvegardée avec succès !");
+    } else {
+        QMessageBox::critical(this, "Erreur", "Impossible d'enregistrer la scène en base de données.");
+    }
+}
+
+void MainWindow::refreshScenesList()
+{
+    scenesCombo->blockSignals(true);
+    scenesCombo->clear();
+
+    // Le choix -1 servira de repère pour savoir si on crée ou si on modifie
+    scenesCombo->addItem("-- Nouvelle Scène (Vide) --", -1);
+
+    scenesList = bdd.chargerLesScenes();
+    for(const auto& s : scenesList) {
+        scenesCombo->addItem(s.nomScene, s.idScene);
+    }
+
+    scenesCombo->blockSignals(false);
+}
+
+void MainWindow::onSceneSelectionChanged()
+{
+    int idScene = scenesCombo->currentData().toInt();
+
+    if (idScene == -1) {
+        // Mode Création : on remet tout à 0 et on désactive les boutons modif/suppr
+        resetSliders();
+        btnRenameScene->setEnabled(false);
+        btnDeleteScene->setEnabled(false);
+        return;
+    }
+
+    // Mode Édition : on active les boutons
+    btnRenameScene->setEnabled(true);
+    btnDeleteScene->setEnabled(true);
+
+    // On récupère les valeurs sauvegardées pour cette scène
+    QMap<int, int> valeursEnregistrees = bdd.chargerValeursScene(idScene);
+
+    // On met à jour nos 512 curseurs
+    for (int i = 0; i < 512; ++i) {
+        int idCanalDB = dmxSliders[i].idCanalDB;
+
+        // Si le curseur est lié à un canal (id != -1) ET que la scène a une valeur pour lui
+        if (idCanalDB != -1 && valeursEnregistrees.contains(idCanalDB)) {
+            dmxSliders[i].slider->setValue(valeursEnregistrees[idCanalDB]);
+        } else {
+            // Sinon, c'est qu'il était à 0 lors de l'enregistrement de la scène
+            dmxSliders[i].slider->setValue(0);
+        }
+    }
+}
+
+void MainWindow::resetSliders()
+{
+    for (int i = 0; i < 512; ++i) {
+        dmxSliders[i].slider->setValue(0);
+    }
+}
+
+void MainWindow::onRenameSceneClicked() {
+    int idScene = scenesCombo->currentData().toInt();
+    QString ancienNom = scenesCombo->currentText();
+
+    if (idScene == -1) return;
+
+    bool ok;
+    QString nouveauNom = QInputDialog::getText(this, "Renommer la scène",
+                                               "Nouveau nom :", QLineEdit::Normal,
+                                               ancienNom, &ok);
+    if (ok && !nouveauNom.isEmpty()) {
+        if (bdd.renommerScene(idScene, nouveauNom)) {
+            refreshScenesList(); // Rafraîchit la combo
+            // On repositionne la sélection sur la scène renommée
+            int index = scenesCombo->findData(idScene);
+            if (index != -1) scenesCombo->setCurrentIndex(index);
+        }
+    }
+}
+
+void MainWindow::onDeleteSceneClicked() {
+    int idScene = scenesCombo->currentData().toInt();
+    if (idScene == -1) return;
+
+    auto result = QMessageBox::question(this, "Confirmation",
+                                        "Voulez-vous vraiment supprimer cette scène ?",
+                                        QMessageBox::Yes | QMessageBox::No);
+
+    if (result == QMessageBox::Yes) {
+        if (bdd.supprimerScene(idScene)) {
+            refreshScenesList(); // La combo revient par défaut sur "Nouvelle Scène"
+            resetSliders();
+        } else {
+            QMessageBox::critical(this, "Erreur", "Impossible de supprimer la scène.");
+        }
+    }
+}
+
 void MainWindow::addChannelToForm(const ChannelData* data) {
     channelCounter++;
     channelCountLabel->setText(QString("CANAUX: <span style='color:#107c7c;'>%1</span>").arg(channelCounter));
@@ -566,15 +905,15 @@ void MainWindow::editEquipment(int index) {
 
 void MainWindow::deleteEquipment(int index) {
     if (index >= 0 && index < equipmentsList.size()) {
-        if (QMessageBox::question(this, "Confirmation", "Supprimer cet équipement et tous ses canaux ?") == QMessageBox::Yes) {
+        // On récupère l'idEquipement stocké dans la structure lors du chargement
+        int idReal = equipmentsList[index].idEquipement;
 
-            // Appel à la BDD avec l'ID réel
-            bool succes = bdd.supprimerEquipment(equipmentsList[index].idEquipement);
-
-            if (succes) {
-                refreshEquipmentsGrid(); // Rafraîchit tout depuis le SQL
+        if (QMessageBox::question(this, "Confirmation", "Supprimer cet équipement ?") == QMessageBox::Yes) {
+            if (bdd.supprimerEquipment(idReal)) {
+                refreshEquipmentsGrid(); // Recharge la liste depuis la BDD
             } else {
-                QMessageBox::warning(this, "Erreur", "Impossible de supprimer l'équipement.");
+                QMessageBox::warning(this, "Erreur", "Impossible de supprimer l'équipement. "
+                                                     "Vérifiez les dépendances SQL.");
             }
         }
     }
