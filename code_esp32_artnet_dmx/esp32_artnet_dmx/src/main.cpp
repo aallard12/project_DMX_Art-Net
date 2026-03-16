@@ -1,18 +1,25 @@
 #include <Arduino.h>
+#include "esp32_snir.h"
+#include <SSD1306.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
+#include <Keypad.h>
 
-// put function declarations here:
-int myFunction(int, int);
-
-void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+OneWire oneWire(TEMP);
+DallasTemperature capteurTemp(&oneWire);
+void setup()
+{
+Serial.begin(115200);
+capteurTemp.begin();
+uint8_t nbCapteurs = capteurTemp.getDS18Count();
+Serial.printf("Nombre de capteurs sur le bus %d\n\r",nbCapteurs);
 }
-
-void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+void loop()
+{
+capteurTemp.requestTemperatures();
+float temperature = capteurTemp.getTempCByIndex(0);
+Serial.print("La température est de : ");
+Serial.print(temperature);
+Serial.println("° Celsius");
+delay(1000);
 }
