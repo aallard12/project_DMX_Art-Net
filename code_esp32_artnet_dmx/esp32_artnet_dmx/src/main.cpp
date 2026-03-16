@@ -4,22 +4,22 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <Keypad.h>
+#include <Adafruit_NeoPixel.h>
 
-OneWire oneWire(TEMP);
-DallasTemperature capteurTemp(&oneWire);
+Adafruit_NeoPixel pixels(NB_PIXELS, DATALEDS, NEO_RGB);
 void setup()
 {
-Serial.begin(115200);
-capteurTemp.begin();
-uint8_t nbCapteurs = capteurTemp.getDS18Count();
-Serial.printf("Nombre de capteurs sur le bus %d\n\r",nbCapteurs);
+pixels.begin();
 }
 void loop()
 {
-capteurTemp.requestTemperatures();
-float temperature = capteurTemp.getTempCByIndex(0);
-Serial.print("La température est de : ");
-Serial.print(temperature);
-Serial.println("° Celsius");
-delay(1000);
+pixels.clear();
+pixels.show();
+delay(500);
+for(int i = 0 ; i < NB_PIXELS ; i++)
+{
+pixels.setPixelColor(i,16,0,0); // numLed, R, V, B
+pixels.show();
+delay(500);
+}
 }
