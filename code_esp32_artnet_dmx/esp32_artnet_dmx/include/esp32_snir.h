@@ -21,7 +21,7 @@
 #define ADD_OLED 0x3C // adresse de l’afficheur OLED sur le bus I2C
 
 #define DATALEDS 19 // définition du GPIO pour la commande des LED RGB
-#define NB_PIXELS 4 // nombre de pixels sur la carte.
+#define NB_PIXELS 60 // nombre de pixels sur la carte.
 
 #define ADC_LDR 36 // définition du GPIO pour la conversion analogique numérique
 
