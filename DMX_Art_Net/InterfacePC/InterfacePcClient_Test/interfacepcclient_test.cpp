@@ -1,24 +1,24 @@
-#include "interfacepcclient.h"
+#include "interfacepcclient_test.h"
 #include <QApplication>
 #include <QDialog>
 #include <QFormLayout>
 #include <QDialogButtonBox>
 #include <QMessageBox>
 
-MainWindow::MainWindow(QWidget *parent)
+interfacepcclient_test::interfacepcclient_test(QWidget *parent)
     : QMainWindow(parent), currentEditEquipIndex(-1), channelCounter(0) {
 
     setupUi();
     setupStyle();
     resize(1100, 750);
     // Connexion des signaux TCP (Inspiré de dab_window)
-    connect(&socketClient, &QTcpSocket::connected, this, &MainWindow::onQTcpSocket_connected);
-    connect(&socketClient, &QTcpSocket::disconnected, this, &MainWindow::onQTcpSocket_disconnected);
+    connect(&socketClient, &QTcpSocket::connected, this, &interfacepcclient_test::onQTcpSocket_connected);
+    connect(&socketClient, &QTcpSocket::disconnected, this, &interfacepcclient_test::onQTcpSocket_disconnected);
 }
 
-MainWindow::~MainWindow() {}
+interfacepcclient_test::~interfacepcclient_test() {}
 
-void MainWindow::setupUi() {
+void interfacepcclient_test::setupUi() {
     QWidget* centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
     QVBoxLayout* mainLayout = new QVBoxLayout(centralWidget);
@@ -38,11 +38,11 @@ void MainWindow::setupUi() {
 
     QPushButton* btnAddMain = new QPushButton("+ Ajouter Équipement");
     btnAddMain->setObjectName("btnTeal");
-    connect(btnAddMain, &QPushButton::clicked, this, &MainWindow::showAddForm);
+    connect(btnAddMain, &QPushButton::clicked, this, &interfacepcclient_test::showAddForm);
 
     QPushButton* btnGoToScenes = new QPushButton("Créer les Scènes");
     btnGoToScenes->setObjectName("btnGrey"); // Un style différent pour le distinguer
-    connect(btnGoToScenes, &QPushButton::clicked, this, &MainWindow::showScenesPage);
+    connect(btnGoToScenes, &QPushButton::clicked, this, &interfacepcclient_test::showScenesPage);
 
     headerLayout->addLayout(titleLayout);
     headerLayout->addStretch();
@@ -52,7 +52,7 @@ void MainWindow::setupUi() {
 
     QPushButton* btnGoToLive = new QPushButton("Live / Régie");
     btnGoToLive->setObjectName("btnTeal");
-    connect(btnGoToLive, &QPushButton::clicked, this, &MainWindow::showLivePage);
+    connect(btnGoToLive, &QPushButton::clicked, this, &interfacepcclient_test::showLivePage);
     headerLayout->addWidget(btnGoToLive);
 
     // --- STACKED WIDGET ---
@@ -74,7 +74,7 @@ void MainWindow::setupUi() {
     uniTitle->setObjectName("tealTitle");
     uiUniversList = new QListWidget();
     uiUniversList->setObjectName("listWidget");
-    connect(uiUniversList, &QListWidget::itemSelectionChanged, this, &MainWindow::onUniversSelectionChanged);
+    connect(uiUniversList, &QListWidget::itemSelectionChanged, this, &interfacepcclient_test::onUniversSelectionChanged);
 
     QHBoxLayout* uniActionsLayout = new QHBoxLayout();
     btnEditUnivers = new QPushButton("Modifier");
@@ -88,12 +88,12 @@ void MainWindow::setupUi() {
     uniActionsLayout->addWidget(btnEditUnivers);
     uniActionsLayout->addWidget(btnDeleteUnivers);
 
-    connect(btnEditUnivers, &QPushButton::clicked, this, &MainWindow::editUnivers);
-    connect(btnDeleteUnivers, &QPushButton::clicked, this, &MainWindow::deleteUnivers);
+    connect(btnEditUnivers, &QPushButton::clicked, this, &interfacepcclient_test::editUnivers);
+    connect(btnDeleteUnivers, &QPushButton::clicked, this, &interfacepcclient_test::deleteUnivers);
 
     QPushButton* btnAddUnivers = new QPushButton("+ Ajouter Univers");
     btnAddUnivers->setObjectName("btnDashed");
-    connect(btnAddUnivers, &QPushButton::clicked, this, &MainWindow::addUnivers);
+    connect(btnAddUnivers, &QPushButton::clicked, this, &interfacepcclient_test::addUnivers);
 
     sidebarLayout->addWidget(uniTitle);
     sidebarLayout->addWidget(uiUniversList);
@@ -168,11 +168,11 @@ void MainWindow::setupUi() {
 
     scenesUniversCombo = new QComboBox();
     scenesUniversCombo->setObjectName("comboBox");
-    connect(scenesUniversCombo, &QComboBox::currentIndexChanged, this, &MainWindow::onScenesUniversChanged);
+    connect(scenesUniversCombo, &QComboBox::currentIndexChanged, this, &interfacepcclient_test::onScenesUniversChanged);
 
     btnResetSliders = new QPushButton("Reset 0");
     btnResetSliders->setObjectName("btnGrey");
-    connect(btnResetSliders, &QPushButton::clicked, this, &MainWindow::resetSliders);
+    connect(btnResetSliders, &QPushButton::clicked, this, &interfacepcclient_test::resetSliders);
 
     scenesHeaderLayout1->addWidget(scenesTitle);
     scenesHeaderLayout1->addStretch();
@@ -185,21 +185,21 @@ void MainWindow::setupUi() {
 
     scenesCombo = new QComboBox();
     scenesCombo->setObjectName("comboBox");
-    connect(scenesCombo, &QComboBox::currentIndexChanged, this, &MainWindow::onSceneSelectionChanged);
+    connect(scenesCombo, &QComboBox::currentIndexChanged, this, &interfacepcclient_test::onSceneSelectionChanged);
 
     btnRenameScene = new QPushButton("Renommer");
     btnRenameScene->setObjectName("btnGrey");
     btnRenameScene->setEnabled(false); // Désactivé par défaut si aucune scène n'est choisie
-    connect(btnRenameScene, &QPushButton::clicked, this, &MainWindow::onRenameSceneClicked);
+    connect(btnRenameScene, &QPushButton::clicked, this, &interfacepcclient_test::onRenameSceneClicked);
 
     btnDeleteScene = new QPushButton("Supprimer");
     btnDeleteScene->setObjectName("btnRed");
     btnDeleteScene->setEnabled(false);
-    connect(btnDeleteScene, &QPushButton::clicked, this, &MainWindow::onDeleteSceneClicked);
+    connect(btnDeleteScene, &QPushButton::clicked, this, &interfacepcclient_test::onDeleteSceneClicked);
 
     QPushButton* btnSaveScene = new QPushButton("Enregistrer la Scène"); // Déclaré UNE SEULE FOIS
     btnSaveScene->setObjectName("btnGreen");
-    connect(btnSaveScene, &QPushButton::clicked, this, &MainWindow::saveCurrentScene);
+    connect(btnSaveScene, &QPushButton::clicked, this, &interfacepcclient_test::saveCurrentScene);
 
     scenesHeaderLayout2->addWidget(new QLabel("Scène active:"));
     scenesHeaderLayout2->addWidget(scenesCombo, 1);
@@ -290,7 +290,7 @@ void MainWindow::setupUi() {
     // On ajoute un bouton pour revenir à l'accueil
     QPushButton* btnBackToEquipments = new QPushButton("Retour aux équipements");
     btnBackToEquipments->setObjectName("btnGrey");
-    connect(btnBackToEquipments, &QPushButton::clicked, this, &MainWindow::showList);
+    connect(btnBackToEquipments, &QPushButton::clicked, this, &interfacepcclient_test::showList);
     scenesPageLayout->addWidget(btnBackToEquipments);
 
     scenesPageLayout->addStretch(); // Pousse les éléments vers le haut
@@ -322,7 +322,7 @@ void MainWindow::setupUi() {
 
     btnConnectTCP = new QPushButton("Connexion");
     btnConnectTCP->setObjectName("btnGrey");
-    connect(btnConnectTCP, &QPushButton::clicked, this, &MainWindow::on_btnConnect_clicked);
+    connect(btnConnectTCP, &QPushButton::clicked, this, &interfacepcclient_test::on_btnConnect_clicked);
     tcpLayout->addWidget(btnConnectTCP);
 
     liveMainLayout->addLayout(tcpLayout);
@@ -337,7 +337,7 @@ void MainWindow::setupUi() {
     // On force des gros éléments pour que ce soit facile à cliquer en plein show
     liveScenesList->setStyleSheet("QListWidget::item { padding: 15px; font-size: 14px; border-bottom: 1px solid #444; } "
                                   "QListWidget::item:selected { background-color: #107c7c; color: white; font-weight: bold; }");
-    connect(liveScenesList, &QListWidget::itemSelectionChanged, this, &MainWindow::onLiveSceneSelected);
+    connect(liveScenesList, &QListWidget::itemSelectionChanged, this, &interfacepcclient_test::onLiveSceneSelected);
 
     // 2. Le gros bouton de lancement
     btnLaunchLiveScene = new QPushButton("SÉLECTIONNEZ UNE SCÈNE");
@@ -351,7 +351,7 @@ void MainWindow::setupUi() {
     fontGO.setBold(true);
     btnLaunchLiveScene->setFont(fontGO);
 
-    connect(btnLaunchLiveScene, &QPushButton::clicked, this, &MainWindow::onLaunchButtonClicked);
+    connect(btnLaunchLiveScene, &QPushButton::clicked, this, &interfacepcclient_test::onLaunchButtonClicked);
 
     liveMainLayout->addWidget(liveScenesList, 1); // Prend tout l'espace restant
     liveMainLayout->addWidget(btnLaunchLiveScene);
@@ -376,10 +376,10 @@ void MainWindow::setupUi() {
     bottomLayout->addStretch();
     QPushButton* btnCancel = new QPushButton("Annuler");
     btnCancel->setObjectName("btnGrey");
-    connect(btnCancel, &QPushButton::clicked, this, &MainWindow::showList);
+    connect(btnCancel, &QPushButton::clicked, this, &interfacepcclient_test::showList);
     QPushButton* btnSave = new QPushButton("Enregistrer");
     btnSave->setObjectName("btnGreen");
-    connect(btnSave, &QPushButton::clicked, this, &MainWindow::saveEquipment);
+    connect(btnSave, &QPushButton::clicked, this, &interfacepcclient_test::saveEquipment);
 
     bottomLayout->addWidget(btnCancel);
     bottomLayout->addWidget(btnSave);
@@ -393,7 +393,7 @@ void MainWindow::setupUi() {
     refreshEquipmentsGrid();
 }
 
-void MainWindow::setupStyle() {
+void interfacepcclient_test::setupStyle() {
     // Style identique
     QString qss = R"(
         QMainWindow { background-color: #2b2b2b; }
@@ -437,7 +437,7 @@ void MainWindow::setupStyle() {
 }
 
 // --- GESTION DES UNIVERS (identique) ---
-void MainWindow::refreshUniversList() {
+void interfacepcclient_test::refreshUniversList() {
     uiUniversList->clear();
     universCombo->clear();
 
@@ -454,13 +454,13 @@ void MainWindow::refreshUniversList() {
     btnDeleteUnivers->setEnabled(false);
 }
 
-void MainWindow::onUniversSelectionChanged() {
+void interfacepcclient_test::onUniversSelectionChanged() {
     bool hasSelection = uiUniversList->currentRow() >= 0;
     btnEditUnivers->setEnabled(hasSelection);
     btnDeleteUnivers->setEnabled(hasSelection);
 }
 
-void MainWindow::addUnivers() {
+void interfacepcclient_test::addUnivers() {
     QDialog dialog(this);
     dialog.setWindowTitle("Nouvel Univers");
     dialog.setStyleSheet(this->styleSheet());
@@ -490,7 +490,7 @@ void MainWindow::addUnivers() {
     }
 }
 
-void MainWindow::editUnivers() {
+void interfacepcclient_test::editUnivers() {
     int row = uiUniversList->currentRow();
 
     // On englobe tout dans le if plutôt que de faire un "if (erreur) return;"
@@ -530,7 +530,7 @@ void MainWindow::editUnivers() {
     }
 }
 
-void MainWindow::deleteUnivers() {
+void interfacepcclient_test::deleteUnivers() {
     int row = uiUniversList->currentRow();
 
     if (row >= 0 && row < universList.size()) {
@@ -550,7 +550,7 @@ void MainWindow::deleteUnivers() {
 
 // --- GESTION DE L'ÉQUIPEMENT ---
 
-void MainWindow::showAddForm() {
+void interfacepcclient_test::showAddForm() {
     if (universList.isEmpty()) {
         QMessageBox::warning(this, "Erreur", "Veuillez créer au moins un Univers DMX d'abord.");
         return;
@@ -560,11 +560,11 @@ void MainWindow::showAddForm() {
     stackedWidget->setCurrentWidget(formPage);
 }
 
-void MainWindow::showList() {
+void interfacepcclient_test::showList() {
     stackedWidget->setCurrentWidget(listPage);
 }
 
-void MainWindow::clearForm() {
+void interfacepcclient_test::clearForm() {
     nameEdit->clear();
     startAddressEdit->clear();
     channelCounter = 0;
@@ -577,7 +577,7 @@ void MainWindow::clearForm() {
     }
 }
 
-void MainWindow::showScenesPage()
+void interfacepcclient_test::showScenesPage()
 {
     scenesUniversCombo->blockSignals(true); // Evite de déclencher le changed tout de suite
     scenesUniversCombo->clear();
@@ -595,7 +595,7 @@ void MainWindow::showScenesPage()
     stackedWidget->setCurrentWidget(scenesPage);
 }
 
-void MainWindow::onScenesUniversChanged()
+void interfacepcclient_test::onScenesUniversChanged()
 {
     int index = scenesUniversCombo->currentIndex();
     if (index < 0) return;
@@ -633,7 +633,7 @@ void MainWindow::onScenesUniversChanged()
     }
 }
 
-void MainWindow::saveCurrentScene()
+void interfacepcclient_test::saveCurrentScene()
 {
     if (scenesUniversCombo->count() == 0) return;
 
@@ -677,7 +677,7 @@ void MainWindow::saveCurrentScene()
     }
 }
 
-void MainWindow::refreshScenesList()
+void interfacepcclient_test::refreshScenesList()
 {
     scenesCombo->blockSignals(true);
     scenesCombo->clear();
@@ -693,7 +693,7 @@ void MainWindow::refreshScenesList()
     scenesCombo->blockSignals(false);
 }
 
-void MainWindow::onSceneSelectionChanged()
+void interfacepcclient_test::onSceneSelectionChanged()
 {
     int idScene = scenesCombo->currentData().toInt();
 
@@ -726,14 +726,14 @@ void MainWindow::onSceneSelectionChanged()
     }
 }
 
-void MainWindow::resetSliders()
+void interfacepcclient_test::resetSliders()
 {
     for (int i = 0; i < 512; ++i) {
         dmxSliders[i].slider->setValue(0);
     }
 }
 
-void MainWindow::onRenameSceneClicked() {
+void interfacepcclient_test::onRenameSceneClicked() {
     int idScene = scenesCombo->currentData().toInt();
     QString ancienNom = scenesCombo->currentText();
 
@@ -753,7 +753,7 @@ void MainWindow::onRenameSceneClicked() {
     }
 }
 
-void MainWindow::onDeleteSceneClicked() {
+void interfacepcclient_test::onDeleteSceneClicked() {
     int idScene = scenesCombo->currentData().toInt();
     if (idScene == -1) return;
 
@@ -771,7 +771,7 @@ void MainWindow::onDeleteSceneClicked() {
     }
 }
 
-void MainWindow::showLivePage()
+void interfacepcclient_test::showLivePage()
 {
     liveScenesList->clear();
     btnLaunchLiveScene->setEnabled(false);
@@ -791,7 +791,7 @@ void MainWindow::showLivePage()
     stackedWidget->setCurrentWidget(livePage);
 }
 
-void MainWindow::onLiveSceneSelected()
+void interfacepcclient_test::onLiveSceneSelected()
 {
     if (liveScenesList->selectedItems().isEmpty()) {
         btnLaunchLiveScene->setEnabled(false);
@@ -811,7 +811,7 @@ void MainWindow::onLiveSceneSelected()
     btnLaunchLiveScene->setText("▶ LANCER : " + item->text().toUpper());
 }
 
-void MainWindow::onLaunchButtonClicked()
+void interfacepcclient_test::onLaunchButtonClicked()
 {
     if (selectedLiveSceneId != -1) {
         // C'est ici qu'on appelle la vraie méthode d'envoi !
@@ -819,7 +819,7 @@ void MainWindow::onLaunchButtonClicked()
     }
 }
 
-void MainWindow::lancerScene(int idScene)
+void interfacepcclient_test::lancerScene(int idScene)
 {
     // On bloque l'envoi si on n'est pas connecté
     if (socketClient.state() != QAbstractSocket::ConnectedState) {
@@ -868,7 +868,7 @@ void MainWindow::lancerScene(int idScene)
              << ". Trame de" << tampon.size() << "octets envoyée.";
 }
 
-void MainWindow::onQTcpSocket_connected()
+void interfacepcclient_test::onQTcpSocket_connected()
 {
     btnConnectTCP->setText("Déconnexion");
     btnConnectTCP->setObjectName("btnGreen");
@@ -877,7 +877,7 @@ void MainWindow::onQTcpSocket_connected()
     qDebug() << "Connecté au serveur du camarade !";
 }
 
-void MainWindow::onQTcpSocket_disconnected()
+void interfacepcclient_test::onQTcpSocket_disconnected()
 {
     btnConnectTCP->setText("Connexion");
     btnConnectTCP->setObjectName("btnGrey");
@@ -886,7 +886,7 @@ void MainWindow::onQTcpSocket_disconnected()
     qDebug() << "Déconnecté du serveur.";
 }
 
-void MainWindow::on_btnConnect_clicked()
+void interfacepcclient_test::on_btnConnect_clicked()
 {
     if (btnConnectTCP->text() == "Connexion"){
         socketClient.connectToHost(lineEditIP->text(), spinBoxPort->value());
@@ -895,7 +895,7 @@ void MainWindow::on_btnConnect_clicked()
     }
 }
 
-void MainWindow::addChannelToForm(const ChannelData* data) {
+void interfacepcclient_test::addChannelToForm(const ChannelData* data) {
     channelCounter++;
     channelCountLabel->setText(QString("CANAUX: <span style='color:#107c7c;'>%1</span>").arg(channelCounter));
 
@@ -947,7 +947,7 @@ void MainWindow::addChannelToForm(const ChannelData* data) {
     channelsFormLayout->addWidget(channelFrame);
 }
 
-void MainWindow::addFunctionToChannel(QVBoxLayout* functionsLayout, const FunctionData* data) {
+void interfacepcclient_test::addFunctionToChannel(QVBoxLayout* functionsLayout, const FunctionData* data) {
     QWidget* funcWidget = new QWidget();
     QHBoxLayout* layout = new QHBoxLayout(funcWidget);
     layout->setContentsMargins(0, 5, 0, 5);
@@ -974,7 +974,7 @@ void MainWindow::addFunctionToChannel(QVBoxLayout* functionsLayout, const Functi
     functionsLayout->addWidget(funcWidget);
 }
 
-void MainWindow::saveEquipment() {
+void interfacepcclient_test::saveEquipment() {
     EquipmentData eq;
     eq.nom = nameEdit->text().isEmpty() ? "Nouvel Équipement" : nameEdit->text();
     eq.univers = universCombo->currentText();
@@ -1022,7 +1022,7 @@ void MainWindow::saveEquipment() {
     }
 }
 
-void MainWindow::refreshEquipmentsGrid() {
+void interfacepcclient_test::refreshEquipmentsGrid() {
     // Nettoyer la grille actuelle
     QLayoutItem* item;
     while ((item = equipmentsGrid->takeAt(0)) != nullptr) {
@@ -1040,7 +1040,7 @@ void MainWindow::refreshEquipmentsGrid() {
     }
 }
 
-QFrame* MainWindow::createEquipmentCard(const EquipmentData& eq, int index) {
+QFrame* interfacepcclient_test::createEquipmentCard(const EquipmentData& eq, int index) {
     QFrame* card = new QFrame();
     card->setObjectName("card");
     card->setFixedWidth(380);
@@ -1078,7 +1078,7 @@ QFrame* MainWindow::createEquipmentCard(const EquipmentData& eq, int index) {
     return card;
 }
 
-void MainWindow::editEquipment(int index) {
+void interfacepcclient_test::editEquipment(int index) {
     if (index >= 0 && index < equipmentsList.size()) {
         currentEditEquipIndex = index;
         const EquipmentData& eq = equipmentsList[index];
@@ -1098,7 +1098,7 @@ void MainWindow::editEquipment(int index) {
     }
 }
 
-void MainWindow::deleteEquipment(int index) {
+void interfacepcclient_test::deleteEquipment(int index) {
     if (index >= 0 && index < equipmentsList.size()) {
         // On récupère l'idEquipement stocké dans la structure lors du chargement
         int idReal = equipmentsList[index].idEquipement;

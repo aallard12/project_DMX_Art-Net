@@ -1,6 +1,8 @@
 #ifndef INTERFACEPCCLIENT_H
 #define INTERFACEPCCLIENT_H
 
+#include <QtTest>
+#include <QCoreApplication>
 #include "accessbdd.h"
 
 #include <QMainWindow>
@@ -20,7 +22,6 @@
 #include <QInputDialog>
 #include <QSizePolicy>
 #include <QListWidget>
-
 #include <QAbstractSocket>
 #include <QBuffer>
 #include <QDataStream>
@@ -29,12 +30,12 @@
 
 // -----------------------------------
 
-class MainWindow : public QMainWindow {
+class interfacepcclient_test : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    interfacepcclient_test(QWidget *parent = nullptr);
+    ~interfacepcclient_test();
 
 private slots:
     void showAddForm();
