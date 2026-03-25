@@ -1,26 +1,18 @@
-QT       += core gui sql network testlib
+QT += core sql widgets
+QT -= gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+TARGET = InterfacePcClient_Test
+CONFIG += console c++11
+TEMPLATE = app
 
-CONFIG += c++17
+INCLUDEPATH += /usr/lib/python3/dist-packages/mypyc/external/googletest/include \
+               /usr/lib/python3/dist-packages/mypyc/external/googletest
 
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+# On garde uniquement TES fichiers sources ici
+SOURCES += main.cpp \
+           test_accessbdd.cpp \
+           accessbdd.cpp
 
-SOURCES += \
-    accessbdd.cpp \
-    main.cpp \
-    interfacepcclient_test.cpp
+HEADERS += accessbdd.h
 
-HEADERS += \
-    accessbdd.h \
-    interfacepcclient_test.h
-
-FORMS += \
-    interfacepcclient_test.ui
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+LIBS += -lpthread

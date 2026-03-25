@@ -1,11 +1,11 @@
-#include "interfacepcclient_test.h"
-
-#include <QApplication>
+#include <gtest/gtest.h>
+#include <QApplication> // Ajoute cet include
 
 int main(int argc, char *argv[])
 {
+    // On crée une QApplication (nécessaire pour QMessageBox)
     QApplication a(argc, argv);
-    interfacepcclient_test w;
-    w.show();
-    return a.exec();
+
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }

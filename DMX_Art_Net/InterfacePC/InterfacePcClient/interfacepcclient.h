@@ -2,32 +2,25 @@
 #define INTERFACEPCCLIENT_H
 
 #include "accessbdd.h"
-
 #include <QMainWindow>
 #include <QStackedWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
+#include <QSpinBox>
 #include <QLineEdit>
 #include <QScrollArea>
 #include <QFrame>
 #include <QComboBox>
 #include <QListWidget>
 #include <QSlider>
-#include <QMap>
-#include <QInputDialog>
-#include <QSizePolicy>
-#include <QListWidget>
-
-#include <QAbstractSocket>
-#include <QBuffer>
-#include <QDataStream>
-#include <QSpinBox>
 #include <QTcpSocket>
-
-// -----------------------------------
+#include <QBuffer>
+#include <QInputDialog>
+#include <QStatusBar>
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -43,11 +36,9 @@ private slots:
     void editUnivers();
     void deleteUnivers();
     void onUniversSelectionChanged();
-
     void saveEquipment();
     void clearForm();
 
-    // Créer des scènes
     void showScenesPage();
     void onScenesUniversChanged();
     void saveCurrentScene();
@@ -58,7 +49,7 @@ private slots:
     void onDeleteSceneClicked();
 
     void showLivePage();
-    void onLiveSceneSelected();          // Quand on clique sur une scène dans la liste
+    void onLiveSceneSelected();
     void onLaunchButtonClicked();
     void lancerScene(int idScene);
 
@@ -70,7 +61,6 @@ private:
     void setupUi();
     void setupStyle();
 
-    // Nouvelles méthodes pour gérer la dynamique des formulaires et de la grille
     void addChannelToForm(const ChannelData* data = nullptr);
     void addFunctionToChannel(QVBoxLayout* functionsLayout, const FunctionData* data = nullptr);
     void refreshUniversList();
@@ -79,21 +69,33 @@ private:
     void deleteEquipment(int index);
     QFrame* createEquipmentCard(const EquipmentData& eq, int index);
 
-    // Data
     QList<UniversData> universList;
-    QList<EquipmentData> equipmentsList; // Stockage réel des équipements
-    int currentEditEquipIndex;           // Index de l'équipement en cours de modification (-1 si nouveau)
+    QList<EquipmentData> equipmentsList;
+    int currentEditEquipIndex;
 
-    // Navigation
     QStackedWidget* stackedWidget;
     QWidget* listPage;
     QWidget* formPage;
-
-    // Créer des scènes
     QWidget* scenesPage;
+    QWidget* livePage;
+
+    QListWidget* uiUniversList;
+    QPushButton* btnEditUnivers;
+    QPushButton* btnDeleteUnivers;
+    QGridLayout* equipmentsGrid;
+    QWidget* equipmentsContainer;
+
+    QLineEdit* nameEdit;
+    QComboBox* universCombo;
+    QLineEdit* startAddressEdit;
+    QLabel* channelCountLabel;
+    QVBoxLayout* channelsFormLayout;
+
+    int channelCounter;
+
     QComboBox* scenesUniversCombo;
     struct SliderWidgetSet {
-        int idCanalDB = -1; // Pour l'enregistrement futur
+        int idCanalDB = -1;
         QLabel* labelTitre;
         QSlider* slider;
         QLabel* labelValeur;
@@ -102,45 +104,24 @@ private:
         QList<DmxFunctionInfo> fonctions;
     };
     QList<SliderWidgetSet> dmxSliders;
-
     QComboBox* scenesCombo;
-    QPushButton* btnResetSliders;
     QPushButton* btnRenameScene;
     QPushButton* btnDeleteScene;
-
+    QPushButton* btnResetSliders;
     QList<SceneData> scenesList;
 
-    // List Page Elements
-    QListWidget* uiUniversList;
-    QPushButton* btnEditUnivers;
-    QPushButton* btnDeleteUnivers;
-    QGridLayout* equipmentsGrid;
-    QWidget* equipmentsContainer;
-
-    QWidget* livePage;
-    QGridLayout* liveScenesLayout;
-    QListWidget* liveScenesList;         // La liste des scènes
-    QPushButton* btnLaunchLiveScene;     // Le gros bouton "GO"
+    QListWidget* liveScenesList;
+    QPushButton* btnLaunchLiveScene;
     int selectedLiveSceneId = -1;
-
-    // Eléments d'interface TCP pour le mode Live
     QLineEdit* lineEditIP;
     QSpinBox* spinBoxPort;
     QPushButton* btnConnectTCP;
 
-    // La socket pour communiquer avec le camarade
+    QLabel* statusLabel;
+
     QTcpSocket socketClient;
 
-    // Form Page Elements
-    QLineEdit* nameEdit;
-    QComboBox* universCombo;
-    QLineEdit* startAddressEdit;
-    QLabel* channelCountLabel;
-    QVBoxLayout* channelsFormLayout;
-
-    int channelCounter;
     AccessBDD bdd;
-
 };
 
-#endif // INTERFACEPCCLIENT_H
+#endif

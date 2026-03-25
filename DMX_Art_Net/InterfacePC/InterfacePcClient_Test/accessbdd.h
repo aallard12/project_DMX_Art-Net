@@ -8,12 +8,11 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QList>
-#include <QString>
 
 struct UniversData {
-    int idUnivers; // Clef primaire
-    int numero;     // numero_Univers
-    QString ip;     // adresse_Ip
+    int idUnivers;
+    int numero;
+    QString ip;
 };
 
 struct FunctionData {
@@ -44,8 +43,8 @@ struct DmxFunctionInfo {
 struct DmxChannelInfo {
     int idCanal = -1;
     QString nomEquipement;
-    QString description; // Description de base (ex: "Roue de couleurs")
-    QList<DmxFunctionInfo> fonctions; // NOUVEAU : La liste des plages de valeurs
+    QString description;
+    QList<DmxFunctionInfo> fonctions;
 };
 
 struct SceneData {
@@ -53,8 +52,7 @@ struct SceneData {
     QString nomScene;
 };
 
-class AccessBDD
-{
+class AccessBDD {
 private:
     QSqlDatabase bdd;
 public:
@@ -63,13 +61,10 @@ public:
     bool enregistrerUnivers(int numero, const QString& ip);
     bool modifierUnivers(int idUnivers, int numero, const QString& ip);
     bool supprimerUnivers(int idUnivers);
-
     bool enregistrerEquipment(const EquipmentData& eq, int idUniversSelectionne);
     bool supprimerEquipment(int idEquipement);
     bool modifierEquipment(int idEquipement, const EquipmentData& eq, int idUniversSelectionne);
     QList<EquipmentData> chargerTousLesEquipements();
-
-
     QMap<int, DmxChannelInfo> chargerMapUnivers(int idUnivers);
     bool enregistrerScene(const QString& nomScene, const QMap<int, int>& valeursCanaux);
     QList<SceneData> chargerLesScenes();
@@ -79,4 +74,4 @@ public:
     bool supprimerScene(int idScene);
 };
 
-#endif // ACCESSBDD_H
+#endif
