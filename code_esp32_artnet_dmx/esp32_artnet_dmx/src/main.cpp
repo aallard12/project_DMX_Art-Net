@@ -113,7 +113,12 @@ void loop() {
       packetBuffer[18] = 255;              // Canal 1 : Monte progressivement
       packetBuffer[19] = 0;        // Canal 2 : Descend progressivement
       packetBuffer[20] = 128;                     // Canal 3 : Allumé à fond
-      packetBuffer[21] = 180;
+      packetBuffer[21] = 255;
+
+      packetBuffer[22] = 0;              // Canal 1 : Monte progressivement
+      packetBuffer[23] = 255;        // Canal 2 : Descend progressivement
+      packetBuffer[24] = 0;                     // Canal 3 : Allumé à fond
+      packetBuffer[25] = 180;
 
       packetSize = 530; // On fait croire au code qu'il a reçu 530 octets
       dernierTest = millis();
@@ -174,5 +179,3 @@ void loop() {
     dernierRafraichissementOLED = millis();
   }
 }
-
-
