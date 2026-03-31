@@ -1,11 +1,12 @@
-#ifndef INTERFACEPCCLIENT_TEST_H
-#define INTERFACEPCCLIENT_TEST_H
+#ifndef INTERFACEPCCLIENT_H
+#define INTERFACEPCCLIENT_H
 
 #include "accessbdd.h"
 #include <QMainWindow>
 #include <QStackedWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QSpinBox>
@@ -18,13 +19,26 @@
 #include <QTcpSocket>
 #include <QBuffer>
 #include <QInputDialog>
+#include <QStatusBar>
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
 
-class MainWindow : public QMainWindow {
+struct SliderWidgetSet {
+    int      idCanalDB = -1;
+    QLabel*  labelTitre;
+    QSlider* slider;
+    QLabel*  labelValeur;
+    QString  nomEquipement;
+    QString  descriptionBase;
+    QList<DmxFunctionInfo> fonctions;
+};
+
+class InterfacePcClient : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    explicit InterfacePcClient(QWidget *parent = nullptr);
+    ~InterfacePcClient();
 
 private slots:
     void showAddForm();
@@ -35,7 +49,6 @@ private slots:
     void onUniversSelectionChanged();
     void saveEquipment();
     void clearForm();
-
     void showScenesPage();
     void onScenesUniversChanged();
     void saveCurrentScene();
@@ -44,12 +57,10 @@ private slots:
     void resetSliders();
     void onRenameSceneClicked();
     void onDeleteSceneClicked();
-
     void showLivePage();
     void onLiveSceneSelected();
     void onLaunchButtonClicked();
     void lancerScene(int idScene);
-
     void onQTcpSocket_connected();
     void onQTcpSocket_disconnected();
     void on_btnConnect_clicked();
@@ -57,7 +68,6 @@ private slots:
 private:
     void setupUi();
     void setupStyle();
-
     void addChannelToForm(const ChannelData* data = nullptr);
     void addFunctionToChannel(QVBoxLayout* functionsLayout, const FunctionData* data = nullptr);
     void refreshUniversList();
@@ -66,56 +76,49 @@ private:
     void deleteEquipment(int index);
     QFrame* createEquipmentCard(const EquipmentData& eq, int index);
 
-    QList<UniversData> universList;
-    QList<EquipmentData> equipmentsList;
-    int currentEditEquipIndex;
+    AccessBDD              bdd;
+    QList<UniversData>     universList;
+    QList<EquipmentData>   equipmentsList;
+    QList<SceneData>       scenesList;
+    QList<SliderWidgetSet> dmxSliders;
+    int currentEditEquipIndex = -1;
+    int channelCounter        = 0;
+    int selectedLiveSceneId   = -1;
 
     QStackedWidget* stackedWidget;
-    QWidget* listPage;
-    QWidget* formPage;
-    QWidget* scenesPage;
-    QWidget* livePage;
+    QWidget*        listPage;
+    QWidget*        formPage;
+    QWidget*        scenesPage;
+    QWidget*        livePage;
+
+    QLabel*      statusLabel;
 
     QListWidget* uiUniversList;
     QPushButton* btnEditUnivers;
     QPushButton* btnDeleteUnivers;
-    QGridLayout* equipmentsGrid;
-    QWidget* equipmentsContainer;
 
-    QLineEdit* nameEdit;
-    QComboBox* universCombo;
-    QLineEdit* startAddressEdit;
-    QLabel* channelCountLabel;
+    QGridLayout* equipmentsGrid;
+    QWidget*     equipmentsContainer;
+
+    QLineEdit*   nameEdit;
+    QComboBox*   universCombo;
+    QLineEdit*   startAddressEdit;
+    QLabel*      channelCountLabel;
     QVBoxLayout* channelsFormLayout;
 
-    int channelCounter;
-
-    QComboBox* scenesUniversCombo;
-    struct SliderWidgetSet {
-        int idCanalDB = -1;
-        QLabel* labelTitre;
-        QSlider* slider;
-        QLabel* labelValeur;
-        QString nomEquipement;
-        QString descriptionBase;
-        QList<DmxFunctionInfo> fonctions;
-    };
-    QList<SliderWidgetSet> dmxSliders;
-    QComboBox* scenesCombo;
+    QComboBox*   scenesUniversCombo;
+    QComboBox*   scenesCombo;
     QPushButton* btnRenameScene;
     QPushButton* btnDeleteScene;
     QPushButton* btnResetSliders;
-    QList<SceneData> scenesList;
 
     QListWidget* liveScenesList;
     QPushButton* btnLaunchLiveScene;
-    int selectedLiveSceneId = -1;
-    QLineEdit* lineEditIP;
-    QSpinBox* spinBoxPort;
+    QLineEdit*   lineEditIP;
+    QSpinBox*    spinBoxPort;
     QPushButton* btnConnectTCP;
-    QTcpSocket socketClient;
 
-    AccessBDD bdd;
+    QTcpSocket socketClient;
 };
 
-#endif
+#endif // INTERFACEPCCLIENT_H

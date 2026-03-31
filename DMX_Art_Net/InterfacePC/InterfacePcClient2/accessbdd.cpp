@@ -3,15 +3,24 @@
 AccessBDD::AccessBDD() {
     bdd = QSqlDatabase::addDatabase("QMYSQL");
     QString ip, base, log, mdp;
-    QString nomFichierIni = "commandes.ini";
+    QString nomFichierIni = "commandesTest.ini";
     QFileInfo testFichier(nomFichierIni);
+
+    // if (testFichier.exists() && testFichier.isFile()) {
+    //     QSettings paramsSocket(nomFichierIni, QSettings::IniFormat);
+    //     ip = paramsSocket.value("CONFIG/hostname", "192.168.1.20").toString();
+    //     base = paramsSocket.value("CONFIG/BDD", "DMXBDD").toString();
+    //     log = paramsSocket.value("CONFIG/username", "root").toString();
+    //     mdp = paramsSocket.value("CONFIG/password", "raspberry").toString();
+    // }
 
     if (testFichier.exists() && testFichier.isFile()) {
         QSettings paramsSocket(nomFichierIni, QSettings::IniFormat);
-        ip = paramsSocket.value("CONFIG/hostname", "192.168.1.20").toString();
+        ip = paramsSocket.value("CONFIG/hostname", "172.18.58.8").toString();
         base = paramsSocket.value("CONFIG/BDD", "DMXBDD").toString();
-        log = paramsSocket.value("CONFIG/username", "root").toString();
-        mdp = paramsSocket.value("CONFIG/password", "raspberry").toString();
+        log = paramsSocket.value("CONFIG/username", "ciel").toString();
+        mdp = paramsSocket.value("CONFIG/password", "ciel").toString();
+
     }
 
     bdd.setHostName(ip);
@@ -20,14 +29,15 @@ AccessBDD::AccessBDD() {
     bdd.setPassword(mdp);
 
     if (!bdd.open())
-        QMessageBox::warning(nullptr, "Erreur BDD", bdd.lastError().text());
+        qDebug() << bdd.lastError().text();
     else
         qDebug() << "BDD OK";
 }
 
 QList<UniversData> AccessBDD::chargerUnivers() {
     QList<UniversData> liste;
-    QSqlQuery query("SELECT idUnivers, numeroUnivers, adresseIp FROM UNIVERS");
+    // Ajout de ORDER BY numeroUnivers pour garantir l'ordre de traitement
+    QSqlQuery query("SELECT idUnivers, numeroUnivers, adresseIp FROM UNIVERS ORDER BY numeroUnivers ASC");
     while(query.next()) {
         UniversData u;
         u.idUnivers = query.value("idUnivers").toInt();
@@ -39,11 +49,19 @@ QList<UniversData> AccessBDD::chargerUnivers() {
 }
 
 bool AccessBDD::enregistrerUnivers(int numero, const QString &ip) {
-    QSqlQuery query;
-    query.prepare("INSERT INTO UNIVERS (numeroUnivers, adresseIp) VALUES (:num, :ip)");
-    query.bindValue(":num", numero);
-    query.bindValue(":ip", ip);
-    return query.exec();
+    bool succes = false;
+
+    // On vérifie que l'IP n'est pas vide (en enlevant les espaces parasites avec trimmed)
+    if (!ip.trimmed().isEmpty()) {
+        QSqlQuery query;
+        query.prepare("INSERT INTO UNIVERS (numeroUnivers, adresseIp) VALUES (:num, :ip)");
+        query.bindValue(":num", numero);
+        query.bindValue(":ip", ip);
+        if (query.exec()) {
+            succes = true;
+        }
+    }
+    return succes;
 }
 
 bool AccessBDD::modifierUnivers(int id, int numero, const QString &ip) {

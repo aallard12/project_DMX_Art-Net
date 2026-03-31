@@ -1,3 +1,7 @@
+optimisation des actions :
 - Rajouter une fenêtre pour retourner à la page de la liste des équipements et univers
 - Empêcher de créer un équipement DMX sans canal
 - Faire en sorte que les canaux doivent avoir un nom et toutes les caractéristiques d'un canal
+
+code : 
+- Rendre les boutons fixe et permanent et non dynamique
