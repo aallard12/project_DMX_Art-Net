@@ -25,3 +25,12 @@ void EcranOLED::actualiser(String nomZone, String nomEffet, String infoExtra, lo
     dernierRafraichissement = millis();
   }
 }
+
+// --- NOUVELLE FONCTION POUR L'ECRAN DE DEMARRAGE ---
+void EcranOLED::afficherMessage(String titre, String valeur) {
+  clear(); 
+  setFont(ArialMT_Plain_10);
+  drawString(0, 10, titre);
+  drawString(0, 30, valeur);
+  display(); 
+}
