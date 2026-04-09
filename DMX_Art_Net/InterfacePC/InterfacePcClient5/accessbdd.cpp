@@ -3,24 +3,24 @@
 AccessBDD::AccessBDD() {
     bdd = QSqlDatabase::addDatabase("QMYSQL");
     QString ip, base, log, mdp;
-    QString nomFichierIni = "commandesTest.ini";
+    QString nomFichierIni = "commandes.ini";
     QFileInfo testFichier(nomFichierIni);
-
-    // if (testFichier.exists() && testFichier.isFile()) {
-    //     QSettings paramsSocket(nomFichierIni, QSettings::IniFormat);
-    //     ip = paramsSocket.value("CONFIG/hostname", "192.168.1.20").toString();
-    //     base = paramsSocket.value("CONFIG/BDD", "DMXBDD").toString();
-    //     log = paramsSocket.value("CONFIG/username", "root").toString();
-    //     mdp = paramsSocket.value("CONFIG/password", "raspberry").toString();
-    // }
 
     if (testFichier.exists() && testFichier.isFile()) {
         QSettings paramsSocket(nomFichierIni, QSettings::IniFormat);
-        ip = paramsSocket.value("CONFIG/hostname", "172.18.58.8").toString();
+        ip = paramsSocket.value("CONFIG/hostname", "192.168.1.20").toString();
         base = paramsSocket.value("CONFIG/BDD", "DMXBDD").toString();
-        log = paramsSocket.value("CONFIG/username", "ciel").toString();
-        mdp = paramsSocket.value("CONFIG/password", "ciel").toString();
+        log = paramsSocket.value("CONFIG/username", "root").toString();
+        mdp = paramsSocket.value("CONFIG/password", "raspberry").toString();
     }
+
+    // if (testFichier.exists() && testFichier.isFile()) {
+    //     QSettings paramsSocket(nomFichierIni, QSettings::IniFormat);
+    //     ip = paramsSocket.value("CONFIG/hostname", "172.18.58.8").toString();
+    //     base = paramsSocket.value("CONFIG/BDD", "DMXBDD").toString();
+    //     log = paramsSocket.value("CONFIG/username", "ciel").toString();
+    //     mdp = paramsSocket.value("CONFIG/password", "ciel").toString();
+    // }
 
     bdd.setHostName(ip);
     bdd.setDatabaseName(base);
@@ -382,19 +382,11 @@ bool AccessBDD::renommerScene(int idScene, const QString& nouveauNom) {
 bool AccessBDD::supprimerScene(int idScene) {
     bool succes = false;
 
-    if (bdd.transaction()) {
-        QSqlQuery q1, q2;
-        q1.prepare("DELETE FROM PILOTE WHERE idScene = :id");
-        q1.bindValue(":id", idScene);
-        q2.prepare("DELETE FROM SCENES WHERE idScene = :id");
-        q2.bindValue(":id", idScene);
-
-        if (q1.exec() && q2.exec() && bdd.commit()) {
-            succes = true;
-        } else {
-            bdd.rollback();
-        }
+    QSqlQuery query;
+    query.prepare("DELETE FROM SCENES WHERE idScene = :id");
+    query.bindValue(":id", idScene);
+    if (query.exec()) {
+        succes = true;
     }
-
     return succes;
 }
