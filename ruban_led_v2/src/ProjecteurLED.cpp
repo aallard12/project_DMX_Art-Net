@@ -1,8 +1,6 @@
 #include "ProjecteurLED.h"
 
-// ===================================================================================
-// IMPLEMENTATION : ProjecteurLED
-// ===================================================================================
+
 ProjecteurLED::ProjecteurLED() {
   gHue = 0;
   dernierStrobe = 0;

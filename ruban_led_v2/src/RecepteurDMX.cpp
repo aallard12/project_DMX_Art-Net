@@ -1,8 +1,6 @@
 #include "RecepteurDMX.h"
 
-// ===================================================================================
-// IMPLEMENTATION : RecepteurDMX
-// ===================================================================================
+
 RecepteurDMX::RecepteurDMX() {
   dmxPort = 1;
   tramesRecues = 0;

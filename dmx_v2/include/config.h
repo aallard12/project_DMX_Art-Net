@@ -2,12 +2,12 @@
 #define CONFIG_H
 
 #include <Arduino.h>
-#include "esp32_snir.h" // Fournit TX_RS232, RX_RS232, ADD_OLED, SDA, SCL
+#include "esp32_snir.h" 
 
 // --- CONFIGURATION WI-FI & ART-NET ---
-const char ssid[] = "RouterDMX";     // Le nom de ton réseau Wi-Fi
-const char password[] = "tititoto";  // Le mot de passe
-const int artNetPort = 6454;         // Port de réception UDP officiel
+const char ssid[] = "RouterDMX";    
+const char password[] = "tititoto";  
+const int artNetPort = 6454;         
 
 // --- SÉCURITÉ BROCHES ---
 #ifndef SDA

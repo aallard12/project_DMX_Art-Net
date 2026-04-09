@@ -1,8 +1,6 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <WiFiUdp.h>
-
-// Inclusion de nos modules
 #include "config.h"
 #include "ecran.h"
 #include "dmx.h"
@@ -15,7 +13,6 @@ long paquetsRecus = 0;
 void setup() {
   Serial.begin(115200);
 
-  // Initialisation du matériel 
   initialiserEcran();
   afficherAttenteWifi();
   initialiserDMX();
@@ -45,16 +42,14 @@ void loop() {
   // S'il n'y a pas de Wi-Fi, on attend
   if (WiFi.status() != WL_CONNECTED) return;
 
-  // ==========================================================
+
   // 1. ÉCOUTE DU RÉSEAU UDP (LES TRAMES DU SERVEUR)
-  // ==========================================================
   int packetSize = udp.parsePacket();
   if (packetSize > 0 && packetSize <= 530) {
     udp.read(packetBuffer, 530);
     
-    // ==========================================================
+ 
     // 2. DÉCODAGE DE LA TRAME ART-NET
-    // ==========================================================
     char artnetHeader[] = "Art-Net\0";
     if (memcmp(packetBuffer, artnetHeader, 8) == 0) {
       
@@ -67,7 +62,7 @@ void loop() {
           // On copie les valeurs dans le tableau (à partir de la case 1)
           memcpy(dmxData + 1, packetBuffer + 18, dmxLength);
           
-          // --- ESPIONNAGE DES 512 CANAUX (Avec numéros) ---
+          // ESPIONNAGE DES 512 CANAUX (Avec numéros)
           static unsigned long dernierAffichage = 0;
           
           // On affiche le tableau 1 seule fois par seconde pour ne pas faire planter l'ordi
@@ -83,7 +78,7 @@ void loop() {
               // 2. On écrit les 16 valeurs DMX de cette ligne
               for (int j = 0; j < 16; j++) {
                 if (i + j <= 512) {
-                  // %3d permet d'aligner les nombres sur 3 caractères (ex: "  0", " 45", "255")
+                  // %3d permet d'aligner les nombres sur 3 caractères 
                   Serial.printf("%3d ", dmxData[i + j]);
                 }
               }
@@ -93,7 +88,7 @@ void loop() {
             
             dernierAffichage = millis();
           }
-          // ------------------------------------------------
+          
 
           // On envoie les données à notre module DMX matériel
           ecrireDonneesDMX(dmxData, 513);
@@ -103,9 +98,8 @@ void loop() {
     }
   }
 
-  // ==========================================================
+  
   // 3. TÂCHES DE FOND (Envoi physique et mise à jour écran)
-  // ==========================================================
   envoyerSignalDMX();
   rafraichirEcran(paquetsRecus);
 }

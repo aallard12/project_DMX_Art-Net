@@ -1,11 +1,9 @@
 #pragma once
 
-#include <Arduino.h>   // Pour les types byte, uint8_t, etc.
-#include <esp_dmx.h>   // Indispensable pour dmx_port_t et DMX_PACKET_SIZE
+#include <Arduino.h>  
+#include <esp_dmx.h> 
 
-// ===================================================================================
-// CLASSE 3 : GESTION DU DMX
-// ===================================================================================
+
 class RecepteurDMX {
   private:
     dmx_port_t dmxPort;

@@ -1,25 +1,16 @@
 #include <Arduino.h>
-#include <Keypad.h> // Ajout de la bibliothèque Clavier
-
-// 1. Inclusion de la configuration matérielle
-#define MODELE_A 
+#include <Keypad.h> 
 #include "esp32_snir.h" 
-
-// 2. Inclusion de tes classes
 #include "ProjecteurLED.h"
 #include "EcranOLED.h"
 #include "RecepteurDMX.h"
 
-// ===================================================================================
-// INSTANCIATION DES OBJETS
-// ===================================================================================
+
 ProjecteurLED monRuban;
 EcranOLED monEcran(ADD_OLED, SDA, SCL);
 RecepteurDMX monDMX;
 
-// ===================================================================================
-// CONFIGURATION DU CLAVIER MATRICIEL
-// ===================================================================================
+
 const byte LIGNES = 4; 
 const byte COLONNES = 3; 
 char touches[LIGNES][COLONNES] = {
@@ -28,22 +19,22 @@ char touches[LIGNES][COLONNES] = {
   {'7','8','9'},
   {'*','0','#'}
 };
-// Les broches L0..L3 et C0..C2 sont directement tirées de ton fichier esp32_snir.h
+
 byte brochesLignes[LIGNES] = {L0, L1, L2, L3}; 
 byte brochesColonnes[COLONNES] = {C0, C1, C2}; 
 Keypad monClavier = Keypad(makeKeymap(touches), brochesLignes, brochesColonnes, LIGNES, COLONNES);
 
-// VARIABLE GLOBALE POUR L'ADRESSE (Remplace l'ancien #define)
+
 int adresseDMX = 1; 
 
-// ===================================================================================
+
 
 void setup() {
   Serial.begin(115200);
 
   monEcran.initialiser();
   monRuban.initialiser();
-  monDMX.initialiser(16); // Broche RX = 16
+  monDMX.initialiser(16); 
 
   // --- SÉQUENCE DE DÉMARRAGE : CHOIX DE L'ADRESSE ---
   String saisie = "";
@@ -108,7 +99,7 @@ void loop() {
   monDMX.ecouter();
   monRuban.actualiserHorloge();
 
-  // 2. Lecture des canaux (On utilise la variable dynamique adresseDMX !)
+  
   uint8_t r         = monDMX.lireCanal(adresseDMX);
   uint8_t g         = monDMX.lireCanal(adresseDMX + 1);
   uint8_t b         = monDMX.lireCanal(adresseDMX + 2);
@@ -116,7 +107,7 @@ void loop() {
   uint8_t ch_mode   = monDMX.lireCanal(adresseDMX + 4);
   uint8_t ch_effets = monDMX.lireCanal(adresseDMX + 5);
 
-  // 3. Logique de sélection de la zone (Canal 4)
+  // 2. Logique de sélection de la zone (Canal 4)
   int idxDebut = 0, idxFin = 0, indexSauvegarde = -1;
   String nomZone = "";
 
@@ -135,7 +126,7 @@ void loop() {
     monRuban.sauvegarderCouleurZone(indexSauvegarde, r, g, b);
   }
 
-  // 4. Base d'allumage
+  // 3. Base d'allumage
   monRuban.toutEteindre();
 
   switch (ch_zone) {
@@ -148,7 +139,7 @@ void loop() {
       break;
   }
 
-  // 5. Application des effets (Canaux 5 et 6)
+  // 4. Application des effets (Canaux 5 et 6)
   String nomMode = "DIMMER";
   String infoEffet = "";
 
@@ -183,7 +174,7 @@ void loop() {
       break;
   }
 
-  // 6. Rendu final
+  // 5. Rendu final
   monRuban.afficher();
   monEcran.actualiser(nomZone, nomMode, infoEffet, monDMX.getTramesRecues());
 }

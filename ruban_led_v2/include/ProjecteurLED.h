@@ -1,15 +1,12 @@
 #pragma once
 
 #include <Arduino.h>
-#include <FastLED.h> // Uniquement FastLED, pas besoin du reste ici !
+#include <FastLED.h> 
 
-// On inclut ton fichier matériel ici pour que la classe connaisse NB_PIXELS et DATALEDS
-#define MODELE_A 
+
 #include "esp32_snir.h" 
 
-// ===================================================================================
-// CLASSE 1 : GESTION DU RUBAN LED
-// ===================================================================================
+
 class ProjecteurLED {
   private:
     CRGB leds[NB_PIXELS];
@@ -30,7 +27,7 @@ class ProjecteurLED {
     void peindreToutesZonesMemorisees();
     void appliquerStrobe(int debut, int fin, uint8_t valeurDMX);
 
-    // Effets (Avec le nouveau Chenillard en 2)
+    
     void effet01_Rainbow(int debut, int fin);
     void effet02_Chenillard(int debut, int fin);
     void effet03_Confetti(int debut, int fin);
