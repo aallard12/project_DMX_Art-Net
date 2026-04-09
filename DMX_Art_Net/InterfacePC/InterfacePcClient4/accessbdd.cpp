@@ -20,7 +20,6 @@ AccessBDD::AccessBDD() {
         base = paramsSocket.value("CONFIG/BDD", "DMXBDD").toString();
         log = paramsSocket.value("CONFIG/username", "ciel").toString();
         mdp = paramsSocket.value("CONFIG/password", "ciel").toString();
-
     }
 
     bdd.setHostName(ip);
@@ -84,12 +83,13 @@ bool AccessBDD::enregistrerEquipment(const EquipmentData &eq, int idUniversSelec
     if (!bdd.isOpen() || !bdd.transaction()) return false;
 
     QSqlQuery query;
-    query.prepare("INSERT INTO EQUIPEMENTS (nomEquipement, adresseDepart, nbCanal, idUnivers) "
-                  "VALUES (:nom, :adr, :nb, :idU)");
+    query.prepare("INSERT INTO EQUIPEMENTS (nomEquipement, adresseDepart, nbCanal, idUnivers, couleur) "
+                  "VALUES (:nom, :adr, :nb, :idU, :couleur)");
     query.bindValue(":nom", eq.nom);
     query.bindValue(":adr", eq.dmxStart.toInt());
     query.bindValue(":nb", eq.canaux.size());
     query.bindValue(":idU", idUniversSelectionne);
+    query.bindValue(":couleur", eq.couleur);
 
     if (query.exec()) {
         int idEquip = query.lastInsertId().toInt();
@@ -135,21 +135,30 @@ bool AccessBDD::supprimerEquipment(int idEquipement) {
 bool AccessBDD::modifierEquipment(int idEquipement, const EquipmentData &eq, int idUniversSelectionne) {
     if (!bdd.isOpen() || !bdd.transaction()) return false;
 
+    qDebug()<<"passe par là";
+
     QSqlQuery query;
     query.prepare("UPDATE EQUIPEMENTS SET nomEquipement = :nom, adresseDepart = :adr, "
-                  "nbCanal = :nb, idUnivers = :idU WHERE idEquipement = :idEq");
+                  "nbCanal = :nb, idUnivers = :idU, couleur = :couleur WHERE idEquipement = :idEq");
     query.bindValue(":nom", eq.nom);
     query.bindValue(":adr", eq.dmxStart.toInt());
     query.bindValue(":nb", eq.canaux.size());
     query.bindValue(":idU", idUniversSelectionne);
+    query.bindValue(":couleur", eq.couleur);
     query.bindValue(":idEq", idEquipement);
 
     if (query.exec()) {
+
+        qDebug()<<"modification de l'équipement réussi";
+
         QSqlQuery qDel;
         qDel.prepare("DELETE FROM CANAUX WHERE idEquipement = :idEq");
         qDel.bindValue(":idEq", idEquipement);
 
         if (qDel.exec()) {
+
+            qDebug()<<"supprimer des canaux de l'équipement";
+
             bool errorOccured = false;
             for (int i = 0; i < eq.canaux.size(); ++i) {
                 QSqlQuery qChan;
@@ -160,6 +169,9 @@ bool AccessBDD::modifierEquipment(int idEquipement, const EquipmentData &eq, int
                 qChan.bindValue(":idE", idEquipement);
 
                 if (qChan.exec()) {
+
+                    qDebug()<<"insertion canaux réussi";
+
                     int idChan = qChan.lastInsertId().toInt();
                     for (const auto& func : eq.canaux[i].fonctions) {
                         QSqlQuery qFunc;
@@ -184,7 +196,7 @@ bool AccessBDD::modifierEquipment(int idEquipement, const EquipmentData &eq, int
 
 QList<EquipmentData> AccessBDD::chargerTousLesEquipements() {
     QList<EquipmentData> liste;
-    QSqlQuery query("SELECT E.idEquipement, E.nomEquipement, E.adresseDepart, U.numeroUnivers "
+    QSqlQuery query("SELECT E.idEquipement, E.nomEquipement, E.adresseDepart, E.couleur, U.numeroUnivers "
                     "FROM EQUIPEMENTS E JOIN UNIVERS U ON E.idUnivers = U.idUnivers");
 
     while (query.next()) {
@@ -193,6 +205,7 @@ QList<EquipmentData> AccessBDD::chargerTousLesEquipements() {
         eq.nom = query.value("nomEquipement").toString();
         eq.dmxStart = query.value("adresseDepart").toString();
         eq.univers = "Univers " + query.value("numeroUnivers").toString();
+        eq.couleur = query.value("couleur").toString();
 
         QSqlQuery qChan;
         qChan.prepare("SELECT idCanal, description FROM CANAUX WHERE idEquipement = :idEq ORDER BY numeroCanal");
@@ -228,7 +241,7 @@ QList<EquipmentData> AccessBDD::chargerTousLesEquipements() {
 QMap<int, DmxChannelInfo> AccessBDD::chargerMapUnivers(int idUnivers) {
     QMap<int, DmxChannelInfo> map;
     QSqlQuery query;
-    query.prepare("SELECT C.idCanal, C.numeroCanal, C.description, E.adresseDepart, E.nomEquipement "
+    query.prepare("SELECT C.idCanal, C.numeroCanal, C.description, E.adresseDepart, E.nomEquipement, E.couleur "
                   "FROM CANAUX C JOIN EQUIPEMENTS E ON C.idEquipement = E.idEquipement "
                   "WHERE E.idUnivers = :idU");
     query.bindValue(":idU", idUnivers);
@@ -241,6 +254,7 @@ QMap<int, DmxChannelInfo> AccessBDD::chargerMapUnivers(int idUnivers) {
             DmxChannelInfo info;
             info.idCanal = query.value("idCanal").toInt();
             info.nomEquipement = query.value("nomEquipement").toString();
+            info.couleur = query.value("couleur").toString();
             info.description = query.value("description").toString();
             map.insert(canalAbsolu, info);
         }
@@ -284,6 +298,21 @@ bool AccessBDD::enregistrerScene(const QString &nomScene, const QMap<int, int> &
         bdd.rollback();
     } else bdd.rollback();
     return false;
+}
+
+int AccessBDD::recupererCompteurCanaux(int index)
+{
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(c.idCanal) AS nombreCanaux FROM CANAUX c "
+                    "JOIN EQUIPEMENTS e ON c.idEquipement = e.idEquipement "
+                    "WHERE e.idUnivers = :index; ");
+
+    int countCanaux = 0;
+    query.bindValue(":index", index);
+    if (query.exec() && query.next()) {
+        countCanaux = query.value("nombreCanaux").toInt();
+    }
+    return countCanaux;
 }
 
 QList<SceneData> AccessBDD::chargerLesScenes() {

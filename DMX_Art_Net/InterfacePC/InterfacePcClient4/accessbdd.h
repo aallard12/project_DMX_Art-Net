@@ -32,6 +32,7 @@ struct EquipmentData {
     QString univers;
     QString dmxStart;
     QList<ChannelData> canaux;
+    QString couleur;
 };
 
 struct DmxFunctionInfo {
@@ -43,6 +44,7 @@ struct DmxFunctionInfo {
 struct DmxChannelInfo {
     int idCanal = -1;
     QString nomEquipement;
+    QString couleur;
     QString description;
     QList<DmxFunctionInfo> fonctions;
 };
@@ -67,6 +69,7 @@ public:
     QList<EquipmentData> chargerTousLesEquipements();
     QMap<int, DmxChannelInfo> chargerMapUnivers(int idUnivers);
     bool enregistrerScene(const QString& nomScene, const QMap<int, int>& valeursCanaux);
+    int recupererCompteurCanaux(int index);
     QList<SceneData> chargerLesScenes();
     QMap<int, int> chargerValeursScene(int idScene);
     int getUniversDeScene(int idScene);

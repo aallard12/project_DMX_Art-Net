@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1100</width>
-    <height>750</height>
+    <width>1314</width>
+    <height>755</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,9 +19,6 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="mainLayout">
     <property name="spacing">
-     <number>0</number>
-    </property>
-    <property name="margin" stdset="0">
      <number>0</number>
     </property>
     <item>
@@ -119,95 +116,122 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QFrame" name="sidebar">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>100</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QFrame#sidebar { background-color: #222222; border-right: 1px solid #111; } QLabel { color: #107c7c; font-size: 16px; font-weight: bold; }</string>
-          </property>
-          <layout class="QVBoxLayout" name="sidebarLayout">
-           <item>
-            <widget class="QLabel" name="uniTitle">
-             <property name="text">
-              <string>UNIVERS DMX</string>
+         <widget class="QWidget" name="widget" native="true">
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="0">
+            <widget class="QFrame" name="sidebar">
+             <property name="enabled">
+              <bool>true</bool>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>50</width>
+               <height>635</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>250</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QFrame#sidebar { background-color: #222222; border-right: 1px solid #111; } QLabel { color: #107c7c; font-size: 16px; font-weight: bold; }</string>
+             </property>
+             <layout class="QVBoxLayout" name="sidebarLayout">
+              <item>
+               <widget class="QLabel" name="uniTitle">
+                <property name="text">
+                 <string>UNIVERS DMX</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QListWidget" name="uiUniversList">
+                <property name="styleSheet">
+                 <string notr="true">QListWidget { background-color: #383838; border: 1px solid #555; color: #ffffff; border-radius: 4px; } QListWidget::item { padding: 10px; border-bottom: 1px solid #444; } QListWidget::item:selected { background-color: #107c7c; color: white; }</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="uniActionsLayout">
+                <item>
+                 <widget class="QPushButton" name="btnEditUnivers">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton { background-color: #555555; color: white; border-radius: 4px; padding: 8px; font-weight: bold; } QPushButton:hover { background-color: #666666; }</string>
+                  </property>
+                  <property name="text">
+                   <string>Modifier</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnDeleteUnivers">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton { background-color: #d32f2f; color: white; border-radius: 4px; padding: 8px; font-weight: bold; } QPushButton:hover { background-color: #f44336; }</string>
+                  </property>
+                  <property name="text">
+                   <string>Supprimer</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btnAddUnivers">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton { background-color: transparent; color: #107c7c; border: 1px dashed #107c7c; padding: 12px; border-radius: 4px; font-weight: bold; } QPushButton:hover { background-color: rgba(16, 124, 124, 0.1); }</string>
+                </property>
+                <property name="text">
+                 <string>+ Ajouter Univers</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
-           <item>
-            <widget class="QListWidget" name="uiUniversList">
-             <property name="styleSheet">
-              <string notr="true">QListWidget { background-color: #383838; border: 1px solid #555; color: #ffffff; border-radius: 4px; } QListWidget::item { padding: 10px; border-bottom: 1px solid #444; } QListWidget::item:selected { background-color: #107c7c; color: white; }</string>
+           <item row="0" column="1">
+            <widget class="QScrollArea" name="listScroll">
+             <property name="minimumSize">
+              <size>
+               <width>597</width>
+               <height>635</height>
+              </size>
              </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="uniActionsLayout">
-             <item>
-              <widget class="QPushButton" name="btnEditUnivers">
-               <property name="styleSheet">
-                <string notr="true">QPushButton { background-color: #555555; color: white; border-radius: 4px; padding: 8px; font-weight: bold; } QPushButton:hover { background-color: #666666; }</string>
+             <property name="frameShape">
+              <enum>QFrame::Shape::NoFrame</enum>
+             </property>
+             <property name="widgetResizable">
+              <bool>true</bool>
+             </property>
+             <widget class="QWidget" name="scrollContent">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>1022</width>
+                <height>636</height>
+               </rect>
+              </property>
+              <widget class="QWidget" name="gridLayoutWidget">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>1021</width>
+                 <height>631</height>
+                </rect>
                </property>
-               <property name="text">
-                <string>Modifier</string>
-               </property>
+               <layout class="QGridLayout" name="equipmentsGrid">
+                <property name="spacing">
+                 <number>15</number>
+                </property>
+               </layout>
               </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btnDeleteUnivers">
-               <property name="styleSheet">
-                <string notr="true">QPushButton { background-color: #d32f2f; color: white; border-radius: 4px; padding: 8px; font-weight: bold; } QPushButton:hover { background-color: #f44336; }</string>
-               </property>
-               <property name="text">
-                <string>Supprimer</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="QPushButton" name="btnAddUnivers">
-             <property name="styleSheet">
-              <string notr="true">QPushButton { background-color: transparent; color: #107c7c; border: 1px dashed #107c7c; padding: 12px; border-radius: 4px; font-weight: bold; } QPushButton:hover { background-color: rgba(16, 124, 124, 0.1); }</string>
-             </property>
-             <property name="text">
-              <string>+ Ajouter Univers</string>
-             </property>
+             </widget>
             </widget>
            </item>
           </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QScrollArea" name="listScroll">
-          <property name="frameShape">
-           <enum>QFrame::Shape::NoFrame</enum>
-          </property>
-          <property name="widgetResizable">
-           <bool>true</bool>
-          </property>
-          <widget class="QWidget" name="equipmentsContainer">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <!-- <width>547</width>-->
-             <!--<height>667</height>-->
-             <width>200</width>
-             <height>400</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: transparent;</string>
-           </property>
-           <layout class="QGridLayout" name="equipmentsGrid"/>
-          </widget>
          </widget>
         </item>
        </layout>
@@ -227,8 +251,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>297</width>
-             <height>214</height>
+             <width>1254</width>
+             <height>612</height>
             </rect>
            </property>
            <property name="styleSheet">
@@ -247,20 +271,23 @@
             </item>
             <item>
              <layout class="QGridLayout" name="infoGrid">
-              <item row="0" column="0">
-               <widget class="QLabel" name="label">
-                <property name="styleSheet">
-                 <string>color: #cccccc;</string>
-                </property>
-                <property name="text">
-                 <string>NOM DE L'ÉQUIPEMENT</string>
-                </property>
-               </widget>
-              </item>
               <item row="1" column="0">
                <widget class="QLineEdit" name="nameEdit">
                 <property name="styleSheet">
                  <string notr="true">background-color: #383838; border: 1px solid #555; color: #ffffff; padding: 8px; border-radius: 4px;</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Ex. iRock7s</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QLineEdit" name="startAddressEdit">
+                <property name="styleSheet">
+                 <string notr="true">background-color: #383838; border: 1px solid #555; color: #ffffff; padding: 8px; border-radius: 4px;</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Ex. 1</string>
                 </property>
                </widget>
               </item>
@@ -271,10 +298,23 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="2">
-               <widget class="QLineEdit" name="startAddressEdit">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label">
                 <property name="styleSheet">
-                 <string notr="true">background-color: #383838; border: 1px solid #555; color: #ffffff; padding: 8px; border-radius: 4px;</string>
+                 <string>color: #cccccc;</string>
+                </property>
+                <property name="text">
+                 <string>NOM DE L'ÉQUIPEMENT</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QPushButton" name="pushButtonCouleur">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {background-color: &quot;#000000&quot; ;color: white; border-radius: 4px; padding: 8px; font-weight: bold;}</string>
+                </property>
+                <property name="text">
+                 <string>Couleur</string>
                 </property>
                </widget>
               </item>
@@ -385,7 +425,7 @@
             <item>
              <widget class="QPushButton" name="btnResetSliders">
               <property name="styleSheet">
-               <string notr="true">QPushButton { background-color: #555555; color: white; padding: 8px; border-radius: 4px; }</string>
+               <string notr="true">QPushButton { background-color: #555555; color: white; padding: 8px 16px; border-radius: 4px; font-weight: bold;}</string>
               </property>
               <property name="text">
                <string>Reset 0</string>
@@ -406,7 +446,7 @@
             <item>
              <widget class="QPushButton" name="btnRenameScene">
               <property name="styleSheet">
-               <string notr="true">QPushButton { background-color: #555555; color: white; padding: 8px; border-radius: 4px; }</string>
+               <string notr="true">QPushButton { background-color: #555555; color: white; padding: 8px 16px; border-radius: 4px; font-weight: bold; }</string>
               </property>
               <property name="text">
                <string>Renommer</string>
@@ -416,7 +456,7 @@
             <item>
              <widget class="QPushButton" name="btnDeleteScene">
               <property name="styleSheet">
-               <string notr="true">QPushButton { background-color: #d32f2f; color: white; padding: 8px; border-radius: 4px; }</string>
+               <string notr="true">QPushButton { background-color: #d32f2f; color: white; padding: 8px 16px; border-radius: 4px; font-weight: bold; }</string>
               </property>
               <property name="text">
                <string>Supprimer</string>
@@ -447,8 +487,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>44</width>
-             <height>18</height>
+             <width>829</width>
+             <height>529</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="slidersGrid"/>
@@ -479,6 +519,9 @@
             <property name="styleSheet">
              <string notr="true">background-color: #383838; color: white; padding: 8px; border-radius: 4px;</string>
             </property>
+            <property name="text">
+             <string>192.168.1.20</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -486,12 +529,18 @@
             <property name="styleSheet">
              <string notr="true">background-color: #383838; color: white; padding: 8px; border-radius: 4px;</string>
             </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+            <property name="value">
+             <number>12345</number>
+            </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="btnConnectTCP">
             <property name="styleSheet">
-             <string notr="true">QPushButton { background-color: #555555; color: white; padding: 8px; border-radius: 4px; }</string>
+             <string notr="true">QPushButton { background-color: #555555;  color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none; }</string>
             </property>
             <property name="text">
              <string>Connexion</string>
@@ -528,4 +577,3 @@
  <resources/>
  <connections/>
 </ui>
-

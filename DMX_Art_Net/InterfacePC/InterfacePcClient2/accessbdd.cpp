@@ -3,25 +3,24 @@
 AccessBDD::AccessBDD() {
     bdd = QSqlDatabase::addDatabase("QMYSQL");
     QString ip, base, log, mdp;
-    QString nomFichierIni = "commandesTest.ini";
+    QString nomFichierIni = "commandes.ini";
     QFileInfo testFichier(nomFichierIni);
-
-    // if (testFichier.exists() && testFichier.isFile()) {
-    //     QSettings paramsSocket(nomFichierIni, QSettings::IniFormat);
-    //     ip = paramsSocket.value("CONFIG/hostname", "192.168.1.20").toString();
-    //     base = paramsSocket.value("CONFIG/BDD", "DMXBDD").toString();
-    //     log = paramsSocket.value("CONFIG/username", "root").toString();
-    //     mdp = paramsSocket.value("CONFIG/password", "raspberry").toString();
-    // }
 
     if (testFichier.exists() && testFichier.isFile()) {
         QSettings paramsSocket(nomFichierIni, QSettings::IniFormat);
-        ip = paramsSocket.value("CONFIG/hostname", "172.18.58.8").toString();
+        ip = paramsSocket.value("CONFIG/hostname", "192.168.1.20").toString();
         base = paramsSocket.value("CONFIG/BDD", "DMXBDD").toString();
-        log = paramsSocket.value("CONFIG/username", "ciel").toString();
-        mdp = paramsSocket.value("CONFIG/password", "ciel").toString();
-
+        log = paramsSocket.value("CONFIG/username", "root").toString();
+        mdp = paramsSocket.value("CONFIG/password", "raspberry").toString();
     }
+
+    // if (testFichier.exists() && testFichier.isFile()) {
+    //     QSettings paramsSocket(nomFichierIni, QSettings::IniFormat);
+    //     ip = paramsSocket.value("CONFIG/hostname", "172.18.58.8").toString();
+    //     base = paramsSocket.value("CONFIG/BDD", "DMXBDD").toString();
+    //     log = paramsSocket.value("CONFIG/username", "ciel").toString();
+    //     mdp = paramsSocket.value("CONFIG/password", "ciel").toString();
+    // }
 
     bdd.setHostName(ip);
     bdd.setDatabaseName(base);
