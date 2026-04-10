@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/home/USERS/ELEVES/CIEL2024/alaffiac/Documents/projet/BDD/Bdd" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="0"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1627"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,6:mainCANAUX"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="CANAUX" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="57"/><column index="2" value="96"/><column index="3" value="78"/><column index="4" value="101"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">-- Activer les clés étrangères
+PRAGMA foreign_keys = ON;
+
+-- Supprimer toutes les tables (dans l'ordre pour éviter les erreurs de dépendances)
+DROP TABLE IF EXISTS PILOTE;
+DROP TABLE IF EXISTS FONCTIONNALITE_CANAL;
+DROP TABLE IF EXISTS CANAUX;
+DROP TABLE IF EXISTS EQUIPEMENTS;
+DROP TABLE IF EXISTS SCENES;
+DROP TABLE IF EXISTS UNIVERS;
+
+-- Recréer les tables avec les clés étrangères
+
+CREATE TABLE UNIVERS (
+    id_Univers VARCHAR(42) PRIMARY KEY NOT NULL,
+    numero_Univers VARCHAR(42),
+    adresse_Ip VARCHAR(42)
+);
+
+CREATE TABLE SCENES (
+    id_scene VARCHAR(42) PRIMARY KEY NOT NULL,
+    nom_scene VARCHAR(42)
+);
+
+CREATE TABLE EQUIPEMENTS (
+    id_Equipement VARCHAR(42) PRIMARY KEY NOT NULL,
+    nom_Equipement VARCHAR(42),
+    adresse_Depart VARCHAR(42),
+    nb_Canal INTEGER,
+    id_Univers VARCHAR(42) NOT NULL,
+    FOREIGN KEY (id_Univers) REFERENCES UNIVERS(id_Univers)
+);
+
+CREATE TABLE CANAUX (
+    id_Canal VARCHAR(42) PRIMARY KEY NOT NULL,
+    nom_Canal VARCHAR(42),
+    id_Equipement VARCHAR(42) NOT NULL,
+    FOREIGN KEY (id_Equipement) REFERENCES EQUIPEMENTS(id_Equipement)
+);
+
+CREATE TABLE FONCTIONNALITE_CANAL (
+    id_Fonctionnalite VARCHAR(42) PRIMARY KEY NOT NULL,
+    valeur_Min REAL,
+    valeur_Max REAL,
+    fonction VARCHAR(42),
+    id_Canal VARCHAR(42) NOT NULL,
+    FOREIGN KEY (id_Canal) REFERENCES CANAUX(id_Canal)
+);
+
+CREATE TABLE PILOTE (
+    id_scene VARCHAR(42) NOT NULL,
+    id_Canal VARCHAR(42) NOT NULL,
+    valeur_des_canaux VARCHAR(42),
+    PRIMARY KEY (id_scene, id_Canal),
+    FOREIGN KEY (id_Canal) REFERENCES CANAUX(id_Canal),
+    FOREIGN KEY (id_scene) REFERENCES SCENES(id_scene)
+);</sql><current_tab id="0"/></tab_sql></sqlb_project>
