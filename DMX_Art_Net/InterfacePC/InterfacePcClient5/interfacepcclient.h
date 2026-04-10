@@ -1,3 +1,10 @@
+/**
+ * @file interfacepcclient.h
+ * @brief Déclaration de la classe InterfacePcClient
+ * @author Antoine ALLARD
+ * @date 10/04/2026
+ */
+
 #ifndef INTERFACEPCCLIENT_H
 #define INTERFACEPCCLIENT_H
 
@@ -18,7 +25,10 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class InterfacePcClient; }
 QT_END_NAMESPACE
 
-
+/**
+ * @struct SliderWidgetSet
+ * @brief Structure regroupant les widgets et données nécessaires à la gestion d'un canal DMX via un slider
+ */
 struct SliderWidgetSet {
     int      idCanalDB = -1;
     QLabel*  labelTitre;
@@ -75,19 +85,29 @@ private slots:
     void refreshLiveScenesList(int idUniversFiltre);
 
 private:
+    /// Pointeur vers l'interface utilisateur générée par Qt Designer
     Ui::InterfacePcClient *ui;
+    /// Composition avec la classe AccessBDD pour accéder à la base de données
     AccessBDD bdd;
+    /// Composition avec la classe QTcpSocket pour communiquer via le protocole TCP en étant client
     QTcpSocket socketClient;
-
+    /// Liste stockant les données des univers récupérées depuis la base de données
     QList<UniversData>     universList;
+    /// Liste stockant les équipements DMX actuellement chargés en mémoire
     QList<EquipmentData>   equipmentsList;
+    /// Liste stockant l'ensemble des scènes enregistrées
     QList<SceneData>       scenesList;
+    /// Liste regroupant les ensembles de widgets (sliders et labels) pour le contrôle DMX
     QList<SliderWidgetSet> dmxSliders;
-
+    /// Index de l'équipement en cours de modification dans la liste (-1 si aucun)
     int currentEditEquipIndex = -1;
+    /// Compteur utilisé pour l'indexation et la gestion dynamique des canaux dans les formulaires
     int channelCounter        = 0;
+    /// Identifiant de la scène actuellement sélectionnée dans le mode Live
     int selectedLiveSceneId   = -1;
-    QString couleurActuelle = "#383838";
+    /// Stockage du code couleur hexadécimal sélectionné pour l'équipement
+    QString couleurActuelle = "#FFFFFF";
+    /// Label affiché dans la barre d'état pour indiquer l'état de la connexion ou les erreurs
     QLabel*      statusLabel;
 
     void refreshEquipmentsGrid();

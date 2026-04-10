@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>InterfacePcClient5:  Fichier source de InterfacePcClient5/accessbdd.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">InterfacePcClient5<span id="projectnumber">&#160;1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('accessbdd_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">accessbdd.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="accessbdd_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#ifndef ACCESSBDD_H</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define ACCESSBDD_H</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;QSqlDatabase&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;QFileInfo&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;QSettings&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;QMessageBox&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;QSqlError&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;QSqlQuery&gt;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;QList&gt;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="foldopen" id="foldopen00023" data-start="{" data-end="};">
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="structUniversData.html">   23</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structUniversData.html">UniversData</a> {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="structUniversData.html#ac655ccb532a04880f734837d3bb82c92">   24</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structUniversData.html#ac655ccb532a04880f734837d3bb82c92">idUnivers</a>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="structUniversData.html#aa443cdbca420f7a45837970db80b62ba">   25</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structUniversData.html#aa443cdbca420f7a45837970db80b62ba">numero</a>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="structUniversData.html#a3c127c5dc779cf2a5baf81850939f9b3">   26</a></span>    QString <a class="code hl_variable" href="structUniversData.html#a3c127c5dc779cf2a5baf81850939f9b3">ip</a>;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>};</div>
+</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="foldopen" id="foldopen00033" data-start="{" data-end="};">
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="structFunctionData.html">   33</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structFunctionData.html">FunctionData</a> {</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="structFunctionData.html#a6eea552fb1acd96b37e802c7da35258a">   34</a></span>    QString <a class="code hl_variable" href="structFunctionData.html#a6eea552fb1acd96b37e802c7da35258a">nom</a>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="structFunctionData.html#ac3f149bdd8587cb6193d9feff2e2970d">   35</a></span>    QString <a class="code hl_variable" href="structFunctionData.html#ac3f149bdd8587cb6193d9feff2e2970d">min</a>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="structFunctionData.html#a7ebd3bdfbb016c0c063a7c722c6195e2">   36</a></span>    QString <a class="code hl_variable" href="structFunctionData.html#a7ebd3bdfbb016c0c063a7c722c6195e2">max</a>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>};</div>
+</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="foldopen" id="foldopen00043" data-start="{" data-end="};">
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="structChannelData.html">   43</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structChannelData.html">ChannelData</a> {</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="structChannelData.html#adb8133bdb5c550fbd20ac9e7984a81f8">   44</a></span>    QString <a class="code hl_variable" href="structChannelData.html#adb8133bdb5c550fbd20ac9e7984a81f8">description</a>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="structChannelData.html#a2509da621a71099bedf75218f494eb46">   45</a></span>    QList&lt;FunctionData&gt; <a class="code hl_variable" href="structChannelData.html#a2509da621a71099bedf75218f494eb46">fonctions</a>;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>};</div>
+</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="foldopen" id="foldopen00052" data-start="{" data-end="};">
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="structEquipmentData.html">   52</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structEquipmentData.html">EquipmentData</a> {</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="structEquipmentData.html#a4e460a3a22d8a7f3ef42a916b1930afc">   53</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structEquipmentData.html#a4e460a3a22d8a7f3ef42a916b1930afc">idEquipement</a>;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="structEquipmentData.html#aa34ec304c6a4ff6b8091e291059e71a9">   54</a></span>    QString <a class="code hl_variable" href="structEquipmentData.html#aa34ec304c6a4ff6b8091e291059e71a9">nom</a>;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="structEquipmentData.html#af19820c5948b02aa2e66ecb6eea91047">   55</a></span>    QString <a class="code hl_variable" href="structEquipmentData.html#af19820c5948b02aa2e66ecb6eea91047">univers</a>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="structEquipmentData.html#aed9ac6159c39c16906f8f5c9d717c70b">   56</a></span>    QString <a class="code hl_variable" href="structEquipmentData.html#aed9ac6159c39c16906f8f5c9d717c70b">dmxStart</a>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="structEquipmentData.html#aa5bea8cc28e9d229d9975bfd1800dd0f">   57</a></span>    QList&lt;ChannelData&gt; <a class="code hl_variable" href="structEquipmentData.html#aa5bea8cc28e9d229d9975bfd1800dd0f">canaux</a>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="structEquipmentData.html#ad3c9d8dfb70fc175d2091dde1358e55b">   58</a></span>    QString <a class="code hl_variable" href="structEquipmentData.html#ad3c9d8dfb70fc175d2091dde1358e55b">couleur</a>;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>};</div>
+</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="foldopen" id="foldopen00065" data-start="{" data-end="};">
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="structDmxFunctionInfo.html">   65</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structDmxFunctionInfo.html">DmxFunctionInfo</a> {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="structDmxFunctionInfo.html#a8272b2b0787b1dad8a3c6bbd9882a09d">   66</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structDmxFunctionInfo.html#a8272b2b0787b1dad8a3c6bbd9882a09d">min</a>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="structDmxFunctionInfo.html#a7eed36c687eae078ab9b8dbf6dea2f10">   67</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structDmxFunctionInfo.html#a7eed36c687eae078ab9b8dbf6dea2f10">max</a>;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="structDmxFunctionInfo.html#a8dbb804cc650a55f15c25d510a40e323">   68</a></span>    QString <a class="code hl_variable" href="structDmxFunctionInfo.html#a8dbb804cc650a55f15c25d510a40e323">nom</a>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>};</div>
+</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="foldopen" id="foldopen00075" data-start="{" data-end="};">
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="structDmxChannelInfo.html">   75</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structDmxChannelInfo.html">DmxChannelInfo</a> {</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="structDmxChannelInfo.html#a8ffa008cffe12e399b997c6710780bbc">   76</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structDmxChannelInfo.html#a8ffa008cffe12e399b997c6710780bbc">idCanal</a> = -1;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="structDmxChannelInfo.html#a532e2f26a515e812e4bf53d8a6381659">   77</a></span>    QString <a class="code hl_variable" href="structDmxChannelInfo.html#a532e2f26a515e812e4bf53d8a6381659">nomEquipement</a>;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="structDmxChannelInfo.html#a5dbc844ad6e3f9040ab7118bb23a4c39">   78</a></span>    QString <a class="code hl_variable" href="structDmxChannelInfo.html#a5dbc844ad6e3f9040ab7118bb23a4c39">couleur</a>;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="structDmxChannelInfo.html#a3777ed14c21a33e42a0acd1023f751d2">   79</a></span>    QString <a class="code hl_variable" href="structDmxChannelInfo.html#a3777ed14c21a33e42a0acd1023f751d2">description</a>;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="structDmxChannelInfo.html#a9afc7ff095b5c5e95e26438bd99dbeda">   80</a></span>    QList&lt;DmxFunctionInfo&gt; <a class="code hl_variable" href="structDmxChannelInfo.html#a9afc7ff095b5c5e95e26438bd99dbeda">fonctions</a>;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>};</div>
+</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="foldopen" id="foldopen00087" data-start="{" data-end="};">
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="structSceneData.html">   87</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structSceneData.html">SceneData</a> {</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="structSceneData.html#a6fa2e2229056028756e8e71c7b27fec5">   88</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structSceneData.html#a6fa2e2229056028756e8e71c7b27fec5">idScene</a>;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="structSceneData.html#a6a6a3c2d9ea9ede2ea363e97783a4a2a">   89</a></span>    QString <a class="code hl_variable" href="structSceneData.html#a6a6a3c2d9ea9ede2ea363e97783a4a2a">nomScene</a>;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>};</div>
+</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="foldopen" id="foldopen00092" data-start="{" data-end="};">
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="classAccessBDD.html">   92</a></span><span class="keyword">class </span><a class="code hl_class" href="classAccessBDD.html">AccessBDD</a> {</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classAccessBDD.html#a28d380948ddfc2a334c0d3a96e9bd60a">   95</a></span>    QSqlDatabase <a class="code hl_variable" href="classAccessBDD.html#a28d380948ddfc2a334c0d3a96e9bd60a">bdd</a>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <a class="code hl_function" href="classAccessBDD.html#aeaf47e448dfc27eaa92eccf384e0fd43">AccessBDD</a>();</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    QList&lt;UniversData&gt; <a class="code hl_function" href="classAccessBDD.html#a564f7da01c1ca7f8518ef614982c0d60">chargerUnivers</a>();</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classAccessBDD.html#abfc04d3385b49710031fc194142f909b">enregistrerUnivers</a>(<span class="keywordtype">int</span> numero, <span class="keyword">const</span> QString&amp; ip);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classAccessBDD.html#adb9de194ff0ed426ab0de6d384d0572c">modifierUnivers</a>(<span class="keywordtype">int</span> idUnivers, <span class="keywordtype">int</span> numero, <span class="keyword">const</span> QString&amp; ip);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classAccessBDD.html#a2493d570379d6dd3cfcbe4256fb726f7">supprimerUnivers</a>(<span class="keywordtype">int</span> idUnivers);</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classAccessBDD.html#a370f646ebd0b12f2bb1463582b7597f6">enregistrerEquipment</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structEquipmentData.html">EquipmentData</a>&amp; eq, <span class="keywordtype">int</span> idUniversSelectionne);</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classAccessBDD.html#ad43b75d6783e2be2e7168de380927383">supprimerEquipment</a>(<span class="keywordtype">int</span> idEquipement);</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classAccessBDD.html#ad49944beca2acf29f4d7b28702f1f343">modifierEquipment</a>(<span class="keywordtype">int</span> idEquipement, <span class="keyword">const</span> <a class="code hl_struct" href="structEquipmentData.html">EquipmentData</a>&amp; eq, <span class="keywordtype">int</span> idUniversSelectionne);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    QList&lt;EquipmentData&gt; <a class="code hl_function" href="classAccessBDD.html#a9bfba18f6e2aeacd016cedab940cba4b">chargerTousLesEquipements</a>();</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    QMap&lt;int, DmxChannelInfo&gt; <a class="code hl_function" href="classAccessBDD.html#a34f36f5a9e4a8c78c40790555c851045">chargerMapUnivers</a>(<span class="keywordtype">int</span> idUnivers);</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classAccessBDD.html#ad9b35dd0addec706b7733a68aad6a08d">enregistrerScene</a>(<span class="keyword">const</span> QString&amp; nomScene, <span class="keyword">const</span> QMap&lt;int, int&gt;&amp; valeursCanaux);</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keywordtype">int</span> <a class="code hl_function" href="classAccessBDD.html#a64f2e58f9aa7811b24c22bc3e60b9701">recupererCompteurCanaux</a>(<span class="keywordtype">int</span> index);</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    QList&lt;SceneData&gt; <a class="code hl_function" href="classAccessBDD.html#a43713dbd32f1afb9e70343ca354b5485">chargerLesScenes</a>();</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    QMap&lt;int, int&gt; <a class="code hl_function" href="classAccessBDD.html#a2b86299465c4f43f0d523d680a0c7e7f">chargerValeursScene</a>(<span class="keywordtype">int</span> idScene);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keywordtype">int</span> <a class="code hl_function" href="classAccessBDD.html#ad18f0bf6e09e8e39c01830a96e851106">getUniversDeScene</a>(<span class="keywordtype">int</span> idScene);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classAccessBDD.html#ae34fdbcbda6006d05774cab17a7bd3b3">renommerScene</a>(<span class="keywordtype">int</span> idScene, <span class="keyword">const</span> QString&amp; nouveauNom);</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classAccessBDD.html#a2c506b36f23de3e2c160762970126b10">supprimerScene</a>(<span class="keywordtype">int</span> idScene);</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>};</div>
+</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclassAccessBDD_html"><div class="ttname"><a href="classAccessBDD.html">AccessBDD</a></div><div class="ttdef"><b>Definition</b> accessbdd.h:92</div></div>
+<div class="ttc" id="aclassAccessBDD_html_a2493d570379d6dd3cfcbe4256fb726f7"><div class="ttname"><a href="classAccessBDD.html#a2493d570379d6dd3cfcbe4256fb726f7">AccessBDD::supprimerUnivers</a></div><div class="ttdeci">bool supprimerUnivers(int idUnivers)</div><div class="ttdoc">AccessBDD::supprimerUnivers.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:118</div></div>
+<div class="ttc" id="aclassAccessBDD_html_a28d380948ddfc2a334c0d3a96e9bd60a"><div class="ttname"><a href="classAccessBDD.html#a28d380948ddfc2a334c0d3a96e9bd60a">AccessBDD::bdd</a></div><div class="ttdeci">QSqlDatabase bdd</div><div class="ttdoc">Objet gérant la connexion et les requêtes vers la base de données SQL.</div><div class="ttdef"><b>Definition</b> accessbdd.h:95</div></div>
+<div class="ttc" id="aclassAccessBDD_html_a2b86299465c4f43f0d523d680a0c7e7f"><div class="ttname"><a href="classAccessBDD.html#a2b86299465c4f43f0d523d680a0c7e7f">AccessBDD::chargerValeursScene</a></div><div class="ttdeci">QMap&lt; int, int &gt; chargerValeursScene(int idScene)</div><div class="ttdoc">AccessBDD::chargerValeursScene.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:462</div></div>
+<div class="ttc" id="aclassAccessBDD_html_a2c506b36f23de3e2c160762970126b10"><div class="ttname"><a href="classAccessBDD.html#a2c506b36f23de3e2c160762970126b10">AccessBDD::supprimerScene</a></div><div class="ttdeci">bool supprimerScene(int idScene)</div><div class="ttdoc">AccessBDD::supprimerScene.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:514</div></div>
+<div class="ttc" id="aclassAccessBDD_html_a34f36f5a9e4a8c78c40790555c851045"><div class="ttname"><a href="classAccessBDD.html#a34f36f5a9e4a8c78c40790555c851045">AccessBDD::chargerMapUnivers</a></div><div class="ttdeci">QMap&lt; int, DmxChannelInfo &gt; chargerMapUnivers(int idUnivers)</div><div class="ttdoc">AccessBDD::chargerMapUnivers.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:336</div></div>
+<div class="ttc" id="aclassAccessBDD_html_a370f646ebd0b12f2bb1463582b7597f6"><div class="ttname"><a href="classAccessBDD.html#a370f646ebd0b12f2bb1463582b7597f6">AccessBDD::enregistrerEquipment</a></div><div class="ttdeci">bool enregistrerEquipment(const EquipmentData &amp;eq, int idUniversSelectionne)</div><div class="ttdoc">AccessBDD::enregistrerEquipment.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:135</div></div>
+<div class="ttc" id="aclassAccessBDD_html_a43713dbd32f1afb9e70343ca354b5485"><div class="ttname"><a href="classAccessBDD.html#a43713dbd32f1afb9e70343ca354b5485">AccessBDD::chargerLesScenes</a></div><div class="ttdeci">QList&lt; SceneData &gt; chargerLesScenes()</div><div class="ttdoc">AccessBDD::chargerLesScenes.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:444</div></div>
+<div class="ttc" id="aclassAccessBDD_html_a564f7da01c1ca7f8518ef614982c0d60"><div class="ttname"><a href="classAccessBDD.html#a564f7da01c1ca7f8518ef614982c0d60">AccessBDD::chargerUnivers</a></div><div class="ttdeci">QList&lt; UniversData &gt; chargerUnivers()</div><div class="ttdoc">AccessBDD::chargerUnivers.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:57</div></div>
+<div class="ttc" id="aclassAccessBDD_html_a64f2e58f9aa7811b24c22bc3e60b9701"><div class="ttname"><a href="classAccessBDD.html#a64f2e58f9aa7811b24c22bc3e60b9701">AccessBDD::recupererCompteurCanaux</a></div><div class="ttdeci">int recupererCompteurCanaux(int index)</div><div class="ttdoc">AccessBDD::recupererCompteurCanaux.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:424</div></div>
+<div class="ttc" id="aclassAccessBDD_html_a9bfba18f6e2aeacd016cedab940cba4b"><div class="ttname"><a href="classAccessBDD.html#a9bfba18f6e2aeacd016cedab940cba4b">AccessBDD::chargerTousLesEquipements</a></div><div class="ttdeci">QList&lt; EquipmentData &gt; chargerTousLesEquipements()</div><div class="ttdoc">AccessBDD::chargerTousLesEquipements.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:284</div></div>
+<div class="ttc" id="aclassAccessBDD_html_abfc04d3385b49710031fc194142f909b"><div class="ttname"><a href="classAccessBDD.html#abfc04d3385b49710031fc194142f909b">AccessBDD::enregistrerUnivers</a></div><div class="ttdeci">bool enregistrerUnivers(int numero, const QString &amp;ip)</div><div class="ttdoc">AccessBDD::enregistrerUnivers.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:78</div></div>
+<div class="ttc" id="aclassAccessBDD_html_ad18f0bf6e09e8e39c01830a96e851106"><div class="ttname"><a href="classAccessBDD.html#ad18f0bf6e09e8e39c01830a96e851106">AccessBDD::getUniversDeScene</a></div><div class="ttdeci">int getUniversDeScene(int idScene)</div><div class="ttdoc">AccessBDD::getUniversDeScene.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:481</div></div>
+<div class="ttc" id="aclassAccessBDD_html_ad43b75d6783e2be2e7168de380927383"><div class="ttname"><a href="classAccessBDD.html#ad43b75d6783e2be2e7168de380927383">AccessBDD::supprimerEquipment</a></div><div class="ttdeci">bool supprimerEquipment(int idEquipement)</div><div class="ttdoc">AccessBDD::supprimerEquipment.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:197</div></div>
+<div class="ttc" id="aclassAccessBDD_html_ad49944beca2acf29f4d7b28702f1f343"><div class="ttname"><a href="classAccessBDD.html#ad49944beca2acf29f4d7b28702f1f343">AccessBDD::modifierEquipment</a></div><div class="ttdeci">bool modifierEquipment(int idEquipement, const EquipmentData &amp;eq, int idUniversSelectionne)</div><div class="ttdoc">AccessBDD::modifierEquipment.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:214</div></div>
+<div class="ttc" id="aclassAccessBDD_html_ad9b35dd0addec706b7733a68aad6a08d"><div class="ttname"><a href="classAccessBDD.html#ad9b35dd0addec706b7733a68aad6a08d">AccessBDD::enregistrerScene</a></div><div class="ttdeci">bool enregistrerScene(const QString &amp;nomScene, const QMap&lt; int, int &gt; &amp;valeursCanaux)</div><div class="ttdoc">AccessBDD::enregistrerScene.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:383</div></div>
+<div class="ttc" id="aclassAccessBDD_html_adb9de194ff0ed426ab0de6d384d0572c"><div class="ttname"><a href="classAccessBDD.html#adb9de194ff0ed426ab0de6d384d0572c">AccessBDD::modifierUnivers</a></div><div class="ttdeci">bool modifierUnivers(int idUnivers, int numero, const QString &amp;ip)</div><div class="ttdoc">AccessBDD::modifierUnivers.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:101</div></div>
+<div class="ttc" id="aclassAccessBDD_html_ae34fdbcbda6006d05774cab17a7bd3b3"><div class="ttname"><a href="classAccessBDD.html#ae34fdbcbda6006d05774cab17a7bd3b3">AccessBDD::renommerScene</a></div><div class="ttdeci">bool renommerScene(int idScene, const QString &amp;nouveauNom)</div><div class="ttdoc">AccessBDD::renommerScene.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:499</div></div>
+<div class="ttc" id="aclassAccessBDD_html_aeaf47e448dfc27eaa92eccf384e0fd43"><div class="ttname"><a href="classAccessBDD.html#aeaf47e448dfc27eaa92eccf384e0fd43">AccessBDD::AccessBDD</a></div><div class="ttdeci">AccessBDD()</div><div class="ttdoc">AccessBDD::AccessBDD.</div><div class="ttdef"><b>Definition</b> accessbdd.cpp:18</div></div>
+<div class="ttc" id="astructChannelData_html"><div class="ttname"><a href="structChannelData.html">ChannelData</a></div><div class="ttdoc">Représente un canal DMX individuel au sein d'un équipement.</div><div class="ttdef"><b>Definition</b> accessbdd.h:43</div></div>
+<div class="ttc" id="astructChannelData_html_a2509da621a71099bedf75218f494eb46"><div class="ttname"><a href="structChannelData.html#a2509da621a71099bedf75218f494eb46">ChannelData::fonctions</a></div><div class="ttdeci">QList&lt; FunctionData &gt; fonctions</div><div class="ttdef"><b>Definition</b> accessbdd.h:45</div></div>
+<div class="ttc" id="astructChannelData_html_adb8133bdb5c550fbd20ac9e7984a81f8"><div class="ttname"><a href="structChannelData.html#adb8133bdb5c550fbd20ac9e7984a81f8">ChannelData::description</a></div><div class="ttdeci">QString description</div><div class="ttdef"><b>Definition</b> accessbdd.h:44</div></div>
+<div class="ttc" id="astructDmxChannelInfo_html"><div class="ttname"><a href="structDmxChannelInfo.html">DmxChannelInfo</a></div><div class="ttdoc">Structure détaillée d'un canal pour la cartographie d'un univers.</div><div class="ttdef"><b>Definition</b> accessbdd.h:75</div></div>
+<div class="ttc" id="astructDmxChannelInfo_html_a3777ed14c21a33e42a0acd1023f751d2"><div class="ttname"><a href="structDmxChannelInfo.html#a3777ed14c21a33e42a0acd1023f751d2">DmxChannelInfo::description</a></div><div class="ttdeci">QString description</div><div class="ttdef"><b>Definition</b> accessbdd.h:79</div></div>
+<div class="ttc" id="astructDmxChannelInfo_html_a532e2f26a515e812e4bf53d8a6381659"><div class="ttname"><a href="structDmxChannelInfo.html#a532e2f26a515e812e4bf53d8a6381659">DmxChannelInfo::nomEquipement</a></div><div class="ttdeci">QString nomEquipement</div><div class="ttdef"><b>Definition</b> accessbdd.h:77</div></div>
+<div class="ttc" id="astructDmxChannelInfo_html_a5dbc844ad6e3f9040ab7118bb23a4c39"><div class="ttname"><a href="structDmxChannelInfo.html#a5dbc844ad6e3f9040ab7118bb23a4c39">DmxChannelInfo::couleur</a></div><div class="ttdeci">QString couleur</div><div class="ttdef"><b>Definition</b> accessbdd.h:78</div></div>
+<div class="ttc" id="astructDmxChannelInfo_html_a8ffa008cffe12e399b997c6710780bbc"><div class="ttname"><a href="structDmxChannelInfo.html#a8ffa008cffe12e399b997c6710780bbc">DmxChannelInfo::idCanal</a></div><div class="ttdeci">int idCanal</div><div class="ttdef"><b>Definition</b> accessbdd.h:76</div></div>
+<div class="ttc" id="astructDmxChannelInfo_html_a9afc7ff095b5c5e95e26438bd99dbeda"><div class="ttname"><a href="structDmxChannelInfo.html#a9afc7ff095b5c5e95e26438bd99dbeda">DmxChannelInfo::fonctions</a></div><div class="ttdeci">QList&lt; DmxFunctionInfo &gt; fonctions</div><div class="ttdef"><b>Definition</b> accessbdd.h:80</div></div>
+<div class="ttc" id="astructDmxFunctionInfo_html"><div class="ttname"><a href="structDmxFunctionInfo.html">DmxFunctionInfo</a></div><div class="ttdoc">Version simplifiée d'une fonction pour le traitement des données Live.</div><div class="ttdef"><b>Definition</b> accessbdd.h:65</div></div>
+<div class="ttc" id="astructDmxFunctionInfo_html_a7eed36c687eae078ab9b8dbf6dea2f10"><div class="ttname"><a href="structDmxFunctionInfo.html#a7eed36c687eae078ab9b8dbf6dea2f10">DmxFunctionInfo::max</a></div><div class="ttdeci">int max</div><div class="ttdef"><b>Definition</b> accessbdd.h:67</div></div>
+<div class="ttc" id="astructDmxFunctionInfo_html_a8272b2b0787b1dad8a3c6bbd9882a09d"><div class="ttname"><a href="structDmxFunctionInfo.html#a8272b2b0787b1dad8a3c6bbd9882a09d">DmxFunctionInfo::min</a></div><div class="ttdeci">int min</div><div class="ttdef"><b>Definition</b> accessbdd.h:66</div></div>
+<div class="ttc" id="astructDmxFunctionInfo_html_a8dbb804cc650a55f15c25d510a40e323"><div class="ttname"><a href="structDmxFunctionInfo.html#a8dbb804cc650a55f15c25d510a40e323">DmxFunctionInfo::nom</a></div><div class="ttdeci">QString nom</div><div class="ttdef"><b>Definition</b> accessbdd.h:68</div></div>
+<div class="ttc" id="astructEquipmentData_html"><div class="ttname"><a href="structEquipmentData.html">EquipmentData</a></div><div class="ttdoc">Modélise un appareil DMX complet (projecteur, lyre, etc.).</div><div class="ttdef"><b>Definition</b> accessbdd.h:52</div></div>
+<div class="ttc" id="astructEquipmentData_html_a4e460a3a22d8a7f3ef42a916b1930afc"><div class="ttname"><a href="structEquipmentData.html#a4e460a3a22d8a7f3ef42a916b1930afc">EquipmentData::idEquipement</a></div><div class="ttdeci">int idEquipement</div><div class="ttdef"><b>Definition</b> accessbdd.h:53</div></div>
+<div class="ttc" id="astructEquipmentData_html_aa34ec304c6a4ff6b8091e291059e71a9"><div class="ttname"><a href="structEquipmentData.html#aa34ec304c6a4ff6b8091e291059e71a9">EquipmentData::nom</a></div><div class="ttdeci">QString nom</div><div class="ttdef"><b>Definition</b> accessbdd.h:54</div></div>
+<div class="ttc" id="astructEquipmentData_html_aa5bea8cc28e9d229d9975bfd1800dd0f"><div class="ttname"><a href="structEquipmentData.html#aa5bea8cc28e9d229d9975bfd1800dd0f">EquipmentData::canaux</a></div><div class="ttdeci">QList&lt; ChannelData &gt; canaux</div><div class="ttdef"><b>Definition</b> accessbdd.h:57</div></div>
+<div class="ttc" id="astructEquipmentData_html_ad3c9d8dfb70fc175d2091dde1358e55b"><div class="ttname"><a href="structEquipmentData.html#ad3c9d8dfb70fc175d2091dde1358e55b">EquipmentData::couleur</a></div><div class="ttdeci">QString couleur</div><div class="ttdef"><b>Definition</b> accessbdd.h:58</div></div>
+<div class="ttc" id="astructEquipmentData_html_aed9ac6159c39c16906f8f5c9d717c70b"><div class="ttname"><a href="structEquipmentData.html#aed9ac6159c39c16906f8f5c9d717c70b">EquipmentData::dmxStart</a></div><div class="ttdeci">QString dmxStart</div><div class="ttdef"><b>Definition</b> accessbdd.h:56</div></div>
+<div class="ttc" id="astructEquipmentData_html_af19820c5948b02aa2e66ecb6eea91047"><div class="ttname"><a href="structEquipmentData.html#af19820c5948b02aa2e66ecb6eea91047">EquipmentData::univers</a></div><div class="ttdeci">QString univers</div><div class="ttdef"><b>Definition</b> accessbdd.h:55</div></div>
+<div class="ttc" id="astructFunctionData_html"><div class="ttname"><a href="structFunctionData.html">FunctionData</a></div><div class="ttdoc">Définit une plage de valeurs DMX pour une fonction précise d'un canal.</div><div class="ttdef"><b>Definition</b> accessbdd.h:33</div></div>
+<div class="ttc" id="astructFunctionData_html_a6eea552fb1acd96b37e802c7da35258a"><div class="ttname"><a href="structFunctionData.html#a6eea552fb1acd96b37e802c7da35258a">FunctionData::nom</a></div><div class="ttdeci">QString nom</div><div class="ttdef"><b>Definition</b> accessbdd.h:34</div></div>
+<div class="ttc" id="astructFunctionData_html_a7ebd3bdfbb016c0c063a7c722c6195e2"><div class="ttname"><a href="structFunctionData.html#a7ebd3bdfbb016c0c063a7c722c6195e2">FunctionData::max</a></div><div class="ttdeci">QString max</div><div class="ttdef"><b>Definition</b> accessbdd.h:36</div></div>
+<div class="ttc" id="astructFunctionData_html_ac3f149bdd8587cb6193d9feff2e2970d"><div class="ttname"><a href="structFunctionData.html#ac3f149bdd8587cb6193d9feff2e2970d">FunctionData::min</a></div><div class="ttdeci">QString min</div><div class="ttdef"><b>Definition</b> accessbdd.h:35</div></div>
+<div class="ttc" id="astructSceneData_html"><div class="ttname"><a href="structSceneData.html">SceneData</a></div><div class="ttdoc">Représente une scène (un état lumineux) enregistrée.</div><div class="ttdef"><b>Definition</b> accessbdd.h:87</div></div>
+<div class="ttc" id="astructSceneData_html_a6a6a3c2d9ea9ede2ea363e97783a4a2a"><div class="ttname"><a href="structSceneData.html#a6a6a3c2d9ea9ede2ea363e97783a4a2a">SceneData::nomScene</a></div><div class="ttdeci">QString nomScene</div><div class="ttdef"><b>Definition</b> accessbdd.h:89</div></div>
+<div class="ttc" id="astructSceneData_html_a6fa2e2229056028756e8e71c7b27fec5"><div class="ttname"><a href="structSceneData.html#a6fa2e2229056028756e8e71c7b27fec5">SceneData::idScene</a></div><div class="ttdeci">int idScene</div><div class="ttdef"><b>Definition</b> accessbdd.h:88</div></div>
+<div class="ttc" id="astructUniversData_html"><div class="ttname"><a href="structUniversData.html">UniversData</a></div><div class="ttdoc">Regroupe les informations d'identification d'un univers DMX.</div><div class="ttdef"><b>Definition</b> accessbdd.h:23</div></div>
+<div class="ttc" id="astructUniversData_html_a3c127c5dc779cf2a5baf81850939f9b3"><div class="ttname"><a href="structUniversData.html#a3c127c5dc779cf2a5baf81850939f9b3">UniversData::ip</a></div><div class="ttdeci">QString ip</div><div class="ttdef"><b>Definition</b> accessbdd.h:26</div></div>
+<div class="ttc" id="astructUniversData_html_aa443cdbca420f7a45837970db80b62ba"><div class="ttname"><a href="structUniversData.html#aa443cdbca420f7a45837970db80b62ba">UniversData::numero</a></div><div class="ttdeci">int numero</div><div class="ttdef"><b>Definition</b> accessbdd.h:25</div></div>
+<div class="ttc" id="astructUniversData_html_ac655ccb532a04880f734837d3bb82c92"><div class="ttname"><a href="structUniversData.html#ac655ccb532a04880f734837d3bb82c92">UniversData::idUnivers</a></div><div class="ttdeci">int idUnivers</div><div class="ttdef"><b>Definition</b> accessbdd.h:24</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_79566e75b4553cf77f804f3d3808e624.html">InterfacePcClient5</a></li><li class="navelem"><a class="el" href="accessbdd_8h.html">accessbdd.h</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

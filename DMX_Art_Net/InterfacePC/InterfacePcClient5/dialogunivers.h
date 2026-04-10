@@ -1,3 +1,10 @@
+/**
+ * @file dialogunivers.h
+ * @brief Déclaration de la classe DialogUnivers
+ * @author Antoine ALLARD
+ * @date 10/04/2026
+ */
+
 #ifndef DIALOGUNIVERS_H
 #define DIALOGUNIVERS_H
 
@@ -20,6 +27,7 @@ public:
     QString getIpUnivers();
 
 private:
+    /// Pointeur vers l'interface utilisateur graphique de la boîte de dialogue
     Ui::DialogUnivers *ui;
 };
 
