@@ -57,6 +57,7 @@ struct SceneData {
 class AccessBDD {
 private:
     QSqlDatabase bdd;
+    void initialiserSchema();
 public:
     AccessBDD();
     QList<UniversData> chargerUnivers();
