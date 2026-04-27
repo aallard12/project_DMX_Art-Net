@@ -2,6 +2,7 @@
 #include "accessbdd.h"
 
 #include <QApplication>
+#include <QTest>
 
 int main(int argc, char *argv[])
 {

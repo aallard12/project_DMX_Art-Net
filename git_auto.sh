@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# On se déplace dans le dossier souhaité
-#cd ...
-
 # On ajoute tous les fichiers
 git add *
 
@@ -15,6 +12,3 @@ git commit -m "$message"
 
 # On pousse les modifications
 git push
-
-# (Optionnel) On revient au dossier initial pour ne pas perturber le terminal si sourcé
-#cd ..

@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InterfacePcClient</class>
+ <widget class="QMainWindow" name="InterfacePcClient">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1314</width>
+    <height>811</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>DMX Equipment Manager</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow { background-color: #2b2b2b; }</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="mainLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QFrame" name="header">
+      <property name="styleSheet">
+       <string notr="true">QFrame#header { background-color: #1e1e1e; border-bottom: 1px solid #000; }</string>
+      </property>
+      <layout class="QHBoxLayout" name="headerLayout">
+       <property name="leftMargin">
+        <number>20</number>
+       </property>
+       <property name="topMargin">
+        <number>15</number>
+       </property>
+       <property name="rightMargin">
+        <number>20</number>
+       </property>
+       <property name="bottomMargin">
+        <number>15</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="mainTitle">
+         <property name="styleSheet">
+          <string notr="true">color: #ffffff; font-size: 20px; font-weight: bold; font-family: 'Segoe UI';</string>
+         </property>
+         <property name="text">
+          <string>DMX Equipment Manager</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="hSpacer">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnGoToList">
+         <property name="styleSheet">
+          <string notr="true">QPushButton { background-color: #107c7c; color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none; } QPushButton:hover { background-color: #149999; }</string>
+         </property>
+         <property name="text">
+          <string>Univers &amp; Équipements</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnAddMain">
+         <property name="styleSheet">
+          <string notr="true">QPushButton { background-color: #20b2aa; color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none; } QPushButton:hover { background-color: #149999; }</string>
+         </property>
+         <property name="text">
+          <string>+ Ajouter Équipement</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnGoToScenes">
+         <property name="styleSheet">
+          <string notr="true">QPushButton { background-color: #008b8b; color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none; } QPushButton:hover { background-color: #149999; }</string>
+         </property>
+         <property name="text">
+          <string>Créer les Scènes</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnGoToLive">
+         <property name="styleSheet">
+          <string notr="true">QPushButton { background-color: #005f5f; color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none; } QPushButton:hover { background-color: #149999; }</string>
+         </property>
+         <property name="text">
+          <string>Live / Régie</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="listPage">
+       <layout class="QHBoxLayout" name="listPageLayout">
+        <property name="margin" stdset="0">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QWidget" name="widget" native="true">
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="1" column="1">
+            <widget class="QComboBox" name="filterUniversCombo">
+             <property name="styleSheet">
+              <string notr="true">background-color: #383838; border: 1px solid #555; color: #ffffff; padding: 6px; border-radius: 4px;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QScrollArea" name="listScroll">
+             <property name="minimumSize">
+              <size>
+               <width>597</width>
+               <height>635</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::Shape::NoFrame</enum>
+             </property>
+             <property name="widgetResizable">
+              <bool>true</bool>
+             </property>
+             <widget class="QWidget" name="scrollContent">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>1022</width>
+                <height>635</height>
+               </rect>
+              </property>
+              <widget class="QWidget" name="gridLayoutWidget">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>1021</width>
+                 <height>631</height>
+                </rect>
+               </property>
+               <layout class="QGridLayout" name="equipmentsGrid">
+                <property name="spacing">
+                 <number>15</number>
+                </property>
+               </layout>
+              </widget>
+             </widget>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="filterLabel">
+             <property name="styleSheet">
+              <string notr="true">color: #aaaaaa; font-size: 12px; font-weight: normal;</string>
+             </property>
+             <property name="text">
+              <string>Filtrer les équipements :</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" rowspan="4">
+            <widget class="QFrame" name="sidebar">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>50</width>
+               <height>635</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>250</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QFrame#sidebar { background-color: #222222; border-right: 1px solid #111; } QLabel { color: #107c7c; font-size: 16px; font-weight: bold; }</string>
+             </property>
+             <layout class="QVBoxLayout" name="sidebarLayout">
+              <item>
+               <widget class="QLabel" name="uniTitle">
+                <property name="text">
+                 <string>UNIVERS DMX</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QListWidget" name="uiUniversList">
+                <property name="styleSheet">
+                 <string notr="true">QListWidget { background-color: #383838; border: 1px solid #555; color: #ffffff; border-radius: 4px; } QListWidget::item { padding: 10px; border-bottom: 1px solid #444; } QListWidget::item:selected { background-color: #107c7c; color: white; }</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="uniActionsLayout">
+                <item>
+                 <widget class="QPushButton" name="btnEditUnivers">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton { background-color: #555555; color: white; border-radius: 4px; padding: 8px; font-weight: bold; } QPushButton:hover { background-color: #666666; }</string>
+                  </property>
+                  <property name="text">
+                   <string>Modifier</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnDeleteUnivers">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton { background-color: #d32f2f; color: white; border-radius: 4px; padding: 8px; font-weight: bold; } QPushButton:hover { background-color: #f44336; }</string>
+                  </property>
+                  <property name="text">
+                   <string>Supprimer</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btnAddUnivers">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton { background-color: transparent; color: #107c7c; border: 1px dashed #107c7c; padding: 12px; border-radius: 4px; font-weight: bold; } QPushButton:hover { background-color: rgba(16, 124, 124, 0.1); }</string>
+                </property>
+                <property name="text">
+                 <string>+ Ajouter Univers</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="formPage">
+       <layout class="QVBoxLayout" name="formPageLayout">
+        <property name="margin" stdset="0">
+         <number>20</number>
+        </property>
+        <item>
+         <widget class="QScrollArea" name="formScroll">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="formScrollContent">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>1254</width>
+             <height>668</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: transparent;</string>
+           </property>
+           <layout class="QVBoxLayout" name="formLayout">
+            <item>
+             <widget class="QLabel" name="formTitle">
+              <property name="styleSheet">
+               <string notr="true">color: #107c7c; font-size: 16px; font-weight: bold;</string>
+              </property>
+              <property name="text">
+               <string>Équipement DMX</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="infoGrid">
+              <item row="1" column="0">
+               <widget class="QLineEdit" name="nameEdit">
+                <property name="styleSheet">
+                 <string notr="true">background-color: #383838; border: 1px solid #555; color: #ffffff; padding: 8px; border-radius: 4px;</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Ex. iRock7s</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QLineEdit" name="startAddressEdit">
+                <property name="styleSheet">
+                 <string notr="true">background-color: #383838; border: 1px solid #555; color: #ffffff; padding: 8px; border-radius: 4px;</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Ex. 1</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="universCombo">
+                <property name="styleSheet">
+                 <string notr="true">background-color: #383838; border: 1px solid #555; color: #ffffff; padding: 8px; border-radius: 4px;</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label">
+                <property name="styleSheet">
+                 <string>color: #cccccc;</string>
+                </property>
+                <property name="text">
+                 <string>NOM DE L'ÉQUIPEMENT</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QPushButton" name="pushButtonCouleur">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {background-color: &quot;#000000&quot; ;color: white; border-radius: 4px; padding: 8px; font-weight: bold;}</string>
+                </property>
+                <property name="text">
+                 <string>Couleur</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QLabel" name="channelCountLabel">
+              <property name="styleSheet">
+               <string notr="true">font-weight: bold; font-size: 13px; color: #aaaaaa;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="channelsFormLayout"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnAddChannelGlobal">
+              <property name="styleSheet">
+               <string notr="true">QPushButton { background-color: transparent; color: #107c7c; border: 1px dashed #107c7c; padding: 12px; border-radius: 4px; font-weight: bold; }</string>
+              </property>
+              <property name="text">
+               <string>+ Ajouter un canal</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="bottomLayout">
+              <item>
+               <spacer name="s">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btnCancel">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton { background-color: #555555; color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; }</string>
+                </property>
+                <property name="text">
+                 <string>Annuler</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btnSave">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton { background-color: #388e3c; color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; }</string>
+                </property>
+                <property name="text">
+                 <string>Enregistrer</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="scenesPage">
+       <layout class="QVBoxLayout" name="scenesPageLayout">
+        <property name="margin" stdset="0">
+         <number>20</number>
+        </property>
+        <item>
+         <layout class="QVBoxLayout" name="scenesTopLayout">
+          <item>
+           <layout class="QHBoxLayout" name="scenesH1">
+            <item>
+             <widget class="QLabel" name="scenesTitle">
+              <property name="styleSheet">
+               <string notr="true">color: #107c7c; font-size: 16px; font-weight: bold;</string>
+              </property>
+              <property name="text">
+               <string>GESTION DES SCÈNES</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="s2">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QComboBox" name="scenesUniversCombo">
+              <property name="styleSheet">
+               <string notr="true">background-color: #383838; color: white; padding: 5px; border-radius: 4px;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnResetSliders">
+              <property name="styleSheet">
+               <string notr="true">QPushButton { background-color: #555555; color: white; padding: 8px 16px; border-radius: 4px; font-weight: bold;}</string>
+              </property>
+              <property name="text">
+               <string>Reset 0</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="scenesH2">
+            <item>
+             <widget class="QComboBox" name="scenesCombo">
+              <property name="styleSheet">
+               <string notr="true">background-color: #383838; color: white; padding: 8px; border-radius: 4px;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnRenameScene">
+              <property name="styleSheet">
+               <string notr="true">QPushButton { background-color: #555555; color: white; padding: 8px 16px; border-radius: 4px; font-weight: bold; }</string>
+              </property>
+              <property name="text">
+               <string>Renommer</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnDeleteScene">
+              <property name="styleSheet">
+               <string notr="true">QPushButton { background-color: #d32f2f; color: white; padding: 8px 16px; border-radius: 4px; font-weight: bold; }</string>
+              </property>
+              <property name="text">
+               <string>Supprimer</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnSaveScene">
+              <property name="styleSheet">
+               <string notr="true">QPushButton { background-color: #388e3c; color: white; padding: 8px 16px; border-radius: 4px; font-weight: bold; }</string>
+              </property>
+              <property name="text">
+               <string>Sauvegarder</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QScrollArea" name="slidersScroll">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="slidersContainer">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>44</width>
+             <height>18</height>
+            </rect>
+           </property>
+           <layout class="QGridLayout" name="slidersGrid"/>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="livePage">
+       <layout class="QVBoxLayout" name="liveMainLayout">
+        <property name="margin" stdset="0">
+         <number>20</number>
+        </property>
+        <item>
+         <layout class="QHBoxLayout" name="liveTitleLayout">
+          <item>
+           <widget class="QLabel" name="liveTitle">
+            <property name="styleSheet">
+             <string notr="true">color: #107c7c; font-size: 16px; font-weight: bold;</string>
+            </property>
+            <property name="text">
+             <string>RÉGIE LIVE</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="liveTitleSpacer">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="liveFilterLabel">
+            <property name="styleSheet">
+             <string notr="true">color: #aaaaaa; font-size: 12px; font-weight: normal;</string>
+            </property>
+            <property name="text">
+             <string>Filtrer par univers :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="liveUniversCombo">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: #383838; border: 1px solid #555; color: #ffffff; padding: 6px; border-radius: 4px;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="tcpLayout">
+          <item>
+           <widget class="QLineEdit" name="lineEditIP">
+            <property name="styleSheet">
+             <string notr="true">background-color: #383838; color: white; padding: 8px; border-radius: 4px;</string>
+            </property>
+            <property name="text">
+             <string>192.168.1.20</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spinBoxPort">
+            <property name="styleSheet">
+             <string notr="true">background-color: #383838; color: white; padding: 8px; border-radius: 4px;</string>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+            <property name="value">
+             <number>12345</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnConnectTCP">
+            <property name="styleSheet">
+             <string notr="true">QPushButton { background-color: #555555;  color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none; }</string>
+            </property>
+            <property name="text">
+             <string>Connexion</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QListWidget" name="liveScenesList">
+          <property name="styleSheet">
+           <string notr="true">QListWidget { background-color: #383838; color: white; border-radius: 4px; } QListWidget::item { padding: 15px; border-bottom: 1px solid #444; } QListWidget::item:selected { background-color: #107c7c; font-weight: bold; }</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnLaunchLiveScene">
+          <property name="styleSheet">
+           <string notr="true">QPushButton { background-color: #388e3c; color: white; padding: 20px; border-radius: 8px; font-size: 18px; font-weight: bold; } QPushButton:disabled { background-color: #444444; color: #777777; }</string>
+          </property>
+          <property name="text">
+           <string>Lancer la scène</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,13 @@
+<map id="/home/USERS/ELEVES/CIEL2024/aallard/Cours/ANNEE2/Projet_Git/DMX_Art_Net/InterfacePC/InterfacePcClientTest/accessbdd.h" name="/home/USERS/ELEVES/CIEL2024/aallard/Cours/ANNEE2/Projet_Git/DMX_Art_Net/InterfacePC/InterfacePcClientTest/accessbdd.h">
+<area shape="rect" id="Node000001" title="Déclaration de la classe AccessBDD." alt="" coords="127,5,345,89"/>
+<area shape="rect" id="Node000002" href="$accessbdd_8cpp.html" title="Implémentation de la classe AccessBDD." alt="" coords="5,137,224,221"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,101,155,139,151,135,186,98"/>
+<area shape="rect" id="Node000003" href="$interfacepcclient_8h.html" title="Déclaration de la classe InterfacePcClient." alt="" coords="248,137,467,221"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="286,98,321,135,317,139,282,101"/>
+<area shape="rect" id="Node000004" href="$interfacepcclient_8cpp.html" title="Implémentation de la classe InterfacePcClient." alt="" coords="5,269,224,353"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="270,230,193,271,190,267,267,226"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html" title=" " alt="" coords="248,269,467,353"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="360,235,360,269,355,269,355,235"/>
+<area shape="rect" id="Node000006" href="$moc__interfacepcclient_8cpp.html" title=" " alt="" coords="491,269,728,353"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="450,225,531,267,529,272,448,230"/>
+</map>
