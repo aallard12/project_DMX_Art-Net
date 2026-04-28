@@ -183,20 +183,19 @@ void InterfacePcClient::on_btnEditUnivers_clicked()
 void InterfacePcClient::on_btnDeleteUnivers_clicked()
 {
     int row = ui->uiUniversList->currentRow();
-    if (row < 0 || row >= universList.size()) return;
-
-    if (QMessageBox::question(this, "Confirmation",
-                              "Supprimer cet univers ? Cela supprimera les équipements associés.")
-            != QMessageBox::Yes) return;
-
-    if (bdd.supprimerUnivers(universList[row].idUnivers)) {
-        universList = bdd.chargerUnivers();
-        for (int i = 0; i < universList.size(); ++i) {
-            if (universList[i].numero != i + 1)
-                bdd.modifierUnivers(universList[i].idUnivers, i + 1, universList[i].ip);
+    if (row >= 0 && row < universList.size()) {
+        if (QMessageBox::question(this, "Confirmation",
+                                  "Supprimer cet univers ? Cela supprimera les équipements associés.")
+                != QMessageBox::Yes) return;
+        if (bdd.supprimerUnivers(universList[row].idUnivers)) {
+            universList = bdd.chargerUnivers();
+            for (int i = 0; i < universList.size(); ++i) {
+                if (universList[i].numero != i + 1)
+                    bdd.modifierUnivers(universList[i].idUnivers, i + 1, universList[i].ip);
+            }
+            refreshUniversList();
+            statusBar()->showMessage("Univers supprimé et liste réindexée.", 3000);
         }
-        refreshUniversList();
-        statusBar()->showMessage("Univers supprimé et liste réindexée.", 3000);
     }
 }
 
@@ -301,18 +300,19 @@ QFrame *InterfacePcClient::createEquipmentCard(const EquipmentData &eq, int inde
  */
 void InterfacePcClient::editEquipment(int index)
 {
-    if (index < 0 || index >= equipmentsList.size()) return;
-    currentEditEquipIndex = index;
-    const EquipmentData& eq = equipmentsList[index];
-    clearForm();
-    couleurActuelle = eq.couleur.isEmpty() ? "#000000" : eq.couleur;
-    ui->pushButtonCouleur->setStyleSheet(
-                QString("background-color: %1; color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none;").arg(couleurActuelle)
-                );
-    ui->nameEdit->setText(eq.nom);
-    ui->startAddressEdit->setText(eq.dmxStart);
-    for (const ChannelData& cd : eq.canaux) addChannelToForm(&cd);
-    ui->stackedWidget->setCurrentWidget(ui->formPage);
+    if (index >= 0 && index < equipmentsList.size()) {
+        currentEditEquipIndex = index;
+        const EquipmentData& eq = equipmentsList[index];
+        clearForm();
+        couleurActuelle = eq.couleur.isEmpty() ? "#000000" : eq.couleur;
+        ui->pushButtonCouleur->setStyleSheet(
+                    QString("background-color: %1; color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none;").arg(couleurActuelle)
+                    );
+        ui->nameEdit->setText(eq.nom);
+        ui->startAddressEdit->setText(eq.dmxStart);
+        for (const ChannelData& cd : eq.canaux) addChannelToForm(&cd);
+        ui->stackedWidget->setCurrentWidget(ui->formPage);
+    }
 }
 
 /**
@@ -322,12 +322,13 @@ void InterfacePcClient::editEquipment(int index)
  */
 void InterfacePcClient::deleteEquipment(int index)
 {
-    if (index < 0 || index >= equipmentsList.size()) return;
-    if (QMessageBox::question(this, "Confirmation", "Supprimer cet équipement ?") != QMessageBox::Yes) return;
-    if (bdd.supprimerEquipment(equipmentsList[index].idEquipement))
-        refreshEquipmentsGrid();
-    else
-        statusBar()->showMessage("Impossible de supprimer l'équipement", 3000);
+    if (index >= 0 || index < equipmentsList.size()) {
+        if (QMessageBox::question(this, "Confirmation", "Supprimer cet équipement ?") != QMessageBox::Yes) return;
+        if (bdd.supprimerEquipment(equipmentsList[index].idEquipement))
+            refreshEquipmentsGrid();
+        else
+            statusBar()->showMessage("Impossible de supprimer l'équipement", 3000);
+    }
 }
 
 /**
@@ -719,30 +720,27 @@ void InterfacePcClient::on_btnSaveScene_clicked()
 {
     if (ui->scenesUniversCombo->count() == 0) {
         statusBar()->showMessage("Aucun univers enregistré");
-        return;
     } else {
         bool ok;
         QString sceneName = QInputDialog::getText(this, "Nouvelle Scène",
                                                   "Entrez le nom de la scène :", QLineEdit::Normal, "", &ok);
-        if (!ok || sceneName.trimmed().isEmpty()) return;
-
-        QMap<int, int> valeursAEnregistrer;
-        for (int i = 0; i < dmxSliders.size(); ++i) {
-            int idCanalDB = dmxSliders[i].idCanalDB;
-            int valeur    = dmxSliders[i].slider->value();
-            if (idCanalDB != -1 && valeur != 0)
-                valeursAEnregistrer.insert(idCanalDB, valeur);
-        }
-
-        if (valeursAEnregistrer.isEmpty()) {
-            statusBar()->showMessage("Aucune valeur > 0 à enregistrer");
-        } else {
-
-            if (bdd.enregistrerScene(sceneName, valeursAEnregistrer)) {
-                statusBar()->showMessage("Scène '" + sceneName + "' sauvegardée !");
-                refreshScenesList();
+        if (ok && !sceneName.trimmed().isEmpty()) {
+            QMap<int, int> valeursAEnregistrer;
+            for (int i = 0; i < dmxSliders.size(); ++i) {
+                int idCanalDB = dmxSliders[i].idCanalDB;
+                int valeur    = dmxSliders[i].slider->value();
+                if (idCanalDB != -1 && valeur != 0)
+                    valeursAEnregistrer.insert(idCanalDB, valeur);
+            }
+            if (valeursAEnregistrer.isEmpty()) {
+                statusBar()->showMessage("Aucune valeur > 0 à enregistrer");
             } else {
-                statusBar()->showMessage("Impossible d'enregistrer la scène");
+                if (bdd.enregistrerScene(sceneName, valeursAEnregistrer)) {
+                    statusBar()->showMessage("Scène '" + sceneName + "' sauvegardée !");
+                    refreshScenesList();
+                } else {
+                    statusBar()->showMessage("Impossible d'enregistrer la scène");
+                }
             }
         }
     }
