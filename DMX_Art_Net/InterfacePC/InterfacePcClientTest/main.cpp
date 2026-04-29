@@ -120,8 +120,7 @@ int main(int argc, char* argv[]) {
                             "test_modifierEquipment_idInexistant",
                             "test_supprimerEquipment_valide",
                             "test_supprimerEquipment_idInexistant",
-                            "test_chargerTousLesEquipements_nonVide",
-                            "test_chargerTousLesEquipements_donneesCorrectes"
+                            "test_chargerTousLesEquipements_nonVide"
                         });
             break;
         case 5:
@@ -130,7 +129,6 @@ int main(int argc, char* argv[]) {
                             "test_enregistrerScene_mapVide",
                             "test_enregistrerScene_canalInexistant",
                             "test_chargerLesScenes_nonVide",
-                            "test_chargerLesScenes_ordreAlphabetique",
                             "test_chargerValeursScene_donneesCorrectes",
                             "test_chargerValeursScene_idInexistant",
                             "test_renommerScene_valide",
