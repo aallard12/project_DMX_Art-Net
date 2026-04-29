@@ -1,0 +1,11 @@
+<map id="InterfacePcClient5/interfacepcclient.h" name="InterfacePcClient5/interfacepcclient.h">
+<area shape="rect" id="Node000001" title="Déclaration de la classe InterfacePcClient." alt="" coords="366,5,498,45"/>
+<area shape="rect" id="Node000002" href="$build_2Desktop__Qt__6__9__1-Debug_2moc__interfacepcclient_8cpp.html" title=" " alt="" coords="5,93,253,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="358,52,215,96,214,91,357,47"/>
+<area shape="rect" id="Node000003" href="$interfacepcclient_8cpp.html" title="Implémentation de la classe InterfacePcClient." alt="" coords="277,101,424,141"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="409,57,369,102,365,99,405,54"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html" title=" " alt="" coords="448,101,579,141"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="459,54,499,99,495,102,455,57"/>
+<area shape="rect" id="Node000005" href="$moc__interfacepcclient_8cpp.html" title=" " alt="" coords="603,101,781,141"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="498,47,640,98,639,103,496,52"/>
+</map>

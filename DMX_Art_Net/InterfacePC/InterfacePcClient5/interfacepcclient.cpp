@@ -1,6 +1,23 @@
+/**
+ * @file interfacepcclient.cpp
+ * @brief Implémentation de la classe InterfacePcClient
+ * @author Antoine ALLARD
+ * @date 10/04/2026
+ * @details Cette classe implémente la fenêtre principale de l'application cliente.
+ * Elle permet la gestion des univers, des équipements et des scènes, ainsi que leur
+ * visualisation et leur contrôle via des canaux DMX. Elle gère également
+ * la communication réseau avec un serveur à l’aide de sockets TCP.
+ */
+
 #include "interfacepcclient.h"
 #include "ui_interfacepcclient.h"
 
+/**
+ * @brief InterfacePcClient::InterfacePcClient
+ * @details Constructeur. Initialise l'UI, le label de statut, les signaux TCP,
+ *        puis charge la liste des univers et la grille des équipements.
+ * @param parent Widget parent Qt (nullptr si fenêtre racine).
+ */
 InterfacePcClient::InterfacePcClient(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::InterfacePcClient)
@@ -20,12 +37,19 @@ InterfacePcClient::InterfacePcClient(QWidget *parent)
     refreshEquipmentsGrid();
 }
 
+/**
+ * @brief InterfacePcClient::~InterfacePcClient
+ * @details Libère l'interface graphique générée par Qt Designer.
+ */
 InterfacePcClient::~InterfacePcClient()
 {
     delete ui;
 }
 
-
+/**
+ * @brief InterfacePcClient::on_btnGoToList_clicked
+ * @details Navigue vers la page de liste et rafraîchit les univers et les équipements.
+ */
 void InterfacePcClient::on_btnGoToList_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->listPage);
@@ -33,7 +57,10 @@ void InterfacePcClient::on_btnGoToList_clicked()
     refreshEquipmentsGrid();
 }
 
-
+/**
+ * @brief InterfacePcClient::on_btnAddMain_clicked
+ * @details Prépare le formulaire en mode création (index = -1) et navigue vers celui-ci.
+ */
 void InterfacePcClient::on_btnAddMain_clicked()
 {
     currentEditEquipIndex = -1;
@@ -41,7 +68,11 @@ void InterfacePcClient::on_btnAddMain_clicked()
     ui->stackedWidget->setCurrentWidget(ui->formPage);
 }
 
-
+/**
+ * @brief InterfacePcClient::on_btnGoToScenes_clicked
+ * @details Peuple le combo d'univers de la page Scènes, charge les sliders DMX
+ *        du premier univers, rafraîchit la liste des scènes, puis navigue vers la page Scènes.
+ */
 void InterfacePcClient::on_btnGoToScenes_clicked()
 {
     ui->scenesUniversCombo->blockSignals(true);
@@ -55,7 +86,11 @@ void InterfacePcClient::on_btnGoToScenes_clicked()
     ui->stackedWidget->setCurrentWidget(ui->scenesPage);
 }
 
-
+/**
+ * @brief InterfacePcClient::on_btnGoToLive_clicked
+ * @details Recharge les univers, peuple le combo live, réinitialise la sélection
+ *        de scène, charge toutes les scènes (filtre = -1), puis navigue vers la page Live.
+ */
 void InterfacePcClient::on_btnGoToLive_clicked()
 {
     ui->liveUniversCombo->blockSignals(true);
@@ -77,7 +112,10 @@ void InterfacePcClient::on_btnGoToLive_clicked()
     ui->stackedWidget->setCurrentWidget(ui->livePage);
 }
 
-
+/**
+ * @brief InterfacePcClient::on_btnAddUnivers_clicked
+ * @details Ouvre le dialogue d'ajout d'univers et enregistre le résultat en base de données.
+ */
 void InterfacePcClient::on_btnAddUnivers_clicked()
 {
     DialogUnivers univers;
@@ -92,7 +130,11 @@ void InterfacePcClient::on_btnAddUnivers_clicked()
     }
 }
 
-
+/**
+ * @brief InterfacePcClient::refreshUniversList
+ * @details Recharge depuis la BDD et repeuple uiUniversList, universCombo et filterUniversCombo.
+ *        Désactive les boutons Modifier/Supprimer tant qu'aucun univers n'est sélectionné.
+ */
 void InterfacePcClient::refreshUniversList()
 {
     ui->uiUniversList->clear();
@@ -112,7 +154,10 @@ void InterfacePcClient::refreshUniversList()
     ui->btnDeleteUnivers->setEnabled(false);
 }
 
-
+/**
+ * @brief InterfacePcClient::on_btnEditUnivers_clicked
+ * @details Ouvre le dialogue de modification pour l'univers sélectionné et met à jour la BDD.
+ */
 void InterfacePcClient::on_btnEditUnivers_clicked()
 {
     int row = ui->uiUniversList->currentRow();
@@ -131,6 +176,10 @@ void InterfacePcClient::on_btnEditUnivers_clicked()
     }
 }
 
+/**
+ * @brief InterfacePcClient::on_btnDeleteUnivers_clicked
+ * @details Supprime l'univers sélectionné après confirmation, puis réindexe les numéros restants.
+ */
 void InterfacePcClient::on_btnDeleteUnivers_clicked()
 {
     int row = ui->uiUniversList->currentRow();
@@ -151,6 +200,11 @@ void InterfacePcClient::on_btnDeleteUnivers_clicked()
     }
 }
 
+/**
+ * @brief InterfacePcClient::on_uiUniversList_currentRowChanged
+ * @details Active ou désactive les boutons Modifier/Supprimer selon la sélection courante.
+ * @param currentRow Index de la ligne sélectionnée (-1 si aucune).
+ */
 void InterfacePcClient::on_uiUniversList_currentRowChanged(int currentRow)
 {
     bool hasSelection = ui->uiUniversList->currentRow() >= 0;
@@ -158,6 +212,11 @@ void InterfacePcClient::on_uiUniversList_currentRowChanged(int currentRow)
     ui->btnDeleteUnivers->setEnabled(hasSelection);
 }
 
+/**
+ * @brief InterfacePcClient::refreshEquipmentsGrid
+ * @details Vide et recharge la grille des équipements en appliquant le filtre d'univers actif.
+ *        Les équipements sont affichés sous forme de cartes sur 4 colonnes maximum.
+ */
 void InterfacePcClient::refreshEquipmentsGrid()
 {
     ui->equipmentsGrid->setAlignment(Qt::AlignTop | Qt::AlignLeft);
@@ -194,6 +253,14 @@ void InterfacePcClient::refreshEquipmentsGrid()
     }
 }
 
+/**
+ * @brief InterfacePcClient::createEquipmentCard
+ * @details Crée et retourne un QFrame stylisé affichant les informations d'un équipement
+ *        (nom, univers, adresse DMX, nombre de canaux) avec les boutons Modifier et Supprimer.
+ * @param eq    Données de l'équipement à afficher.
+ * @param index Index dans equipmentsList, transmis aux boutons Modifier/Supprimer.
+ * @return Pointeur vers le QFrame créé.
+ */
 QFrame *InterfacePcClient::createEquipmentCard(const EquipmentData &eq, int index)
 {
     QFrame* card = new QFrame();
@@ -227,6 +294,11 @@ QFrame *InterfacePcClient::createEquipmentCard(const EquipmentData &eq, int inde
     return card;
 }
 
+/**
+ * @brief InterfacePcClient::editEquipment
+ * @details Charge les données d'un équipement existant dans le formulaire en mode édition.
+ * @param index Index de l'équipement à modifier dans equipmentsList.
+ */
 void InterfacePcClient::editEquipment(int index)
 {
     if (index < 0 || index >= equipmentsList.size()) return;
@@ -243,6 +315,11 @@ void InterfacePcClient::editEquipment(int index)
     ui->stackedWidget->setCurrentWidget(ui->formPage);
 }
 
+/**
+ * @brief InterfacePcClient::deleteEquipment
+ * @details Supprime un équipement après confirmation de l'utilisateur et rafraîchit la grille.
+ * @param index Index de l'équipement à supprimer dans equipmentsList.
+ */
 void InterfacePcClient::deleteEquipment(int index)
 {
     if (index < 0 || index >= equipmentsList.size()) return;
@@ -253,6 +330,10 @@ void InterfacePcClient::deleteEquipment(int index)
         statusBar()->showMessage("Impossible de supprimer l'équipement", 3000);
 }
 
+/**
+ * @brief InterfacePcClient::clearForm
+ * @details Réinitialise tous les champs du formulaire (nom, adresse, couleur, canaux).
+ */
 void InterfacePcClient::clearForm()
 {
     ui->nameEdit->clear();
@@ -268,6 +349,11 @@ void InterfacePcClient::clearForm()
     }
 }
 
+/**
+ * @brief InterfacePcClient::addChannelToForm
+ * @details Ajoute dynamiquement un canal DMX au formulaire avec sa description et ses fonctions.
+ * @param data Données du canal à restaurer, ou nullptr pour créer un canal vide.
+ */
 void InterfacePcClient::addChannelToForm(const ChannelData *data)
 {
     channelCounter++;
@@ -318,6 +404,12 @@ void InterfacePcClient::addChannelToForm(const ChannelData *data)
     ui->channelsFormLayout->addWidget(channelFrame);
 }
 
+/**
+ * @brief InterfacePcClient::addFunctionToChannel
+ * @details Ajoute une ligne de fonction (nom, min, max) dans le layout d'un canal.
+ * @param functionsLayout Layout vertical cible dans lequel insérer la ligne.
+ * @param data            Données de la fonction à restaurer, ou nullptr pour une ligne vide.
+ */
 void InterfacePcClient::addFunctionToChannel(QVBoxLayout* functionsLayout, const FunctionData* data)
 {
     QWidget*     funcWidget = new QWidget();
@@ -347,6 +439,13 @@ void InterfacePcClient::addFunctionToChannel(QVBoxLayout* functionsLayout, const
     functionsLayout->addWidget(funcWidget);
 }
 
+/**
+ * @brief InterfacePcClient::creerSliders
+ * @details Recrée entièrement la zone de sliders DMX (un slider vertical 0–255 par canal).
+ *        Chaque slider met à jour son label valeur et affiche dynamiquement la fonction
+ *        DMX correspondante si le canal est mappé à un équipement.
+ * @param nombreCanaux Nombre de sliders à générer.
+ */
 void InterfacePcClient::creerSliders(int nombreCanaux)
 {
     if (QLayout* oldLayout = ui->slidersContainer->layout()) {
@@ -414,7 +513,10 @@ void InterfacePcClient::creerSliders(int nombreCanaux)
     }
 }
 
-
+/**
+ * @brief InterfacePcClient::on_pushButtonCouleur_clicked
+ * @details Ouvre le sélecteur de couleur Qt et applique la couleur choisie au bouton.
+ */
 void InterfacePcClient::on_pushButtonCouleur_clicked()
 {
     QColor couleur = QColorDialog::getColor(
@@ -434,19 +536,29 @@ void InterfacePcClient::on_pushButtonCouleur_clicked()
     }
 }
 
-
+/**
+ * @brief InterfacePcClient::on_btnAddChannelGlobal_clicked
+ * @details Ajoute un canal vide au formulaire via addChannelToForm(nullptr)
+ */
 void InterfacePcClient::on_btnAddChannelGlobal_clicked()
 {
     addChannelToForm(nullptr);
 }
 
-
+/**
+ * @brief InterfacePcClient::on_btnCancel_clicked
+ * @details Annule la saisie et retourne à la page de liste.
+ */
 void InterfacePcClient::on_btnCancel_clicked()
 {
     on_btnGoToList_clicked();
 }
 
-
+/**
+ * @brief InterfacePcClient::on_btnSave_clicked
+ * @details Construit un EquipmentData depuis le formulaire et l'enregistre ou le modifie en BDD.
+ *        Retourne à la liste en cas de succès.
+ */
 void InterfacePcClient::on_btnSave_clicked()
 {
     EquipmentData eq;
@@ -481,13 +593,20 @@ void InterfacePcClient::on_btnSave_clicked()
     }
 }
 
+/**
+ * @brief InterfacePcClient::on_scenesUniversCombo_currentIndexChanged
+ * @details Recharge les sliders DMX et les associe aux canaux de l'univers sélectionné.
+ * @param index Index de l'univers sélectionné dans scenesUniversCombo.
+ */
 void InterfacePcClient::on_scenesUniversCombo_currentIndexChanged(int index)
 {
     int idUnivers = ui->scenesUniversCombo->itemData(index).toInt();
     int nombreCanaux = bdd.recupererCompteurCanaux(idUnivers);
+    QMap<int, DmxChannelInfo> mapCanaux = bdd.chargerMapUnivers(idUnivers);
+
     creerSliders(nombreCanaux);
 
-    QMap<int, DmxChannelInfo> mapCanaux = bdd.chargerMapUnivers(idUnivers);
+
 
     for (int i = 0; i < dmxSliders.size(); ++i) {
         int dmxChannel = i + 1;
@@ -513,7 +632,12 @@ void InterfacePcClient::on_scenesUniversCombo_currentIndexChanged(int index)
     }
 }
 
-
+/**
+ * @brief InterfacePcClient::on_scenesCombo_currentIndexChanged
+ * @details Charge les valeurs DMX de la scène sélectionnée sur les sliders,
+ *        ou remet tout à zéro si "Nouvelle Scène" est sélectionné (id = -1).
+ * @param index Index de la scène sélectionnée dans scenesCombo.
+ */
 void InterfacePcClient::on_scenesCombo_currentIndexChanged(int index)
 {
     int idScene = ui->scenesCombo->itemData(index).toInt();
@@ -534,14 +658,20 @@ void InterfacePcClient::on_scenesCombo_currentIndexChanged(int index)
     }
 }
 
-
+/**
+ * @brief InterfacePcClient::on_btnResetSliders_clicked
+ * @details Remet la valeur de tous les sliders DMX à 0.
+ */
 void InterfacePcClient::on_btnResetSliders_clicked()
 {
     for (int i = 0; i < dmxSliders.size(); ++i)
         dmxSliders[i].slider->setValue(0);
 }
 
-
+/**
+ * @brief InterfacePcClient::on_btnRenameScene_clicked
+ * @details Demande un nouveau nom via QInputDialog et renomme la scène sélectionnée en BDD.
+ */
 void InterfacePcClient::on_btnRenameScene_clicked()
 {
     int idScene = ui->scenesCombo->currentData().toInt();
@@ -561,7 +691,10 @@ void InterfacePcClient::on_btnRenameScene_clicked()
     }
 }
 
-
+/**
+ * @brief InterfacePcClient::on_btnDeleteScene_clicked
+ * @details Supprime la scène sélectionnée après confirmation, puis rafraîchit la liste et remet les sliders à zéro.
+ */
 void InterfacePcClient::on_btnDeleteScene_clicked()
 {
     int idScene = ui->scenesCombo->currentData().toInt();
@@ -578,7 +711,10 @@ void InterfacePcClient::on_btnDeleteScene_clicked()
     }
 }
 
-
+/**
+ * @brief InterfacePcClient::on_btnSaveScene_clicked
+ * @details Demande un nom, collecte les valeurs des sliders non nuls et enregistre la scène en BDD.
+ */
 void InterfacePcClient::on_btnSaveScene_clicked()
 {
     if (ui->scenesUniversCombo->count() == 0) {
@@ -612,6 +748,11 @@ void InterfacePcClient::on_btnSaveScene_clicked()
     }
 }
 
+/**
+ * @brief InterfacePcClient::refreshScenesList
+ * @details Recharge et repeuple scenesCombo depuis la BDD
+ *        (option "-- Nouvelle Scène --" en tête, id = -1).
+ */
 void InterfacePcClient::refreshScenesList()
 {
     ui->scenesCombo->blockSignals(true);
@@ -623,7 +764,10 @@ void InterfacePcClient::refreshScenesList()
     ui->scenesCombo->blockSignals(false);
 }
 
-
+/**
+ * @brief InterfacePcClient::on_btnConnectTCP_clicked
+ * @details Tente une connexion TCP avec l'IP et le port saisis, ou déconnecte si déjà connecté.
+ */
 void InterfacePcClient::on_btnConnectTCP_clicked()
 {
     if (socketClient.state() == QAbstractSocket::UnconnectedState) {
@@ -639,6 +783,10 @@ void InterfacePcClient::on_btnConnectTCP_clicked()
     }
 }
 
+/**
+ * @brief InterfacePcClient::onQTcpSocket_connected
+ * @details Slot TCP : connexion établie. Passe le bouton en vert et affiche un message de statut.
+ */
 void InterfacePcClient::onQTcpSocket_connected()
 {
     ui->btnConnectTCP->setText("Déconnexion");
@@ -649,6 +797,10 @@ void InterfacePcClient::onQTcpSocket_connected()
     statusBar()->showMessage("Connexion au serveur établie", 3000);
 }
 
+/**
+ * @brief InterfacePcClient::onQTcpSocket_disconnected
+ * @details Slot TCP : connexion perdue. Remet le bouton en gris et affiche un message de statut.
+ */
 void InterfacePcClient::onQTcpSocket_disconnected()
 {
     ui->btnConnectTCP->setText("Connexion");
@@ -659,7 +811,11 @@ void InterfacePcClient::onQTcpSocket_disconnected()
     statusBar()->showMessage("Perte de la connexion au serveur", 3000);
 }
 
-
+/**
+ * @brief InterfacePcClient::on_liveScenesList_itemSelectionChanged
+ * @details Met à jour le bouton de lancement avec le nom et l'univers de la scène sélectionnée,
+ *        ou le désactive si aucune sélection.
+ */
 void InterfacePcClient::on_liveScenesList_itemSelectionChanged()
 {
     if (ui->liveScenesList->selectedItems().isEmpty()) {
@@ -679,25 +835,22 @@ void InterfacePcClient::on_liveScenesList_itemSelectionChanged()
     }
 }
 
-
+/**
+ * @brief InterfacePcClient::on_btnLaunchLiveScene_clicked
+ * @details Lance la scène sélectionnée si une scène valide est sélectionnée (id != -1).
+ */
 void InterfacePcClient::on_btnLaunchLiveScene_clicked()
 {
     if (selectedLiveSceneId != -1) lancerScene(selectedLiveSceneId);
 }
 
+/**
+ * @brief InterfacePcClient::lancerScene
+ * @details Envoie au serveur via TCP un objet JSON {"commande":"P", "idScene": idScene}.
+ * @param idScene Identifiant de la scène à lancer.
+ */
 void InterfacePcClient::lancerScene(int idScene)
 {
-    // quint16  taille   = 0;
-    // QChar     commande('P');
-    // QBuffer  tampon;
-    // tampon.open(QIODevice::WriteOnly);
-    // QDataStream out(&tampon);
-    // out << taille << commande << idScene;
-    // qDebug() << "Envoi trame :" << QChar(commande) << "Scene ID:" << idScene;
-    // taille = static_cast<quint16>(tampon.size()) - sizeof(taille);
-    // tampon.seek(0);
-    // out << taille;
-    // socketClient.write(tampon.buffer());
     QJsonObject obj;
     obj["commande"] = "P";
     obj["idScene"]  = idScene;
@@ -710,19 +863,33 @@ void InterfacePcClient::lancerScene(int idScene)
     socketClient.write(data);
 }
 
-
+/**
+ * @brief InterfacePcClient::on_filterUniversCombo_currentIndexChanged
+ * @details Rafraîchit la grille des équipements selon l'univers sélectionné dans le filtre.
+ * @param index Index sélectionné dans filterUniversCombo.
+ */
 void InterfacePcClient::on_filterUniversCombo_currentIndexChanged(int index)
 {
     refreshEquipmentsGrid();
 }
 
-
+/**
+ * @brief InterfacePcClient::on_liveUniversCombo_currentIndexChanged
+ * @details Applique le filtre d'univers sélectionné sur la liste des scènes live.
+ * @param index Index sélectionné dans liveUniversCombo.
+ */
 void InterfacePcClient::on_liveUniversCombo_currentIndexChanged(int index)
 {
     int idFiltre = ui->liveUniversCombo->itemData(index).toInt();
     refreshLiveScenesList(idFiltre);
 }
 
+/**
+ * @brief InterfacePcClient::refreshLiveScenesList
+ * @details Recharge la liste des scènes live en appliquant un filtre optionnel par univers.
+ *        Chaque item stocke l'idScene et le numéro d'univers en données utilisateur.
+ * @param idUniversFiltre Identifiant de l'univers à filtrer, ou -1 pour tout afficher.
+ */
 void InterfacePcClient::refreshLiveScenesList(int idUniversFiltre)
 {
     ui->liveScenesList->clear();
@@ -750,7 +917,7 @@ void InterfacePcClient::refreshLiveScenesList(int idUniversFiltre)
                 continue;
         }
 
-        // Construire le label : "Nom de la scène  —  Univers X"
+        // Construire le label : "Nom de la scène  —  Univers X
         QString label = QString("%1     —     Univers %2").arg(scene.nomScene).arg(numeroUnivers);
 
         QListWidgetItem* item = new QListWidgetItem(label);
