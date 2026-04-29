@@ -99,8 +99,8 @@ void TestClassBDD::cleanup() {
 
 void TestClassBDD::test_enregistrerUnivers_valide() {
     std::cout << "\n▶ [TEST] test_enregistrerUnivers_valide\n";
-    int num = 99;
-    QString ip = "10.0.0.99";
+    int num = 4;
+    QString ip = "192.168.1.34";
     std::cout << "  ├─ Valeurs preparees -> Numero : " << num << " | IP : " << ip.toStdString() << "\n";
 
     AccessBDD bdd;
@@ -129,7 +129,7 @@ void TestClassBDD::test_enregistrerUnivers_numeroNegatif() {
     std::cout << "\n▶ [TEST] test_enregistrerUnivers_numeroNegatif\n";
     AccessBDD bdd;
     std::cout << "  ├─ Tentative avec Numero negatif (-5)...\n";
-    bool resultat = bdd.enregistrerUnivers(-5, "192.168.0.1");
+    bool resultat = bdd.enregistrerUnivers(-5, "192.168.1.34");
     std::cout << "  └─ Resultat : " << (resultat ? "TRUE" : "FALSE") << " (attendu: FALSE)\n";
     QCOMPARE(resultat, false);
 }
@@ -207,8 +207,8 @@ void TestClassBDD::test_modifierUnivers_idInexistant() {
     std::cout << "\n▶ [TEST] test_modifierUnivers_idInexistant\n";
     AccessBDD bdd;
     std::cout << "  ├─ Tentative de modification sur l'ID 999999...\n";
-    bool resultat = bdd.modifierUnivers(999999, 1, "0.0.0.0");
-    Q_UNUSED(resultat);
+    bool resultat = bdd.modifierUnivers(999999, 4, "192.168.1.34");
+    std::cout << "  └─ Resultat : " << (resultat ? "TRUE" : "FALSE") << " (attendu: FALSE)\n";
 
     QSqlQuery q(m_db);
     q.prepare("SELECT COUNT(*) FROM UNIVERS WHERE idUnivers = 999999");
@@ -260,11 +260,6 @@ void TestClassBDD::test_supprimerUnivers_idInexistant() {
 void TestClassBDD::test_enregistrerEquipment_valide() {
     std::cout << "\n▶ [TEST] test_enregistrerEquipment_valide\n";
     AccessBDD bdd;
-    bdd.enregistrerUnivers(44, "10.0.0.44");
-    QSqlQuery q(m_db);
-    q.prepare("SELECT idUnivers FROM UNIVERS WHERE numeroUnivers = 44");
-    q.exec(); q.next();
-    m_idUniversTest = q.value(0).toInt();
 
     EquipmentData eq;
     eq.nom      = "ProjecteurTest";
@@ -281,7 +276,7 @@ void TestClassBDD::test_enregistrerEquipment_valide() {
     chan.fonctions.append(func);
     eq.canaux.append(chan);
 
-    bool resultat = bdd.enregistrerEquipment(eq, m_idUniversTest);
+    bool resultat = bdd.enregistrerEquipment(eq, 1);
     std::cout << "  ├─ Resultat enregistrement : " << (resultat ? "TRUE" : "FALSE") << "\n";
     QVERIFY2(resultat, "L'enregistrement d'un équipement valide doit retourner true.");
 
@@ -296,12 +291,12 @@ void TestClassBDD::test_enregistrerEquipment_universInexistant() {
     std::cout << "\n▶ [TEST] test_enregistrerEquipment_universInexistant\n";
     AccessBDD bdd;
     EquipmentData eq;
-    eq.nom = "EquipOrphan";
+    eq.nom = "ProjecteurTest";
     eq.dmxStart = "1";
-    eq.couleur = "#000000";
+    eq.couleur = "#FF0000";
 
-    std::cout << "  ├─ Tentative d'enregistrement sur idUnivers 999997...\n";
-    bool resultat = bdd.enregistrerEquipment(eq, 999997);
+    std::cout << "  ├─ Tentative d'enregistrement sur idUnivers 999...\n";
+    bool resultat = bdd.enregistrerEquipment(eq, 999);
     std::cout << "  └─ Resultat : " << (resultat ? "TRUE" : "FALSE") << " (attendu: FALSE)\n";
     QCOMPARE(resultat, false);
 }
@@ -329,7 +324,7 @@ void TestClassBDD::test_modifierEquipment_valide() {
     std::cout << "  ├─ Equipement insere : " << eq.nom.toStdString() << " (ID: " << m_idEquipTest << ")\n";
 
     EquipmentData eqModif;
-    eqModif.nom = "EquipModifie"; eqModif.dmxStart = "5"; eqModif.couleur = "#0000FF";
+    eqModif.nom = "EquipModifie"; eqModif.dmxStart = "1"; eqModif.couleur = "#FF0000";
     bool resultat = bdd.modifierEquipment(m_idEquipTest, eqModif, m_idUniversTest);
     std::cout << "  ├─ Modification en : " << eqModif.nom.toStdString() << " -> Resultat : " << (resultat ? "TRUE" : "FALSE") << "\n";
     QVERIFY2(resultat, "La modification d'un équipement existant doit réussir.");
