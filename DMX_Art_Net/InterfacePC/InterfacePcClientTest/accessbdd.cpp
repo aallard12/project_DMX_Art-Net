@@ -484,7 +484,7 @@ int AccessBDD::getUniversDeScene(int idScene) {
                   "JOIN CANAUX C ON P.idCanal = C.idCanal "
                   "JOIN EQUIPEMENTS E ON C.idEquipement = E.idEquipement "
                   "JOIN UNIVERS U ON E.idUnivers = U.idUnivers "
-                  "WHERE P.idScene = :idS");
+                  "WHERE P.idScene = :idS LIMIT 1");
     query.bindValue(":idS", idScene);
     return (query.exec() && query.next()) ? query.value(0).toInt() : 1;
 }

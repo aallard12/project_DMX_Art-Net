@@ -690,9 +690,8 @@ void TestClassBDD::test_getUniversDeScene_idInexistant() {
 void TestClassBDD::test_chargerMapUnivers_nonVide() {
     std::cout << "\n▶ [TEST] test_chargerMapUnivers_nonVide\n";
     AccessBDD bdd;
-    bdd.enregistrerUnivers(501, "10.5.0.1");
     QSqlQuery q(m_db);
-    q.prepare("SELECT idUnivers FROM UNIVERS WHERE numeroUnivers = 501");
+    q.prepare("SELECT idUnivers FROM UNIVERS WHERE numeroUnivers = 1");
     q.exec(); q.next();
     m_idUniversTest = q.value(0).toInt();
 
