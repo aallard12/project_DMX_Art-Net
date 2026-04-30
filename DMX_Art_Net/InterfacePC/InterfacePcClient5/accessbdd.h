@@ -93,6 +93,7 @@ class AccessBDD {
 private:
     /// Objet gérant la connexion et les requêtes vers la base de données SQL
     QSqlDatabase bdd;
+    void initialiserSchema();
 public:
     AccessBDD();
     QList<UniversData> chargerUnivers();

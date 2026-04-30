@@ -16,36 +16,81 @@
  * dès l'instanciation.
  */
 AccessBDD::AccessBDD() {
-    bdd = QSqlDatabase::addDatabase("QMYSQL");
-    QString ip, base, log, mdp;
-    QString nomFichierIni = "commandes.ini";
-    QFileInfo testFichier(nomFichierIni);
+    bdd = QSqlDatabase::addDatabase("QSQLITE");
+    bdd.setDatabaseName("dmxbdd.sqlite");
 
-    if (testFichier.exists() && testFichier.isFile()) {
-        QSettings paramsSocket(nomFichierIni, QSettings::IniFormat);
-        ip = paramsSocket.value("CONFIG/hostname", "192.168.1.20").toString();
-        base = paramsSocket.value("CONFIG/BDD", "DMXBDD").toString();
-        log = paramsSocket.value("CONFIG/username", "root").toString();
-        mdp = paramsSocket.value("CONFIG/password", "raspberry").toString();
+    if (!bdd.open()) {
+        qDebug() << bdd.lastError().text();
+    } else {
+        QSqlQuery("PRAGMA foreign_keys = ON", bdd);
+        qDebug() << "Chemin DB :" << bdd.databaseName();
+        qDebug() << "Fichier SQL trouvé :" << QFile::exists("bdd_sqlite.sql");
+        // initialiserSchema();
+
+        qDebug() << "BDD OK";
+        QSqlQuery test("SELECT COUNT(*) FROM UNIVERS", bdd);
+        if (test.next()) qDebug() << "Nb univers en base :" << test.value(0).toInt();
     }
+
+    // bdd = QSqlDatabase::addDatabase("QMYSQL");
+    // QString ip, base, log, mdp;
+    // QString nomFichierIni = "commandes.ini";
+    // QFileInfo testFichier(nomFichierIni);
 
     // if (testFichier.exists() && testFichier.isFile()) {
     //     QSettings paramsSocket(nomFichierIni, QSettings::IniFormat);
-    //     ip = paramsSocket.value("CONFIG/hostname", "172.18.58.8").toString();
+    //     ip = paramsSocket.value("CONFIG/hostname", "192.168.1.20").toString();
     //     base = paramsSocket.value("CONFIG/BDD", "DMXBDD").toString();
-    //     log = paramsSocket.value("CONFIG/username", "ciel").toString();
-    //     mdp = paramsSocket.value("CONFIG/password", "ciel").toString();
+    //     log = paramsSocket.value("CONFIG/username", "root").toString();
+    //     mdp = paramsSocket.value("CONFIG/password", "raspberry").toString();
     // }
 
-    bdd.setHostName(ip);
-    bdd.setDatabaseName(base);
-    bdd.setUserName(log);
-    bdd.setPassword(mdp);
+    // // if (testFichier.exists() && testFichier.isFile()) {
+    // //     QSettings paramsSocket(nomFichierIni, QSettings::IniFormat);
+    // //     ip = paramsSocket.value("CONFIG/hostname", "172.18.58.8").toString();
+    // //     base = paramsSocket.value("CONFIG/BDD", "DMXBDD").toString();
+    // //     log = paramsSocket.value("CONFIG/username", "ciel").toString();
+    // //     mdp = paramsSocket.value("CONFIG/password", "ciel").toString();
+    // // }
 
-    if (!bdd.open())
-        qDebug() << bdd.lastError().text();
-    else
-        qDebug() << "BDD OK";
+    // bdd.setHostName(ip);
+    // bdd.setDatabaseName(base);
+    // bdd.setUserName(log);
+    // bdd.setPassword(mdp);
+
+    // if (!bdd.open())
+    //     qDebug() << bdd.lastError().text();
+    // else
+    //     qDebug() << "BDD OK";
+}
+
+void AccessBDD::initialiserSchema() {
+    QFile f("bdd_sqlite.sql");
+    if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Impossible d'ouvrir bdd_sqlite.sql :" << f.errorString();
+        return;
+    }
+
+    QSqlQuery query(bdd);
+    QString sql = f.readAll();
+
+    // Supprime les commentaires -- avant de splitter
+    QStringList lignes = sql.split('\n');
+    QStringList lignesSansCommentaires;
+    for (const QString& l : lignes) {
+        QString trimmed = l.trimmed();
+        if (!trimmed.startsWith("--") && !trimmed.isEmpty())
+            lignesSansCommentaires << l;
+    }
+    sql = lignesSansCommentaires.join('\n');
+
+    for (const QString& req : sql.split(";", Qt::SkipEmptyParts)) {
+        QString trimmed = req.trimmed();
+        if (!trimmed.isEmpty()) {
+            if (!query.exec(trimmed))
+                qDebug() << "Erreur SQL:" << query.lastError().text() << "|" << trimmed.left(60);
+        }
+    }
 }
 
 /**
@@ -425,8 +470,8 @@ int AccessBDD::recupererCompteurCanaux(int index)
 {
     QSqlQuery query;
     query.prepare("SELECT COUNT(c.idCanal) AS nombreCanaux FROM CANAUX c "
-                    "JOIN EQUIPEMENTS e ON c.idEquipement = e.idEquipement "
-                    "WHERE e.idUnivers = :index; ");
+                  "JOIN EQUIPEMENTS e ON c.idEquipement = e.idEquipement "
+                  "WHERE e.idUnivers = :index; ");
 
     int countCanaux = 0;
     query.bindValue(":index", index);
