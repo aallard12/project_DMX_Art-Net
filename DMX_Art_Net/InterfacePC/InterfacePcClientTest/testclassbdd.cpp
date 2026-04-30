@@ -141,13 +141,6 @@ void TestClassBDD::test_enregistrerUnivers_numeroNegatif() {
 void TestClassBDD::test_chargerUnivers_nonVide() {
     std::cout << "\n▶ [TEST] test_chargerUnivers_nonVide\n";
     AccessBDD bdd;
-    bdd.enregistrerUnivers(88, "10.0.0.88");
-
-    QSqlQuery q(m_db);
-    q.prepare("SELECT idUnivers FROM UNIVERS WHERE numeroUnivers = 88");
-    q.exec(); q.next();
-    m_idUniversTest = q.value(0).toInt();
-    std::cout << "  ├─ Univers de test insere (ID: " << m_idUniversTest << ")\n";
 
     QList<UniversData> liste = bdd.chargerUnivers();
     std::cout << "  └─ Nombre d'univers charges : " << liste.size() << "\n";

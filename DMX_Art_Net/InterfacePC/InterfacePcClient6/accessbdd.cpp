@@ -60,38 +60,39 @@ AccessBDD::AccessBDD() {
 
     if (!bdd.open())
         qDebug() << bdd.lastError().text();
+
     else
         qDebug() << "BDD OK";
 }
 
-void AccessBDD::initialiserSchema() {
-    QFile f("bdd_sqlite.sql");
-    if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "Impossible d'ouvrir bdd_sqlite.sql :" << f.errorString();
-        return;
-    }
+// void AccessBDD::initialiserSchema() {
+//     QFile f("bdd_sqlite.sql");
+//     if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+//         qDebug() << "Impossible d'ouvrir bdd_sqlite.sql :" << f.errorString();
+//         return;
+//     }
 
-    QSqlQuery query(bdd);
-    QString sql = f.readAll();
+//     QSqlQuery query(bdd);
+//     QString sql = f.readAll();
 
-    // Supprime les commentaires -- avant de splitter
-    QStringList lignes = sql.split('\n');
-    QStringList lignesSansCommentaires;
-    for (const QString& l : lignes) {
-        QString trimmed = l.trimmed();
-        if (!trimmed.startsWith("--") && !trimmed.isEmpty())
-            lignesSansCommentaires << l;
-    }
-    sql = lignesSansCommentaires.join('\n');
+//     // Supprime les commentaires -- avant de splitter
+//     QStringList lignes = sql.split('\n');
+//     QStringList lignesSansCommentaires;
+//     for (const QString& l : lignes) {
+//         QString trimmed = l.trimmed();
+//         if (!trimmed.startsWith("--") && !trimmed.isEmpty())
+//             lignesSansCommentaires << l;
+//     }
+//     sql = lignesSansCommentaires.join('\n');
 
-    for (const QString& req : sql.split(";", Qt::SkipEmptyParts)) {
-        QString trimmed = req.trimmed();
-        if (!trimmed.isEmpty()) {
-            if (!query.exec(trimmed))
-                qDebug() << "Erreur SQL:" << query.lastError().text() << "|" << trimmed.left(60);
-        }
-    }
-}
+//     for (const QString& req : sql.split(";", Qt::SkipEmptyParts)) {
+//         QString trimmed = req.trimmed();
+//         if (!trimmed.isEmpty()) {
+//             if (!query.exec(trimmed))
+//                 qDebug() << "Erreur SQL:" << query.lastError().text() << "|" << trimmed.left(60);
+//         }
+//     }
+// }
 
 /**
  * @brief AccessBDD::chargerUnivers
