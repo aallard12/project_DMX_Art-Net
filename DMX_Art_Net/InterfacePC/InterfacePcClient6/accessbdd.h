@@ -97,7 +97,6 @@ private:
 public:
     AccessBDD();
     QList<UniversData> chargerUnivers();
-
     bool enregistrerUnivers(int numero, const QString& ip);
     bool modifierUnivers(int idUnivers, int numero, const QString& ip);
     bool supprimerUnivers(int idUnivers);
@@ -105,7 +104,6 @@ public:
     bool enregistrerEquipment(const EquipmentData& eq, int idUniversSelectionne);
     bool supprimerEquipment(int idEquipement);
     bool modifierEquipment(int idEquipement, const EquipmentData& eq, int idUniversSelectionne);
-
     QList<EquipmentData> chargerTousLesEquipements();
 
     QMap<int, DmxChannelInfo> chargerMapUnivers(int idUnivers);
@@ -120,7 +118,7 @@ public:
     bool renommerScene(int idScene, const QString& nouveauNom);
     bool supprimerScene(int idScene);
 
-    bool isConnected() const { return bdd.isOpen(); }
+    bool isConnected() {return bdd.isOpen();}
 };
 
 #endif

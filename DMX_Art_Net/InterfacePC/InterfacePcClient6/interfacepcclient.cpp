@@ -23,13 +23,21 @@ InterfacePcClient::InterfacePcClient(QWidget *parent)
     , ui(new Ui::InterfacePcClient)
 {
     ui->setupUi(this);
+
+    // Supprimer la géométrie fixe de gridLayoutWidget et lui donner un vrai layout
+    ui->gridLayoutWidget->setGeometry(QRect());
+    QVBoxLayout* scrollLayout = new QVBoxLayout(ui->scrollContent);
+    scrollLayout->setContentsMargins(0, 0, 0, 0);
+    scrollLayout->addWidget(ui->gridLayoutWidget);
+    scrollLayout->addStretch();
+
     ui->stackedWidget->setCurrentIndex(0);
     ui->centralWidget->showMaximized();
     statusLabel = new QLabel;
-    statusLabel->setMinimumWidth(300);  // largeur fixe pour éviter qu'il soit trop petit
-    statusLabel->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);  // centré dans le label
+    statusLabel->setMinimumWidth(300);
+    statusLabel->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
 
-    ui->statusBar->addPermanentWidget(statusLabel, 1);  // le "1" = stretch, il prend tout l'espace disponible
+    ui->statusBar->addPermanentWidget(statusLabel, 1);
 
     if (bdd.isConnected()) {
         statusLabel->setText("✅ Base de données connectée");
@@ -113,12 +121,10 @@ void InterfacePcClient::on_btnGoToLive_clicked()
         ui->liveUniversCombo->addItem(QString("Univers %1 (%2)").arg(u.numero).arg(u.ip), u.idUnivers);
     ui->liveUniversCombo->blockSignals(false);
 
-    // Réinitialiser la sélection
     ui->btnLaunchLiveScene->setEnabled(false);
     ui->btnLaunchLiveScene->setText("SÉLECTIONNEZ UNE SCÈNE");
     selectedLiveSceneId = -1;
 
-    // Charger toutes les scènes (filtre = -1 = tous)
     refreshLiveScenesList(-1);
 
     ui->stackedWidget->setCurrentWidget(ui->livePage);
@@ -185,12 +191,15 @@ void InterfacePcClient::on_btnEditUnivers_clicked()
     if (univers.exec() == QDialog::Accepted && univers.getNumUnivers() != 0 && !univers.getIpUnivers().isEmpty()){
         if (bdd.modifierUnivers(u.idUnivers, univers.getNumUnivers(), univers.getIpUnivers())){
             refreshUniversList();
-            statusLabel->setText("Modification de l'univers réussie");
+            statusLabel->setText("✅ Modification de l'univers réussie");
             statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
         }else {
-            statusLabel->setText("Impossible de modifier l'univers");
+            statusLabel->setText("❌ Impossible de modifier l'univers");
             statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         }
+        QTimer::singleShot(5000, this, [this]() {
+            statusLabel->setText("");
+        });
     }
 }
 
@@ -201,20 +210,23 @@ void InterfacePcClient::on_btnEditUnivers_clicked()
 void InterfacePcClient::on_btnDeleteUnivers_clicked()
 {
     int row = ui->uiUniversList->currentRow();
-    if (row < 0 || row >= universList.size()) return;
-
-    if (QMessageBox::question(this, "Confirmation",
-                              "Supprimer cet univers ? Cela supprimera les équipements associés.")
-            != QMessageBox::Yes) return;
-
-    if (bdd.supprimerUnivers(universList[row].idUnivers)) {
-        universList = bdd.chargerUnivers();
-        for (int i = 0; i < universList.size(); ++i) {
-            if (universList[i].numero != i + 1)
-                bdd.modifierUnivers(universList[i].idUnivers, i + 1, universList[i].ip);
+    if (row >= 0 && row < universList.size()) {
+        if (QMessageBox::question(this, "Confirmation",
+                                  "Supprimer cet univers ? Cela supprimera les équipements associés.")
+                != QMessageBox::Yes) return;
+        if (bdd.supprimerUnivers(universList[row].idUnivers)) {
+            universList = bdd.chargerUnivers();
+            for (int i = 0; i < universList.size(); ++i) {
+                if (universList[i].numero != i + 1)
+                    bdd.modifierUnivers(universList[i].idUnivers, i + 1, universList[i].ip);
+            }
+            refreshUniversList();
+            statusLabel->setText("✅ Univers supprimé et liste réindexée");
+            statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
         }
-        refreshUniversList();
-        statusBar()->showMessage("Univers supprimé et liste réindexée.", 3000);
+        QTimer::singleShot(5000, this, [this]() {
+            statusLabel->setText("");
+        });
     }
 }
 
@@ -237,38 +249,37 @@ void InterfacePcClient::on_uiUniversList_currentRowChanged(int currentRow)
  */
 void InterfacePcClient::refreshEquipmentsGrid()
 {
-    ui->equipmentsGrid->setAlignment(Qt::AlignTop | Qt::AlignLeft);
-    ui->equipmentsGrid->setSpacing(15);
-
     QLayoutItem* item;
     while ((item = ui->equipmentsGrid->takeAt(0)) != nullptr) {
         if (item->widget()) item->widget()->deleteLater();
         delete item;
     }
+
     equipmentsList = bdd.chargerTousLesEquipements();
     int idFiltre = ui->filterUniversCombo->currentData().toInt();
-    QString filtreUniversLabel = ui->filterUniversCombo->currentText(); // "Univers X ..."
-
+    int colonnes = qMax(1, (ui->scrollContent->width() - 30) / 250);
     int col = 0;
     int row = 0;
+
     for (int i = 0; i < equipmentsList.size(); ++i) {
-        // Filtrage : si -1 on affiche tout, sinon on compare le label univers
-        if (idFiltre != -1 && equipmentsList[i].univers != filtreUniversLabel.left(filtreUniversLabel.indexOf(" ("))) {
-            // Comparaison robuste via l'idUnivers stocké dans UniversData
-            bool match = false;
-            for (const auto& u : universList) {
-                if (u.idUnivers == idFiltre &&
-                        equipmentsList[i].univers == QString("Univers %1").arg(u.numero)) {
-                    match = true;
-                    break;
-                }
-            }
-            if (!match) continue;
+        bool match = (idFiltre == -1);
+        for (const auto& u : universList) {
+            if (u.idUnivers == idFiltre &&
+                    equipmentsList[i].univers == QString("Univers %1").arg(u.numero))
+                match = true;
         }
-        ui->equipmentsGrid->addWidget(createEquipmentCard(equipmentsList[i], i), row, col % 4);
-        col++;
-        if (col % 4 == 0) row++;
+        if (match) {
+            ui->equipmentsGrid->addWidget(createEquipmentCard(equipmentsList[i], i), row, col);
+            col++;
+            if (col >= colonnes) {
+                col = 0;
+                row++;
+            }
+        }
     }
+
+    ui->equipmentsGrid->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+    ui->equipmentsGrid->setSpacing(15);
 }
 
 /**
@@ -319,18 +330,22 @@ QFrame *InterfacePcClient::createEquipmentCard(const EquipmentData &eq, int inde
  */
 void InterfacePcClient::editEquipment(int index)
 {
-    if (index < 0 || index >= equipmentsList.size()) return;
-    currentEditEquipIndex = index;
-    const EquipmentData& eq = equipmentsList[index];
-    clearForm();
-    couleurActuelle = eq.couleur.isEmpty() ? "#000000" : eq.couleur;
-    ui->pushButtonCouleur->setStyleSheet(
-                QString("background-color: %1; color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none;").arg(couleurActuelle)
-                );
-    ui->nameEdit->setText(eq.nom);
-    ui->startAddressEdit->setText(eq.dmxStart);
-    for (const ChannelData& cd : eq.canaux) addChannelToForm(&cd);
-    ui->stackedWidget->setCurrentWidget(ui->formPage);
+    if (index >= 0 && index < equipmentsList.size()) {
+        currentEditEquipIndex = index;
+        const EquipmentData& eq = equipmentsList[index];
+        clearForm();
+        couleurActuelle = eq.couleur.isEmpty() ? "#000000" : eq.couleur;
+        ui->pushButtonCouleur->setStyleSheet(
+                    QString("background-color: %1; color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none;").arg(couleurActuelle)
+                    );
+        ui->nameEdit->setText(eq.nom);
+        ui->startAddressEdit->setText(eq.dmxStart);
+        int idxUnivers = ui->universCombo->findText(eq.univers, Qt::MatchStartsWith);
+        if (idxUnivers != -1)
+            ui->universCombo->setCurrentIndex(idxUnivers);
+        for (const ChannelData& cd : eq.canaux) addChannelToForm(&cd);
+        ui->stackedWidget->setCurrentWidget(ui->formPage);
+    }
 }
 
 /**
@@ -340,12 +355,20 @@ void InterfacePcClient::editEquipment(int index)
  */
 void InterfacePcClient::deleteEquipment(int index)
 {
-    if (index < 0 || index >= equipmentsList.size()) return;
-    if (QMessageBox::question(this, "Confirmation", "Supprimer cet équipement ?") != QMessageBox::Yes) return;
-    if (bdd.supprimerEquipment(equipmentsList[index].idEquipement))
-        refreshEquipmentsGrid();
-    else
-        statusBar()->showMessage("Impossible de supprimer l'équipement", 3000);
+    if (index >= 0 && index < equipmentsList.size()) {
+        if (QMessageBox::question(this, "Confirmation", "Supprimer cet équipement ?") != QMessageBox::Yes) return;
+        if (bdd.supprimerEquipment(equipmentsList[index].idEquipement)) {
+            refreshEquipmentsGrid();
+            statusLabel->setText("✅ Suppression de l'équipement réussie");
+            statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
+        } else {
+            statusLabel->setText("❌ Impossible de supprimer l'équipement");
+            statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
+        }
+        QTimer::singleShot(5000, this, [this]() {
+            statusLabel->setText("");
+        });
+    }
 }
 
 /**
@@ -474,11 +497,9 @@ void InterfacePcClient::creerSliders(int nombreCanaux)
         }
         delete oldLayout;
     }
-
     dmxSliders.clear();
-    QGridLayout* slidersGrid = new QGridLayout(ui->slidersContainer); // ← maintenant installé correctement
+    QGridLayout* slidersGrid = new QGridLayout(ui->slidersContainer);
     slidersGrid->setSpacing(10);
-
     for (int i = 0; i < nombreCanaux; ++i) {
         int dmxChannel = i + 1;
         QFrame* sliderFrame = new QFrame();
@@ -487,48 +508,75 @@ void InterfacePcClient::creerSliders(int nombreCanaux)
         sliderFrame->setFixedSize(100, 240);
         QVBoxLayout* sLayout = new QVBoxLayout(sliderFrame);
         sLayout->setAlignment(Qt::AlignHCenter);
-
         QLabel* lTitle = new QLabel(QString::number(dmxChannel));
         lTitle->setAlignment(Qt::AlignCenter);
         lTitle->setWordWrap(true);
         lTitle->setStyleSheet("font-size: 10px; color: #aaa;");
-
         QSlider* slider = new QSlider(Qt::Vertical);
         slider->setRange(0, 255);
         slider->setValue(0);
-
         QLabel* lVal = new QLabel("0");
         lVal->setAlignment(Qt::AlignCenter);
         lVal->setStyleSheet("font-weight: bold; color: #107c7c;");
-
-        connect(slider, &QSlider::valueChanged, [this, i, dmxChannel, lVal, lTitle](int val) {
+        connect(slider, &QSlider::valueChanged, [this, i, dmxChannel, lVal, lTitle, sliderFrame](int val) {
             lVal->setText(QString::number(val));
             if (dmxSliders[i].idCanalDB != -1) {
                 QString textToDisplay = dmxSliders[i].descriptionBase;
                 for (const auto& f : dmxSliders[i].fonctions) {
-                    if (val >= f.min && val <= f.max) {
+                    if (val >= f.min && val <= f.max)
                         textToDisplay = f.nom;
-                        break;
-                    }
                 }
                 lTitle->setText(
-                            QString("<b>%1</b><br>"
-                                    "<span style='color:%2;'>%3</span><br>"  // <- nom en couleur de l'équipement
-                                    "<i style='color:#00e5ff;'>%4</i>")
+                            QString("<b>%1</b><br>%2<br><i style='color:#00e5ff;'>%3</i>")
                             .arg(dmxChannel)
-                            .arg(dmxSliders[i].couleur)
                             .arg(dmxSliders[i].nomEquipement)
                             .arg(textToDisplay)
                             );
+                sliderFrame->setStyleSheet(
+                            QString("QFrame#card { background-color: #3c3c3c; border: 2px solid %1; border-radius: 6px; }")
+                            .arg(dmxSliders[i].couleur)
+                            );
             }
         });
-
         sLayout->addWidget(lTitle);
         sLayout->addWidget(slider, 1, Qt::AlignHCenter);
         sLayout->addWidget(lVal);
         slidersGrid->addWidget(sliderFrame, i / 16, i % 16);
         dmxSliders.append({-1, lTitle, slider, lVal, "", "", {}});
     }
+}
+
+bool InterfacePcClient::validerFonctionsCanaux(const QList<ChannelData>& canaux, QString& erreur)
+{
+    bool retour = true;
+    for (int c = 0; c < canaux.size(); ++c) {
+        for (int i = 0; i < canaux[c].fonctions.size(); ++i) {
+            int mini = canaux[c].fonctions[i].min.toInt();
+            int maxi = canaux[c].fonctions[i].max.toInt();
+
+            if (mini < 0 || maxi > 255 || mini > maxi) {
+                erreur = QString("Canal %1, fonction %2 : plage invalide (%3-%4). Doit être entre 0 et 255.")
+                        .arg(c + 1).arg(i + 1).arg(mini).arg(maxi);
+                retour = false;
+            }
+            for (int j = i + 1; j < canaux[c].fonctions.size(); ++j) {
+                int mini2 = canaux[c].fonctions[j].min.toInt();
+                int maxi2 = canaux[c].fonctions[j].max.toInt();
+                if (mini <= maxi2 && maxi >= mini2) {
+                    erreur = QString("Canal %1 : chevauchement entre fonction %2 (%3-%4) et fonction %5 (%6-%7).")
+                            .arg(c + 1).arg(i + 1).arg(mini).arg(maxi).arg(j + 1).arg(mini2).arg(maxi2);
+                    retour = false;
+                }
+            }
+        }
+    }
+    return retour;
+}
+
+void InterfacePcClient::resizeEvent(QResizeEvent *event)
+{
+    QMainWindow::resizeEvent(event);
+    QTimer::singleShot(0, this, [this]() { refreshEquipmentsGrid(); });
 }
 
 /**
@@ -544,9 +592,7 @@ void InterfacePcClient::on_pushButtonCouleur_clicked()
                 );
 
     if (couleur.isValid()) {
-        couleurActuelle = couleur.name(); // stocke "#RRGGBB"
-
-        // Colorier le bouton pour donner un aperçu visuel
+        couleurActuelle = couleur.name();
         ui->pushButtonCouleur->setStyleSheet(
                     QString("background-color: %1; color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none;")
                     .arg(couleurActuelle)
@@ -587,27 +633,41 @@ void InterfacePcClient::on_btnSave_clicked()
 
     for (int i = 0; i < ui->channelsFormLayout->count(); ++i) {
         QFrame* cFrame = qobject_cast<QFrame*>(ui->channelsFormLayout->itemAt(i)->widget());
-        if (!cFrame) continue;
-        ChannelData cd;
-        QList<QLineEdit*> lineEdits = cFrame->findChildren<QLineEdit*>();
-        if (!lineEdits.isEmpty()) {
-            cd.description = lineEdits[0]->text();
-            for (int j = 1; j + 2 < lineEdits.size(); j += 3)
-                cd.fonctions.append({lineEdits[j]->text(), lineEdits[j+1]->text(), lineEdits[j+2]->text()});
+        if (cFrame) {
+            ChannelData cd;
+            QList<QLineEdit*> lineEdits = cFrame->findChildren<QLineEdit*>();
+            if (!lineEdits.isEmpty()) {
+                cd.description = lineEdits[0]->text();
+                for (int j = 1; j + 2 < lineEdits.size(); j += 3)
+                    cd.fonctions.append({lineEdits[j]->text(), lineEdits[j+1]->text(), lineEdits[j+2]->text()});
+            }
+            eq.canaux.append(cd);
         }
-        eq.canaux.append(cd);
     }
-
-    int  idU      = ui->universCombo->currentData().toInt();
-    bool resultat = (currentEditEquipIndex >= 0)
-            ? bdd.modifierEquipment(equipmentsList[currentEditEquipIndex].idEquipement, eq, idU)
-            : bdd.enregistrerEquipment(eq, idU);
-
-    if (resultat) {
-        refreshEquipmentsGrid();
-        on_btnCancel_clicked();
+    QString erreurValidation;
+    if (!validerFonctionsCanaux(eq.canaux, erreurValidation)) {
+        statusLabel->setText("❌ " + erreurValidation);
+        statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 20px;");
+        QTimer::singleShot(5000, this, [this]() { statusLabel->setText(""); });
     } else {
-        statusBar()->showMessage("Impossible d'ajouter l'équipement", 3000);
+
+        int  idU      = ui->universCombo->currentData().toInt();
+        bool resultat = (currentEditEquipIndex >= 0)
+                ? bdd.modifierEquipment(equipmentsList[currentEditEquipIndex].idEquipement, eq, idU)
+                : bdd.enregistrerEquipment(eq, idU);
+
+        if (resultat) {
+            refreshEquipmentsGrid();
+            on_btnCancel_clicked();
+            statusLabel->setText("✅ Enregistrement de l'équipement réussi");
+            statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
+        } else {
+            statusLabel->setText("❌ Impossible d'enregistrer l'équipement");
+            statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
+        }
+        QTimer::singleShot(5000, this, [this]() {
+            statusLabel->setText("");
+        });
     }
 }
 
@@ -666,12 +726,23 @@ void InterfacePcClient::on_scenesCombo_currentIndexChanged(int index)
     } else {
         ui->btnRenameScene->setEnabled(true);
         ui->btnDeleteScene->setEnabled(true);
+
+        int numeroUnivers = bdd.getUniversDeScene(idScene);
+        for (int i = 0; i < universList.size(); ++i) {
+            if (universList[i].numero == numeroUnivers) {
+                ui->scenesUniversCombo->blockSignals(true);
+                ui->scenesUniversCombo->setCurrentIndex(i);
+                ui->scenesUniversCombo->blockSignals(false);
+                on_scenesUniversCombo_currentIndexChanged(i);
+            }
+        }
+
         QMap<int, int> valeursEnregistrees = bdd.chargerValeursScene(idScene);
         for (int i = 0; i < dmxSliders.size(); ++i) {
             int idCanalDB = dmxSliders[i].idCanalDB;
             dmxSliders[i].slider->setValue(
-                        (idCanalDB != -1 && valeursEnregistrees.contains(idCanalDB))
-                        ? valeursEnregistrees[idCanalDB] : 0);
+                (idCanalDB != -1 && valeursEnregistrees.contains(idCanalDB))
+                ? valeursEnregistrees[idCanalDB] : 0);
         }
     }
 }
@@ -694,7 +765,8 @@ void InterfacePcClient::on_btnRenameScene_clicked()
 {
     int idScene = ui->scenesCombo->currentData().toInt();
     if (idScene == -1) {
-        statusBar()->showMessage("Aucune scène sélectionnée. Veuillez sélectionner une scène déjà existante !");
+        statusLabel->setText("❌ Aucune scène sélectionnée. Veuillez sélectionner une scène");
+        statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
     } else {
         bool ok;
         QString nouveauNom = QInputDialog::getText(this, "Renommer la scène",
@@ -703,10 +775,16 @@ void InterfacePcClient::on_btnRenameScene_clicked()
             refreshScenesList();
             int index = ui->scenesCombo->findData(idScene);
             if (index != -1) ui->scenesCombo->setCurrentIndex(index);
+            statusLabel->setText("✅ Modification du nom de la scène réussie");
+            statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
         } else {
-            statusBar()->showMessage("Impossible de modifier le nom de la scène");
+            statusLabel->setText("❌ Impossible de modifier le nom de la scène");
+            statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         }
     }
+    QTimer::singleShot(5000, this, [this]() {
+        statusLabel->setText("");
+    });
 }
 
 /**
@@ -717,16 +795,23 @@ void InterfacePcClient::on_btnDeleteScene_clicked()
 {
     int idScene = ui->scenesCombo->currentData().toInt();
     if (idScene == -1) {
-        statusBar()->showMessage("Aucune scène sélectionnée. Veuillez sélectionner une scène déjà existante !");
+        statusLabel->setText("❌ Aucune scène sélectionnée. Veuillez sélectionner une scène");
+        statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
     } else {
         if (QMessageBox::question(this, "Confirmation", "Supprimer cette scène ?") != QMessageBox::Yes) return;
         if (bdd.supprimerScene(idScene)) {
             refreshScenesList();
             on_btnResetSliders_clicked();
+            statusLabel->setText("✅ Suppression de la scène réussie");
+            statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
         } else {
-            statusBar()->showMessage("Impossible de supprimer la scène");
+            statusLabel->setText("❌ Impossible de supprimer la scène");
+            statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         }
     }
+    QTimer::singleShot(5000, this, [this]() {
+        statusLabel->setText("");
+    });
 }
 
 /**
@@ -736,34 +821,38 @@ void InterfacePcClient::on_btnDeleteScene_clicked()
 void InterfacePcClient::on_btnSaveScene_clicked()
 {
     if (ui->scenesUniversCombo->count() == 0) {
-        statusBar()->showMessage("Aucun univers enregistré");
-        return;
+        statusLabel->setText("❌ Aucun univers enregistré");
+        statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
     } else {
         bool ok;
         QString sceneName = QInputDialog::getText(this, "Nouvelle Scène",
                                                   "Entrez le nom de la scène :", QLineEdit::Normal, "", &ok);
-        if (!ok || sceneName.trimmed().isEmpty()) return;
-
-        QMap<int, int> valeursAEnregistrer;
-        for (int i = 0; i < dmxSliders.size(); ++i) {
-            int idCanalDB = dmxSliders[i].idCanalDB;
-            int valeur    = dmxSliders[i].slider->value();
-            if (idCanalDB != -1 && valeur != 0)
-                valeursAEnregistrer.insert(idCanalDB, valeur);
-        }
-
-        if (valeursAEnregistrer.isEmpty()) {
-            statusBar()->showMessage("Aucune valeur > 0 à enregistrer");
-        } else {
-
-            if (bdd.enregistrerScene(sceneName, valeursAEnregistrer)) {
-                statusBar()->showMessage("Scène '" + sceneName + "' sauvegardée !");
-                refreshScenesList();
+        if (ok && !sceneName.trimmed().isEmpty()) {
+            QMap<int, int> valeursAEnregistrer;
+            for (int i = 0; i < dmxSliders.size(); ++i) {
+                int idCanalDB = dmxSliders[i].idCanalDB;
+                int valeur    = dmxSliders[i].slider->value();
+                if (idCanalDB != -1 && valeur != 0)
+                    valeursAEnregistrer.insert(idCanalDB, valeur);
+            }
+            if (valeursAEnregistrer.isEmpty()) {
+                statusLabel->setText("❌ Impossible d'enregistrer une scène à 0");
+                statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
             } else {
-                statusBar()->showMessage("Impossible d'enregistrer la scène");
+                if (bdd.enregistrerScene(sceneName, valeursAEnregistrer)) {
+                    statusLabel->setText("Scène '" + sceneName + "' sauvegardée !");
+                    statusLabel->setStyleSheet("color: white; font-weight: bold; font-size: 30px;");
+                    refreshScenesList();
+                } else {
+                    statusLabel->setText("❌ Impossible d'enregistre la scène");
+                    statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
+                }
             }
         }
     }
+    QTimer::singleShot(5000, this, [this]() {
+        statusLabel->setText("");
+    });
 }
 
 /**
@@ -792,13 +881,17 @@ void InterfacePcClient::on_btnConnectTCP_clicked()
         QString ip   = ui->lineEditIP->text();
         int     port = ui->spinBoxPort->value();
         if (ip.isEmpty() || port <= 0) {
-            statusBar()->showMessage("Mauvaise adresse IP ou port invalide !");
+            statusLabel->setText("❌ Mauvaise adresse IP ou port invalide !");
+            statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         } else {
             socketClient.connectToHost(ip, port);
         }
     } else {
         socketClient.disconnectFromHost();
     }
+    QTimer::singleShot(5000, this, [this]() {
+        statusLabel->setText("");
+    });
 }
 
 /**
@@ -812,7 +905,11 @@ void InterfacePcClient::onQTcpSocket_connected()
     ui->btnConnectTCP->setStyleSheet(" QPushButton#btnGreen { background-color: #388e3c;  color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none; }"
                                      " QPushButton#btnGreen:hover { background-color: #4caf50; }");
     ui->btnConnectTCP->style()->polish(ui->btnConnectTCP);
-    statusBar()->showMessage("Connexion au serveur établie", 3000);
+    statusLabel->setText("✅ Connexion au serveur établie");
+    statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
+    QTimer::singleShot(5000, this, [this]() {
+        statusLabel->setText("");
+    });
 }
 
 /**
@@ -826,7 +923,12 @@ void InterfacePcClient::onQTcpSocket_disconnected()
     ui->btnConnectTCP->setStyleSheet(" QPushButton#btnGrey  { background-color: #555555;  color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none; }"
                                      " QPushButton#btnGrey:hover  { background-color: #666666; }");
     ui->btnConnectTCP->style()->polish(ui->btnConnectTCP);
-    statusBar()->showMessage("Perte de la connexion au serveur", 3000);
+    ui->btnLaunchLiveScene->setEnabled(false);
+    statusLabel->setText("❌ Perte de la connexion au serveur");
+    statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
+    QTimer::singleShot(5000, this, [this]() {
+        statusLabel->setText("");
+    });
 }
 
 /**
@@ -844,7 +946,7 @@ void InterfacePcClient::on_liveScenesList_itemSelectionChanged()
         QListWidgetItem* item = ui->liveScenesList->selectedItems().first();
         selectedLiveSceneId   = item->data(Qt::UserRole).toInt();
         int numeroUnivers     = item->data(Qt::UserRole + 1).toInt();
-        ui->btnLaunchLiveScene->setEnabled(true);
+        ui->btnLaunchLiveScene->setEnabled(socketClient.state() == QAbstractSocket::ConnectedState);
         ui->btnLaunchLiveScene->setText(
                     QString("▶ LANCER : %1  —  UNIVERS %2")
                     .arg(item->text().section("     —     ", 0, 0).toUpper())
@@ -916,32 +1018,22 @@ void InterfacePcClient::refreshLiveScenesList(int idUniversFiltre)
     selectedLiveSceneId = -1;
 
     QList<SceneData> scenes = bdd.chargerLesScenes();
-
     for (const auto& scene : scenes) {
-        // Récupérer le numéro d'univers associé à cette scène
         int numeroUnivers = bdd.getUniversDeScene(scene.idScene);
 
-        // Appliquer le filtre si nécessaire
-        if (idUniversFiltre != -1) {
-            // Trouver l'idUnivers correspondant au numéro pour comparer
-            int idUniversScene = -1;
-            for (const auto& u : universList) {
-                if (u.numero == numeroUnivers) {
-                    idUniversScene = u.idUnivers;
-                    break;
-                }
-            }
-            if (idUniversScene != idUniversFiltre)
-                continue;
+        int idUniversScene = -1;
+        for (const auto& u : universList) {
+            if (u.numero == numeroUnivers)
+                idUniversScene = u.idUnivers;
         }
 
-        // Construire le label : "Nom de la scène  —  Univers X
-        QString label = QString("%1     —     Univers %2").arg(scene.nomScene).arg(numeroUnivers);
-
-        QListWidgetItem* item = new QListWidgetItem(label);
-        item->setData(Qt::UserRole,     scene.idScene);
-        item->setData(Qt::UserRole + 1, numeroUnivers);
-        ui->liveScenesList->addItem(item);
+        bool doitAfficher = (idUniversFiltre == -1) || (idUniversScene == idUniversFiltre);
+        if (doitAfficher) {
+            QString label = QString("%1     —     Univers %2").arg(scene.nomScene).arg(numeroUnivers);
+            QListWidgetItem* item = new QListWidgetItem(label);
+            item->setData(Qt::UserRole,     scene.idScene);
+            item->setData(Qt::UserRole + 1, numeroUnivers);
+            ui->liveScenesList->addItem(item);
+        }
     }
 }
-

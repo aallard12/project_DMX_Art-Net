@@ -118,5 +118,8 @@ private:
     void addChannelToForm(const ChannelData* data = nullptr);
     void addFunctionToChannel(QVBoxLayout* functionsLayout, const FunctionData* data = nullptr);
     void creerSliders(int nombreCanaux);
+
+    bool validerFonctionsCanaux(const QList<ChannelData>& canaux, QString& erreur);
+    void resizeEvent(QResizeEvent* event) override;
 };
 #endif // INTERFACEPCCLIENT_H

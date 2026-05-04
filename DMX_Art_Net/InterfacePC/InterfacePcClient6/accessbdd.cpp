@@ -45,13 +45,13 @@ AccessBDD::AccessBDD() {
         mdp = paramsSocket.value("CONFIG/password", "raspberry").toString();
     }
 
-    // // if (testFichier.exists() && testFichier.isFile()) {
-    // //     QSettings paramsSocket(nomFichierIni, QSettings::IniFormat);
-    // //     ip = paramsSocket.value("CONFIG/hostname", "172.18.58.8").toString();
-    // //     base = paramsSocket.value("CONFIG/BDD", "DMXBDD").toString();
-    // //     log = paramsSocket.value("CONFIG/username", "ciel").toString();
-    // //     mdp = paramsSocket.value("CONFIG/password", "ciel").toString();
-    // // }
+    // if (testFichier.exists() && testFichier.isFile()) {
+    //     QSettings paramsSocket(nomFichierIni, QSettings::IniFormat);
+    //     ip = paramsSocket.value("CONFIG/hostname", "172.18.58.8").toString();
+    //     base = paramsSocket.value("CONFIG/BDD", "DMXBDD").toString();
+    //     log = paramsSocket.value("CONFIG/username", "ciel").toString();
+    //     mdp = paramsSocket.value("CONFIG/password", "ciel").toString();
+    // }
 
     bdd.setHostName(ip);
     bdd.setDatabaseName(base);
@@ -103,6 +103,9 @@ AccessBDD::AccessBDD() {
 QList<UniversData> AccessBDD::chargerUnivers() {
     QList<UniversData> liste;
     QSqlQuery query("SELECT idUnivers, numeroUnivers, adresseIp FROM UNIVERS ORDER BY numeroUnivers ASC");
+
+    if (!query.isActive())      qDebug() << "Erreur chargerUnivers :" << query.lastError().text();
+
     while(query.next()) {
         UniversData u;
         u.idUnivers = query.value("idUnivers").toInt();
@@ -130,6 +133,8 @@ bool AccessBDD::enregistrerUnivers(int numero, const QString &ip) {
         query.bindValue(":ip", ip);
         if (query.exec()) {
             succes = true;
+        } else {
+            qDebug() << "Erreur enregistrerUnivers :" << query.lastError().text();
         }
     }
     return succes;
@@ -145,12 +150,18 @@ bool AccessBDD::enregistrerUnivers(int numero, const QString &ip) {
  * @return bool True si la mise à jour a réussi.
  */
 bool AccessBDD::modifierUnivers(int id, int numero, const QString &ip) {
+    bool retour = false;
     QSqlQuery query;
     query.prepare("UPDATE UNIVERS SET numeroUnivers = :num, adresseIp = :ip WHERE idUnivers = :id");
     query.bindValue(":num", numero);
     query.bindValue(":ip", ip);
     query.bindValue(":id", id);
-    return query.exec();
+    if (query.exec()) {
+        retour = true;
+    } else {
+        qDebug() << "Erreur modifierUnivers :" << query.lastError().text();
+    }
+    return retour;
 }
 
 /**
@@ -162,10 +173,16 @@ bool AccessBDD::modifierUnivers(int id, int numero, const QString &ip) {
  * @return bool True si la suppression est effective.
  */
 bool AccessBDD::supprimerUnivers(int id) {
+    bool retour = false;
     QSqlQuery query;
     query.prepare("DELETE FROM UNIVERS WHERE idUnivers = :id");
     query.bindValue(":id", id);
-    return query.exec();
+    if (query.exec()) {
+        retour = true;
+    } else {
+        qDebug() << "Erreur supprimerUnivers :" << query.lastError().text();
+    }
+    return retour;
 }
 
 /**
@@ -181,7 +198,7 @@ bool AccessBDD::supprimerUnivers(int id) {
 bool AccessBDD::enregistrerEquipment(const EquipmentData &eq, int idUniversSelectionne) {
     bool succes = false;
 
-    if (bdd.isOpen() && bdd.transaction()) {
+    if (bdd.isOpen()) {
         QSqlQuery query;
         query.prepare("INSERT INTO EQUIPEMENTS (nomEquipement, adresseDepart, nbCanal, idUnivers, couleur) "
                       "VALUES (:nom, :adr, :nb, :idU, :couleur)");
@@ -193,9 +210,9 @@ bool AccessBDD::enregistrerEquipment(const EquipmentData &eq, int idUniversSelec
 
         if (query.exec()) {
             int idEquip = query.lastInsertId().toInt();
-            bool errorOccured = false;
+            succes = true;
 
-            for (int i = 0; i < eq.canaux.size() && !errorOccured; ++i) {
+            for (int i = 0; i < eq.canaux.size(); ++i) {
                 QSqlQuery qChan;
                 qChan.prepare("INSERT INTO CANAUX (numeroCanal, description, idEquipement) "
                               "VALUES (:num, :desc, :idE)");
@@ -213,21 +230,20 @@ bool AccessBDD::enregistrerEquipment(const EquipmentData &eq, int idUniversSelec
                         qFunc.bindValue(":max", func.max.toInt());
                         qFunc.bindValue(":f", func.nom);
                         qFunc.bindValue(":idC", idChan);
-                        if (!qFunc.exec()) errorOccured = true;
+
+                        if (!qFunc.exec())
+                            qDebug() << "Erreur insertion FONCTIONNALITE_CANAL :" << qFunc.lastError().text();
                     }
                 } else {
-                    errorOccured = true;
+                    qDebug() << "Erreur insertion CANAUX canal" << i + 1 << ":" << qChan.lastError().text();
+                    succes = false;
                 }
             }
-
-            if (!errorOccured && bdd.commit()) {
-                succes = true;
-            } else {
-                bdd.rollback();
-            }
         } else {
-            bdd.rollback();
+            qDebug() << "Erreur insertion EQUIPEMENTS :" << query.lastError().text();
         }
+    } else {
+        qDebug() << "Erreur enregistrerEquipment : base de données non ouverte";
     }
 
     return succes;
@@ -241,10 +257,16 @@ bool AccessBDD::enregistrerEquipment(const EquipmentData &eq, int idUniversSelec
  * @return bool True si la requête a abouti.
  */
 bool AccessBDD::supprimerEquipment(int idEquipement) {
+    bool retour = false;
     QSqlQuery query;
     query.prepare("DELETE FROM EQUIPEMENTS WHERE idEquipement = :id");
     query.bindValue(":id", idEquipement);
-    return query.exec();
+    if (query.exec()) {
+        retour = true;
+    } else {
+        qDebug() << "Erreur supprimerEquipement :" << query.lastError().text();
+    }
+    return retour;
 }
 
 /**
@@ -260,7 +282,7 @@ bool AccessBDD::supprimerEquipment(int idEquipement) {
 bool AccessBDD::modifierEquipment(int idEquipement, const EquipmentData &eq, int idUniversSelectionne) {
     bool succes = false;
 
-    if (bdd.isOpen() && bdd.transaction()) {
+    if (bdd.isOpen()) {
         QSqlQuery query;
         query.prepare("UPDATE EQUIPEMENTS SET nomEquipement = :nom, adresseDepart = :adr, "
                       "nbCanal = :nb, idUnivers = :idU, couleur = :couleur WHERE idEquipement = :idEq");
@@ -277,9 +299,9 @@ bool AccessBDD::modifierEquipment(int idEquipement, const EquipmentData &eq, int
             qDel.bindValue(":idEq", idEquipement);
 
             if (qDel.exec()) {
-                bool errorOccured = false;
+                succes = true;
 
-                for (int i = 0; i < eq.canaux.size() && !errorOccured; ++i) {
+                for (int i = 0; i < eq.canaux.size(); ++i) {
                     QSqlQuery qChan;
                     qChan.prepare("INSERT INTO CANAUX (numeroCanal, description, idEquipement) "
                                   "VALUES (:num, :desc, :idE)");
@@ -297,24 +319,23 @@ bool AccessBDD::modifierEquipment(int idEquipement, const EquipmentData &eq, int
                             qFunc.bindValue(":max", func.max.toInt());
                             qFunc.bindValue(":f", func.nom);
                             qFunc.bindValue(":idC", idChan);
-                            if (!qFunc.exec()) errorOccured = true;
+
+                            if (!qFunc.exec())
+                                qDebug() << "Erreur insertion FONCTIONNALITE_CANAL :" << qFunc.lastError().text();
                         }
                     } else {
-                        errorOccured = true;
+                        qDebug() << "Erreur insertion CANAUX canal" << i + 1 << ":" << qChan.lastError().text();
+                        succes = false;
                     }
                 }
-
-                if (!errorOccured && bdd.commit()) {
-                    succes = true;
-                } else {
-                    bdd.rollback();
-                }
             } else {
-                bdd.rollback();
+                qDebug() << "Erreur suppression CANAUX :" << qDel.lastError().text();
             }
         } else {
-            bdd.rollback();
+            qDebug() << "Erreur UPDATE EQUIPEMENTS :" << query.lastError().text();
         }
+    } else {
+        qDebug() << "Erreur modifierEquipment : base de données non ouverte";
     }
 
     return succes;
@@ -429,32 +450,32 @@ QMap<int, DmxChannelInfo> AccessBDD::chargerMapUnivers(int idUnivers) {
 bool AccessBDD::enregistrerScene(const QString &nomScene, const QMap<int, int> &valeursCanaux) {
     bool succes = false;
 
-    if (bdd.transaction()) {
+    if (bdd.isOpen()) {
         QSqlQuery query;
         query.prepare("INSERT INTO SCENES (nomScene) VALUES (:nom)");
         query.bindValue(":nom", nomScene);
 
         if (query.exec()) {
             int idScene = query.lastInsertId().toInt();
-            bool erreur = false;
+            succes = true;
 
-            for (auto it = valeursCanaux.begin(); it != valeursCanaux.end() && !erreur; ++it) {
+            for (auto it = valeursCanaux.begin(); it != valeursCanaux.end(); ++it) {
                 QSqlQuery qPilote;
                 qPilote.prepare("INSERT INTO PILOTE (idScene, idCanal, valeurCanaux) VALUES (:idS, :idC, :val)");
                 qPilote.bindValue(":idS", idScene);
                 qPilote.bindValue(":idC", it.key());
                 qPilote.bindValue(":val", it.value());
-                if (!qPilote.exec()) erreur = true;
-            }
 
-            if (!erreur && bdd.commit()) {
-                succes = true;
-            } else {
-                bdd.rollback();
+                if (!qPilote.exec()) {
+                    qDebug() << "Erreur insertion PILOTE :" << qPilote.lastError().text();
+                    succes = false;
+                }
             }
         } else {
-            bdd.rollback();
+            qDebug() << "Erreur insertion SCENES :" << query.lastError().text();
         }
+    } else {
+        qDebug() << "Erreur enregistrerScene : base de données non ouverte";
     }
 
     return succes;
@@ -476,8 +497,10 @@ int AccessBDD::recupererCompteurCanaux(int index)
 
     int countCanaux = 0;
     query.bindValue(":index", index);
-    if (query.exec() && query.next()) {
-        countCanaux = query.value("nombreCanaux").toInt();
+    if (query.exec()) {
+        while (query.next()) {
+            countCanaux = query.value("nombreCanaux").toInt();
+        }
     }
     return countCanaux;
 }

@@ -108,7 +108,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="listPage">
        <layout class="QHBoxLayout" name="listPageLayout">
@@ -268,8 +268,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>368</width>
-             <height>214</height>
+             <width>1254</width>
+             <height>668</height>
             </rect>
            </property>
            <property name="styleSheet">
@@ -504,8 +504,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>44</width>
-             <height>18</height>
+             <width>1254</width>
+             <height>586</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="slidersGrid"/>
