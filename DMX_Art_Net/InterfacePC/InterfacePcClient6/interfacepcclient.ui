@@ -108,7 +108,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="listPage">
        <layout class="QHBoxLayout" name="listPageLayout">
@@ -278,26 +278,37 @@
            <layout class="QVBoxLayout" name="formLayout">
             <item>
              <widget class="QLabel" name="formTitle">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>-1</pointsize>
+                <bold>true</bold>
+               </font>
+              </property>
               <property name="styleSheet">
                <string notr="true">color: #107c7c; font-size: 16px; font-weight: bold;</string>
               </property>
               <property name="text">
                <string>Équipement DMX</string>
               </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
              </widget>
             </item>
             <item>
              <layout class="QGridLayout" name="infoGrid">
-              <item row="1" column="0">
-               <widget class="QLineEdit" name="nameEdit">
-                <property name="styleSheet">
-                 <string notr="true">background-color: #383838; border: 1px solid #555; color: #ffffff; padding: 8px; border-radius: 4px;</string>
-                </property>
-                <property name="placeholderText">
-                 <string>Ex. iRock7s</string>
-                </property>
-               </widget>
-              </item>
               <item row="1" column="2">
                <widget class="QLineEdit" name="startAddressEdit">
                 <property name="styleSheet">
@@ -308,20 +319,32 @@
                 </property>
                </widget>
               </item>
+              <item row="1" column="0">
+               <widget class="QLineEdit" name="nameEdit">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: #383838; border: 1px solid #555; color: #ffffff; padding: 8px; border-radius: 4px;</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Ex. iRock7s</string>
+                </property>
+               </widget>
+              </item>
               <item row="1" column="1">
                <widget class="QComboBox" name="universCombo">
                 <property name="styleSheet">
                  <string notr="true">background-color: #383838; border: 1px solid #555; color: #ffffff; padding: 8px; border-radius: 4px;</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label">
-                <property name="styleSheet">
-                 <string>color: #cccccc;</string>
-                </property>
-                <property name="text">
-                 <string>NOM DE L'ÉQUIPEMENT</string>
                 </property>
                </widget>
               </item>
@@ -335,17 +358,72 @@
                 </property>
                </widget>
               </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string>color: #cccccc;</string>
+                </property>
+                <property name="text">
+                 <string>NOM DE L'ÉQUIPEMENT</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>ADRESSE DMX DE DÉPART</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>UNIVERS</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>
              <widget class="QLabel" name="channelCountLabel">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>50</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">font-weight: bold; font-size: 13px; color: #aaaaaa;</string>
               </property>
              </widget>
             </item>
             <item>
-             <layout class="QVBoxLayout" name="channelsFormLayout"/>
+             <layout class="QVBoxLayout" name="channelsFormLayout">
+              <property name="spacing">
+               <number>6</number>
+              </property>
+             </layout>
             </item>
             <item>
              <widget class="QPushButton" name="btnAddChannelGlobal">

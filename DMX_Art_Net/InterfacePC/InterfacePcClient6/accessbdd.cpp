@@ -41,8 +41,8 @@ AccessBDD::AccessBDD() {
         QSettings paramsSocket(nomFichierIni, QSettings::IniFormat);
         ip = paramsSocket.value("CONFIG/hostname", "192.168.1.20").toString();
         base = paramsSocket.value("CONFIG/BDD", "DMXBDD").toString();
-        log = paramsSocket.value("CONFIG/username", "root").toString();
-        mdp = paramsSocket.value("CONFIG/password", "raspberry").toString();
+        log = paramsSocket.value("CONFIG/username", "UserPc").toString();
+        mdp = paramsSocket.value("CONFIG/password", "toto").toString();
     }
 
     // if (testFichier.exists() && testFichier.isFile()) {

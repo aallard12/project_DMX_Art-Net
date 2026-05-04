@@ -1,0 +1,6 @@
+nom d'utilisateur : UserPc
+mot de passe : toto
+
+CREATE USER 'UserPc'@'%' IDENTIFIED BY 'toto';  //marche sur toutes les IP '%'
+GRANT ALL PRIVILEGES ON * . * TO 'UserPc'@'%';
+FLUSH PRIVILEGES;

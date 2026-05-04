@@ -546,6 +546,13 @@ void InterfacePcClient::creerSliders(int nombreCanaux)
     }
 }
 
+/**
+ * @brief Valide les plages DMX des fonctions de chaque canal.
+ * @details Vérifie que chaque fonction est dans [0-255] et qu'il n'y a pas de chevauchement entre fonctions d'un même canal.
+ * @param canaux Liste des canaux à valider.
+ * @param erreur Message d'erreur renseigné en cas d'invalidité.
+ * @return true si tous les canaux sont valides, false sinon.
+ */
 bool InterfacePcClient::validerFonctionsCanaux(const QList<ChannelData>& canaux, QString& erreur)
 {
     bool retour = true;
@@ -573,6 +580,11 @@ bool InterfacePcClient::validerFonctionsCanaux(const QList<ChannelData>& canaux,
     return retour;
 }
 
+/**
+ * @brief Surcharge du redimensionnement de la fenêtre.
+ * @details Rafraîchit la grille des équipements après le redimensionnement via un QTimer à délai nul.
+ * @param event Événement de redimensionnement Qt.
+ */
 void InterfacePcClient::resizeEvent(QResizeEvent *event)
 {
     QMainWindow::resizeEvent(event);
