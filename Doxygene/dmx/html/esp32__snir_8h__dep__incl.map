@@ -1,0 +1,11 @@
+<map id="include/esp32_snir.h" name="include/esp32_snir.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="105,5,245,31"/>
+<area shape="rect" id="Node000002" href="$config_8h.html" title="Fichier de configuration globale pour le projet ESP32 Art&#45;Net." alt="" coords="119,79,232,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="178,44,178,79,173,79,173,44"/>
+<area shape="rect" id="Node000003" href="$dmx_8cpp.html" title="Implémentation de la gestion du protocole DMX512." alt="" coords="5,152,100,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="145,113,74,154,71,149,143,108"/>
+<area shape="rect" id="Node000004" href="$ecran_8cpp.html" title="Implémentation des fonctions d&#39;affichage OLED." alt="" coords="125,152,226,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="178,118,178,152,173,152,173,118"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html" title="Programme principal du nœud Wi&#45;Fi Art&#45;Net vers DMX." alt="" coords="251,152,348,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="208,108,280,149,278,154,206,113"/>
+</map>

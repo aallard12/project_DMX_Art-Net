@@ -1,0 +1,5 @@
+<map id="EcranOLED" name="EcranOLED">
+<area shape="rect" id="Node000001" title="Classe de gestion de l&#39;affichage OLED pour le contrôleur DMX." alt="" coords="5,79,97,104"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="12,5,91,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="54,44,54,79,49,79,49,44"/>
+</map>
