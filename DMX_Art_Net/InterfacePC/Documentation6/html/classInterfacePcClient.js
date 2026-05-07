@@ -30,6 +30,7 @@ var classInterfacePcClient =
     [ "on_liveScenesList_itemSelectionChanged", "classInterfacePcClient.html#ab9e880a899b9f57bdd952564fd8240e3", null ],
     [ "on_liveUniversCombo_currentIndexChanged", "classInterfacePcClient.html#a03751d66308c4a6cde410897a11287fa", null ],
     [ "on_pushButtonCouleur_clicked", "classInterfacePcClient.html#a59e5a387ae63d9bffc5c6953b0447431", null ],
+    [ "on_pushButtonImport_clicked", "classInterfacePcClient.html#acc4a633e43b0645d416e28df26d8e2cf", null ],
     [ "on_scenesCombo_currentIndexChanged", "classInterfacePcClient.html#a13bff286559b87e547d56a85c231d6ae", null ],
     [ "on_scenesUniversCombo_currentIndexChanged", "classInterfacePcClient.html#adef3e08b9c630b9ed86267669376ff04", null ],
     [ "on_uiUniversList_currentRowChanged", "classInterfacePcClient.html#a8494c8e341747b21fced3500bd6240b6", null ],

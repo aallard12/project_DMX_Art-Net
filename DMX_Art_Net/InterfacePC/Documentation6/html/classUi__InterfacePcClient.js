@@ -58,6 +58,7 @@ var classUi__InterfacePcClient =
     [ "mainTitle", "classUi__InterfacePcClient.html#ae2377fc63e7fc891b28319aee33d9b62", null ],
     [ "nameEdit", "classUi__InterfacePcClient.html#adb7d3ae6a851fbe7e3b33c6fade56103", null ],
     [ "pushButtonCouleur", "classUi__InterfacePcClient.html#a7e3ca74aad6faad7297ba036f34c7c11", null ],
+    [ "pushButtonImport", "classUi__InterfacePcClient.html#a537fb0449e6112df3f44033ded64f8fb", null ],
     [ "s", "classUi__InterfacePcClient.html#ab857266558dff429e0a3e5e96b79d4e8", null ],
     [ "s2", "classUi__InterfacePcClient.html#a8a496438d0063e69f2cf3da1fa3142d0", null ],
     [ "scenesCombo", "classUi__InterfacePcClient.html#a9b749fe0f4cc448d179981a80397153c", null ],

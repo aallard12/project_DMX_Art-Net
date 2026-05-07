@@ -20,9 +20,10 @@ var searchData=
   ['on_5flivesceneslist_5fitemselectionchanged_17',['on_liveScenesList_itemSelectionChanged',['../classInterfacePcClient.html#ab9e880a899b9f57bdd952564fd8240e3',1,'InterfacePcClient']]],
   ['on_5fliveuniverscombo_5fcurrentindexchanged_18',['on_liveUniversCombo_currentIndexChanged',['../classInterfacePcClient.html#a03751d66308c4a6cde410897a11287fa',1,'InterfacePcClient']]],
   ['on_5fpushbuttoncouleur_5fclicked_19',['on_pushButtonCouleur_clicked',['../classInterfacePcClient.html#a59e5a387ae63d9bffc5c6953b0447431',1,'InterfacePcClient']]],
-  ['on_5fscenescombo_5fcurrentindexchanged_20',['on_scenesCombo_currentIndexChanged',['../classInterfacePcClient.html#a13bff286559b87e547d56a85c231d6ae',1,'InterfacePcClient']]],
-  ['on_5fscenesuniverscombo_5fcurrentindexchanged_21',['on_scenesUniversCombo_currentIndexChanged',['../classInterfacePcClient.html#adef3e08b9c630b9ed86267669376ff04',1,'InterfacePcClient']]],
-  ['on_5fuiuniverslist_5fcurrentrowchanged_22',['on_uiUniversList_currentRowChanged',['../classInterfacePcClient.html#a8494c8e341747b21fced3500bd6240b6',1,'InterfacePcClient']]],
-  ['onqtcpsocket_5fconnected_23',['onQTcpSocket_connected',['../classInterfacePcClient.html#aa62dc4c0434de4f027cec4a6a1c37fb1',1,'InterfacePcClient']]],
-  ['onqtcpsocket_5fdisconnected_24',['onQTcpSocket_disconnected',['../classInterfacePcClient.html#ace499ca36b2c67474cfa5c2bc5d2257f',1,'InterfacePcClient']]]
+  ['on_5fpushbuttonimport_5fclicked_20',['on_pushButtonImport_clicked',['../classInterfacePcClient.html#acc4a633e43b0645d416e28df26d8e2cf',1,'InterfacePcClient']]],
+  ['on_5fscenescombo_5fcurrentindexchanged_21',['on_scenesCombo_currentIndexChanged',['../classInterfacePcClient.html#a13bff286559b87e547d56a85c231d6ae',1,'InterfacePcClient']]],
+  ['on_5fscenesuniverscombo_5fcurrentindexchanged_22',['on_scenesUniversCombo_currentIndexChanged',['../classInterfacePcClient.html#adef3e08b9c630b9ed86267669376ff04',1,'InterfacePcClient']]],
+  ['on_5fuiuniverslist_5fcurrentrowchanged_23',['on_uiUniversList_currentRowChanged',['../classInterfacePcClient.html#a8494c8e341747b21fced3500bd6240b6',1,'InterfacePcClient']]],
+  ['onqtcpsocket_5fconnected_24',['onQTcpSocket_connected',['../classInterfacePcClient.html#aa62dc4c0434de4f027cec4a6a1c37fb1',1,'InterfacePcClient']]],
+  ['onqtcpsocket_5fdisconnected_25',['onQTcpSocket_disconnected',['../classInterfacePcClient.html#ace499ca36b2c67474cfa5c2bc5d2257f',1,'InterfacePcClient']]]
 ];
