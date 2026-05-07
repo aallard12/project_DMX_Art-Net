@@ -541,7 +541,7 @@ void InterfacePcClient::creerSliders(int nombreCanaux)
         sLayout->addWidget(lTitle);
         sLayout->addWidget(slider, 1, Qt::AlignHCenter);
         sLayout->addWidget(lVal);
-        slidersGrid->addWidget(sliderFrame, i / 16, i % 16);
+        slidersGrid->addWidget(sliderFrame, i / 14, i % 14);
         dmxSliders.append({-1, lTitle, slider, lVal, "", "", {}});
     }
 }
@@ -753,8 +753,8 @@ void InterfacePcClient::on_scenesCombo_currentIndexChanged(int index)
         for (int i = 0; i < dmxSliders.size(); ++i) {
             int idCanalDB = dmxSliders[i].idCanalDB;
             dmxSliders[i].slider->setValue(
-                (idCanalDB != -1 && valeursEnregistrees.contains(idCanalDB))
-                ? valeursEnregistrees[idCanalDB] : 0);
+                        (idCanalDB != -1 && valeursEnregistrees.contains(idCanalDB))
+                        ? valeursEnregistrees[idCanalDB] : 0);
         }
     }
 }
@@ -806,29 +806,35 @@ void InterfacePcClient::on_btnRenameScene_clicked()
 void InterfacePcClient::on_btnDeleteScene_clicked()
 {
     int idScene = ui->scenesCombo->currentData().toInt();
+    QString nomScene = ui->scenesCombo->currentText();
     if (idScene == -1) {
         statusLabel->setText("❌ Aucune scène sélectionnée. Veuillez sélectionner une scène");
         statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
     } else {
-        if (QMessageBox::question(this, "Confirmation", "Supprimer cette scène ?") != QMessageBox::Yes) return;
-        if (bdd.supprimerScene(idScene)) {
-            refreshScenesList();
-            on_btnResetSliders_clicked();
-            statusLabel->setText("✅ Suppression de la scène réussie");
-            statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
+        bool estProtegee = (nomScene == "BLACKOUT");
+        if (!estProtegee) {
+            if (QMessageBox::question(this, "Confirmation", "Supprimer cette scène ?") == QMessageBox::Yes) {
+                if (bdd.supprimerScene(idScene)) {
+                    refreshScenesList();
+                    statusLabel->setText("✅ Scène supprimée");
+                    statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
+                } else {
+                    statusLabel->setText("❌ Impossible de supprimer la scène");
+                    statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
+                }
+            }
         } else {
-            statusLabel->setText("❌ Impossible de supprimer la scène");
+            statusLabel->setText("❌ Cette scène est protégée et ne peut pas être supprimée");
             statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         }
     }
-    QTimer::singleShot(5000, this, [this]() {
-        statusLabel->setText("");
-    });
+
+    QTimer::singleShot(5000, this, [this]() { statusLabel->setText(""); });
 }
 
 /**
  * @brief InterfacePcClient::on_btnSaveScene_clicked
- * @details Demande un nom, collecte les valeurs des sliders non nuls et enregistre la scène en BDD.
+ * @details Demande un nom, collecte les valeurs des sliders et enregistre la scène en BDD.
  */
 void InterfacePcClient::on_btnSaveScene_clicked()
 {
@@ -847,18 +853,13 @@ void InterfacePcClient::on_btnSaveScene_clicked()
                 if (idCanalDB != -1 && valeur != 0)
                     valeursAEnregistrer.insert(idCanalDB, valeur);
             }
-            if (valeursAEnregistrer.isEmpty()) {
-                statusLabel->setText("❌ Impossible d'enregistrer une scène à 0");
-                statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
+            if (bdd.enregistrerScene(sceneName, valeursAEnregistrer)) {
+                statusLabel->setText("Scène '" + sceneName + "' sauvegardée !");
+                statusLabel->setStyleSheet("color: white; font-weight: bold; font-size: 30px;");
+                refreshScenesList();
             } else {
-                if (bdd.enregistrerScene(sceneName, valeursAEnregistrer)) {
-                    statusLabel->setText("Scène '" + sceneName + "' sauvegardée !");
-                    statusLabel->setStyleSheet("color: white; font-weight: bold; font-size: 30px;");
-                    refreshScenesList();
-                } else {
-                    statusLabel->setText("❌ Impossible d'enregistre la scène");
-                    statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
-                }
+                statusLabel->setText("❌ Impossible d'enregistre la scène");
+                statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
             }
         }
     }
@@ -1049,3 +1050,58 @@ void InterfacePcClient::refreshLiveScenesList(int idUniversFiltre)
         }
     }
 }
+
+/**
+ * @brief InterfacePcClient::on_pushButtonImport_clicked
+ * @details Ouvre un sélecteur de fichier, extrait les données (nom, canaux, fonctions)
+ *          et remplit automatiquement le formulaire. Affiche une erreur en cas d'échec.
+ */
+void InterfacePcClient::on_pushButtonImport_clicked()
+{
+    QString cheminFichier = QFileDialog::getOpenFileName(
+                this, "Importer un équipement", "", "Fichiers JSON (*.json)");
+
+    if (!cheminFichier.isEmpty()) {
+        QFile fichier(cheminFichier);
+        if (fichier.open(QIODevice::ReadOnly)) {
+
+            QJsonDocument doc = QJsonDocument::fromJson(fichier.readAll());
+            fichier.close();
+
+            if (!doc.isNull() && doc.isObject()) {
+
+                QJsonObject equipObj = doc.object().value("equipement").toObject();
+
+                clearForm();
+                ui->nameEdit->setText(equipObj.value("nom").toString());
+
+                QJsonArray canaux = equipObj.value("canaux").toArray();
+                for (const auto& canalVal : canaux) {
+                    QJsonObject canalObj = canalVal.toObject();
+                    ChannelData cd;
+                    cd.description = canalObj.value("description").toString();
+                    QJsonArray fonctions = canalObj.value("fonctions").toArray();
+                    for (const auto& funcVal : fonctions) {
+                        QJsonObject funcObj = funcVal.toObject();
+                        FunctionData fd;
+                        fd.nom = funcObj.value("nom").toString();
+                        fd.min = funcObj.value("min").toString();
+                        fd.max = funcObj.value("max").toString();
+                        cd.fonctions.append(fd);
+                    }
+                    addChannelToForm(&cd);
+                }
+            } else {
+                statusLabel->setText("❌ Fichier JSON invalide");
+                statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
+            }
+        } else {
+            statusLabel->setText("❌ Impossible d'ouvrir le fichier");
+            statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
+        }
+    } else {
+        statusLabel->setText("❌ Fichier JSON vide");
+        statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
+    }
+}
+

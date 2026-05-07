@@ -14,7 +14,6 @@
         "numero": "2",
         "description": "Tilt / Barrel",
         "fonctions": [
-          { "nom": "Tilt (iRock 7S)", "min": "0", "max": "255" },
           { "nom": "Stopped (7B)", "min": "0", "max": "9" },
           { "nom": "Fastest speed counterclockwise (7B)", "min": "10", "max": "10" },
           { "nom": "Slowest speed counterclockwise (7B)", "min": "120", "max": "120" },

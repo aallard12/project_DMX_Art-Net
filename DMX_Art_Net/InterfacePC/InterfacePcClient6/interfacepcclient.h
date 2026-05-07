@@ -21,6 +21,9 @@
 #include <QJsonDocument>
 #include <QColorDialog>
 #include <QTimer>
+#include <QFileDialog>
+#include <QFile>
+#include <QJsonArray>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class InterfacePcClient; }
@@ -84,6 +87,8 @@ private slots:
     void lancerScene(int idScene);
     void on_liveUniversCombo_currentIndexChanged(int index);
     void refreshLiveScenesList(int idUniversFiltre);
+
+    void on_pushButtonImport_clicked();
 
 private:
     /// Pointeur vers l'interface utilisateur générée par Qt Designer

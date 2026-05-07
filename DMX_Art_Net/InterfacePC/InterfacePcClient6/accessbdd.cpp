@@ -60,7 +60,6 @@ AccessBDD::AccessBDD() {
 
     if (!bdd.open())
         qDebug() << bdd.lastError().text();
-
     else
         qDebug() << "BDD OK";
 }

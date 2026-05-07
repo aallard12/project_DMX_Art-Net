@@ -108,7 +108,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="listPage">
        <layout class="QHBoxLayout" name="listPageLayout">
@@ -144,7 +144,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>1022</width>
+                <width>597</width>
                 <height>635</height>
                </rect>
               </property>
@@ -403,6 +403,16 @@
                 </property>
                </widget>
               </item>
+              <item row="0" column="3">
+               <widget class="QPushButton" name="pushButtonImport">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {background-color: &quot;#26A269&quot; ;color: black; border-radius: 4px; padding: 8px; font-weight: bold;}</string>
+                </property>
+                <property name="text">
+                 <string>Importer JSON</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>
@@ -582,8 +592,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1254</width>
-             <height>586</height>
+             <width>44</width>
+             <height>18</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="slidersGrid"/>
