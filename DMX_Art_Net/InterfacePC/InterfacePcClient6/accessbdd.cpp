@@ -581,12 +581,102 @@ bool AccessBDD::renommerScene(int idScene, const QString& nouveauNom) {
  */
 bool AccessBDD::supprimerScene(int idScene) {
     bool succes = false;
-
     QSqlQuery query;
     query.prepare("DELETE FROM SCENES WHERE idScene = :id");
     query.bindValue(":id", idScene);
     if (query.exec()) {
         succes = true;
+    } else {
+        qDebug() << "Erreur suppression de scènes :" << query.lastError().text();
     }
     return succes;
+}
+
+/**
+ * @brief AccessBDD::enregistrerUser
+ * @details Insère un nouvel utilisateur en base avec son nom et son mot de passe.
+ * @param nom Nom de l'utilisateur à enregistrer.
+ * @param mdp Mot de passe associé à l'utilisateur.
+ * @return true si l'insertion a réussi, false sinon.
+ */
+bool AccessBDD::enregistrerUser(QString nom, QString mdp)
+{
+    bool succes = false;
+    QString mdpChiffre = QString(QCryptographicHash::hash(
+            mdp.toUtf8(), QCryptographicHash::Sha256).toHex());
+    QSqlQuery query;
+    query.prepare("INSERT INTO USERS(nomUtilisateur, mdp) VALUES(:nom, :mdp)");
+    query.bindValue(":nom", nom);
+    query.bindValue(":mdp", mdpChiffre);
+    if (query.exec()) {
+        succes = true;
+    } else {
+        qDebug() << "Erreur enregistrement utilisateur :" << query.lastError().text();
+    }
+    return succes;
+}
+
+/**
+ * @brief AccessBDD::chargerUser
+ * @details Récupère la liste de tous les utilisateurs enregistrés, triés par nom.
+ * @return Liste de UserData contenant l'identifiant et le nom de chaque utilisateur.
+ */
+QList<UserData> AccessBDD::chargerUser()
+{
+    QList<UserData> liste;
+    QSqlQuery query("SELECT idUser, nomUtilisateur FROM USERS ORDER BY nomUtilisateur ASC");
+
+    if (!query.isActive())      qDebug() << "Erreur chargerUser :" << query.lastError().text();
+
+    while(query.next()) {
+        UserData u;
+        u.id = query.value("idUser").toInt();
+        u.nom = query.value("nomUtilisateur").toString();
+        liste.append(u);
+    }
+    return liste;
+}
+
+/**
+ * @brief AccessBDD::supprimerUser
+ * @details Supprime l'utilisateur correspondant à l'identifiant fourni.
+ * @param idUser Identifiant de l'utilisateur à supprimer.
+ * @return true si la suppression a réussi, false sinon.
+ */
+bool AccessBDD::supprimerUser(int idUser)
+{
+    bool retour = false;
+    QSqlQuery query;
+    query.prepare("DELETE FROM USERS WHERE idUser = :id");
+    query.bindValue(":id", idUser);
+    if (query.exec()) {
+        retour = true;
+    } else {
+        qDebug() << "Erreur supprimerUser :" << query.lastError().text();
+    }
+    return retour;
+}
+
+/**
+ * @brief AccessBDD::modifierUser
+ * @details Modifie l'utilisateur correspondant à l'identifiant fourni.
+ * @param id Identifiant de l'utilisateur à modifier.
+ * @param nom Nom d'utilisateur à modifier
+ * @param mdp Mot de passe à modifier
+ * @return true si la suppression a réussi, false sinon.
+ */
+bool AccessBDD::modifierUser(int id, const QString &nom, const QString &mdp)
+{
+    bool retour = false;
+    QSqlQuery query;
+    query.prepare("UPDATE USERS SET nomUtilisateur = :nom, mdp = :mdp WHERE idUser = :id");
+    query.bindValue(":nom", nom);
+    query.bindValue(":mdp", mdp);
+    query.bindValue(":id", id);
+    if (query.exec()) {
+        retour = true;
+    } else {
+        qDebug() << "Erreur modifierUser :" << query.lastError().text();
+    }
+    return retour;
 }

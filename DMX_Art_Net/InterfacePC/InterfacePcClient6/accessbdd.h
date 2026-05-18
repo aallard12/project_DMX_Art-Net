@@ -15,6 +15,7 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QList>
+#include <QCryptographicHash>
 
 /**
  * @struct UniversData
@@ -89,6 +90,16 @@ struct SceneData {
     QString nomScene;
 };
 
+/**
+ * @struct UserData
+ * @brief Représente les paramètres d'un utilisateur
+ */
+struct UserData {
+    int id;
+    QString nom;
+    QString mdp;
+};
+
 class AccessBDD {
 private:
     /// Objet gérant la connexion et les requêtes vers la base de données SQL
@@ -119,6 +130,11 @@ public:
     bool supprimerScene(int idScene);
 
     bool isConnected() {return bdd.isOpen();}
+
+    bool enregistrerUser(QString nom, QString mdp);
+    QList<UserData> chargerUser();
+    bool modifierUser(int id, const QString &nom, const QString &mdp);
+    bool supprimerUser(int idUser);
 };
 
 #endif

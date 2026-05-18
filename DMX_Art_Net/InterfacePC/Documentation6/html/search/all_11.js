@@ -30,5 +30,6 @@ var searchData=
   ['statuslabel_27',['statusLabel',['../classInterfacePcClient.html#ad12a1e65e8f17866baea5655f70e3ee3',1,'InterfacePcClient']]],
   ['supprimerequipment_28',['supprimerEquipment',['../classAccessBDD.html#ad43b75d6783e2be2e7168de380927383',1,'AccessBDD']]],
   ['supprimerscene_29',['supprimerScene',['../classAccessBDD.html#a2c506b36f23de3e2c160762970126b10',1,'AccessBDD']]],
-  ['supprimerunivers_30',['supprimerUnivers',['../classAccessBDD.html#a2493d570379d6dd3cfcbe4256fb726f7',1,'AccessBDD']]]
+  ['supprimerunivers_30',['supprimerUnivers',['../classAccessBDD.html#a2493d570379d6dd3cfcbe4256fb726f7',1,'AccessBDD']]],
+  ['supprimeruser_31',['supprimerUser',['../classAccessBDD.html#a06455e971214968493b1047285258247',1,'AccessBDD']]]
 ];

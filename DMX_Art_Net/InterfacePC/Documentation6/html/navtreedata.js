@@ -53,9 +53,10 @@ var NAVTREEINDEX =
 [
 "accessbdd_8cpp.html",
 "build_2Desktop__Qt__6__9__1-Debug_2moc__predefs_8h.html#a7df1cb434b3b8baae4bf6053cb2a3a4a",
-"classDialogUnivers.html#a9176c8ba3e25a5b9579f3c1b175be986",
-"moc__predefs_8h.html#a0faa292beaf4cee43821abe108efb6f4",
-"moc__predefs_8h.html#a9873ff95bac5a53c28f05dbdc78ae91d"
+"classDialogUnivers.html#a13abbd59960be22028392472c9904823",
+"moc__predefs_8h.html#a03e66bc6e427f0c968a7a0daec280729",
+"moc__predefs_8h.html#a895181efde95bdfb3489ba3018c48582",
+"structUniversData.html#ac655ccb532a04880f734837d3bb82c92"
 ];
 
 var SYNCONMSG = 'cliquez pour désactiver la synchronisation du panel';

@@ -20,5 +20,6 @@ var annotated_dup =
     [ "SliderWidgetSet", "structSliderWidgetSet.html", "structSliderWidgetSet" ],
     [ "Ui_DialogUnivers", "classUi__DialogUnivers.html", "classUi__DialogUnivers" ],
     [ "Ui_InterfacePcClient", "classUi__InterfacePcClient.html", "classUi__InterfacePcClient" ],
-    [ "UniversData", "structUniversData.html", "structUniversData" ]
+    [ "UniversData", "structUniversData.html", "structUniversData" ],
+    [ "UserData", "structUserData.html", "structUserData" ]
 ];

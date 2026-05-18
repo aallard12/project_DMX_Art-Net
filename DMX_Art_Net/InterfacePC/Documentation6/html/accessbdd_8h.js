@@ -7,5 +7,6 @@ var accessbdd_8h =
     [ "DmxFunctionInfo", "structDmxFunctionInfo.html", "structDmxFunctionInfo" ],
     [ "DmxChannelInfo", "structDmxChannelInfo.html", "structDmxChannelInfo" ],
     [ "SceneData", "structSceneData.html", "structSceneData" ],
+    [ "UserData", "structUserData.html", "structUserData" ],
     [ "AccessBDD", "classAccessBDD.html", "classAccessBDD" ]
 ];

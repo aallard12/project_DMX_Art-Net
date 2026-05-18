@@ -63,6 +63,7 @@ private slots:
     void refreshUniversList();
     void on_btnEditUnivers_clicked();
     void on_btnDeleteUnivers_clicked();
+    void on_btnGoToConnect_clicked();
     void on_uiUniversList_currentRowChanged(int currentRow);
     void clearForm();
 
@@ -70,6 +71,7 @@ private slots:
     void on_btnAddChannelGlobal_clicked();
     void on_btnCancel_clicked();
     void on_btnSave_clicked();
+    void on_pushButtonImport_clicked();
 
     void on_scenesUniversCombo_currentIndexChanged(int index);
     void on_scenesCombo_currentIndexChanged(int index);
@@ -88,7 +90,11 @@ private slots:
     void on_liveUniversCombo_currentIndexChanged(int index);
     void refreshLiveScenesList(int idUniversFiltre);
 
-    void on_pushButtonImport_clicked();
+    void on_pushButtonSaveUser_clicked();
+    void refreshUserList();
+    void on_listWidgetUser_currentRowChanged(int currentRow);
+    void on_pushButtonEditUser_clicked();
+    void on_pushButtonDeleteUser_clicked();
 
 private:
     /// Pointeur vers l'interface utilisateur générée par Qt Designer
@@ -105,6 +111,8 @@ private:
     QList<SceneData>       scenesList;
     /// Liste regroupant les ensembles de widgets (sliders et labels) pour le contrôle DMX
     QList<SliderWidgetSet> dmxSliders;
+    /// Liste stockant les utilisateurs
+    QList<UserData> userList;
     /// Index de l'équipement en cours de modification dans la liste (-1 si aucun)
     int currentEditEquipIndex = -1;
     /// Compteur utilisé pour l'indexation et la gestion dynamique des canaux dans les formulaires

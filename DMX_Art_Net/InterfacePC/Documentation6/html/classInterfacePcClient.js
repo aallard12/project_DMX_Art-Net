@@ -18,6 +18,7 @@ var classInterfacePcClient =
     [ "on_btnDeleteScene_clicked", "classInterfacePcClient.html#ac6e7eb9e35061701ad93f9284303b628", null ],
     [ "on_btnDeleteUnivers_clicked", "classInterfacePcClient.html#ac14d8889bcabf0d0242a3232b421fc99", null ],
     [ "on_btnEditUnivers_clicked", "classInterfacePcClient.html#afba6ec24b6a0a7d36e26145220c09784", null ],
+    [ "on_btnGoToConnect_clicked", "classInterfacePcClient.html#a1f7bc3a75534008d6a89b78e8fdc5030", null ],
     [ "on_btnGoToList_clicked", "classInterfacePcClient.html#a8113a55c40a3bd1f36375d0490a4428e", null ],
     [ "on_btnGoToLive_clicked", "classInterfacePcClient.html#a9e2e6f18a5f72c8a174e5b3ee83950d8", null ],
     [ "on_btnGoToScenes_clicked", "classInterfacePcClient.html#a7d360d9204140952a6cf88acc2f73472", null ],
@@ -27,10 +28,14 @@ var classInterfacePcClient =
     [ "on_btnSave_clicked", "classInterfacePcClient.html#a3527372b6c34f472d512ca3f460108bb", null ],
     [ "on_btnSaveScene_clicked", "classInterfacePcClient.html#a0e5b25800b7e94e0f8510ca280ddae07", null ],
     [ "on_filterUniversCombo_currentIndexChanged", "classInterfacePcClient.html#a8fedef8917a775d33970ab59292eb378", null ],
+    [ "on_listWidgetUser_currentRowChanged", "classInterfacePcClient.html#a99f846c4c866d7ea2f157a1bf93036c8", null ],
     [ "on_liveScenesList_itemSelectionChanged", "classInterfacePcClient.html#ab9e880a899b9f57bdd952564fd8240e3", null ],
     [ "on_liveUniversCombo_currentIndexChanged", "classInterfacePcClient.html#a03751d66308c4a6cde410897a11287fa", null ],
     [ "on_pushButtonCouleur_clicked", "classInterfacePcClient.html#a59e5a387ae63d9bffc5c6953b0447431", null ],
+    [ "on_pushButtonDeleteUser_clicked", "classInterfacePcClient.html#a2476cecc45a6d86916d247c363306632", null ],
+    [ "on_pushButtonEditUser_clicked", "classInterfacePcClient.html#aa7579b9aaf3ff9493dd7eadbcd19ef7c", null ],
     [ "on_pushButtonImport_clicked", "classInterfacePcClient.html#acc4a633e43b0645d416e28df26d8e2cf", null ],
+    [ "on_pushButtonSaveUser_clicked", "classInterfacePcClient.html#a429103eed34db90e0b90a4b40911759b", null ],
     [ "on_scenesCombo_currentIndexChanged", "classInterfacePcClient.html#a13bff286559b87e547d56a85c231d6ae", null ],
     [ "on_scenesUniversCombo_currentIndexChanged", "classInterfacePcClient.html#adef3e08b9c630b9ed86267669376ff04", null ],
     [ "on_uiUniversList_currentRowChanged", "classInterfacePcClient.html#a8494c8e341747b21fced3500bd6240b6", null ],
@@ -40,6 +45,7 @@ var classInterfacePcClient =
     [ "refreshLiveScenesList", "classInterfacePcClient.html#af75f86e3077e2594a48647a6d35e9ee1", null ],
     [ "refreshScenesList", "classInterfacePcClient.html#ab9cd2f9861ed6307fd60781eb1ce5506", null ],
     [ "refreshUniversList", "classInterfacePcClient.html#acf58b16f9649367e677adc2bf0988857", null ],
+    [ "refreshUserList", "classInterfacePcClient.html#a632ca1d9840ec9717a40fc4f1147c8cc", null ],
     [ "resizeEvent", "classInterfacePcClient.html#a178e8b23d331d8b16945a115001324b3", null ],
     [ "validerFonctionsCanaux", "classInterfacePcClient.html#acccb15b95dd835d584c2663cdd31031d", null ],
     [ "bdd", "classInterfacePcClient.html#a288658320b152e676981d2fd109bb412", null ],
@@ -53,5 +59,6 @@ var classInterfacePcClient =
     [ "socketClient", "classInterfacePcClient.html#a5c20cf447c779853a684db3fec4f5d93", null ],
     [ "statusLabel", "classInterfacePcClient.html#ad12a1e65e8f17866baea5655f70e3ee3", null ],
     [ "ui", "classInterfacePcClient.html#a3c775a5e53f8f19cb1584973e2a143fd", null ],
-    [ "universList", "classInterfacePcClient.html#ae6a577d8fe6121e559261d93d1c49899", null ]
+    [ "universList", "classInterfacePcClient.html#ae6a577d8fe6121e559261d93d1c49899", null ],
+    [ "userList", "classInterfacePcClient.html#a3c67d380376145ecb3e5a28587d4b31f", null ]
 ];

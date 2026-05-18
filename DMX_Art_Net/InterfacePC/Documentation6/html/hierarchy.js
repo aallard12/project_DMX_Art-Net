@@ -24,5 +24,6 @@ var hierarchy =
       [ "Ui::InterfacePcClient", "classUi_1_1InterfacePcClient.html", null ],
       [ "Ui::InterfacePcClient", "classUi_1_1InterfacePcClient.html", null ]
     ] ],
-    [ "UniversData", "structUniversData.html", null ]
+    [ "UniversData", "structUniversData.html", null ],
+    [ "UserData", "structUserData.html", null ]
 ];

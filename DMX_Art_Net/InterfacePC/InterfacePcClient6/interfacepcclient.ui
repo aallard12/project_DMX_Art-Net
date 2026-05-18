@@ -78,7 +78,7 @@
           <string notr="true">QPushButton { background-color: #20b2aa; color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none; } QPushButton:hover { background-color: #149999; }</string>
          </property>
          <property name="text">
-          <string>+ Ajouter Équipement</string>
+          <string>Ajouter Équipement</string>
          </property>
         </widget>
        </item>
@@ -102,14 +102,152 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="btnGoToConnect">
+         <property name="styleSheet">
+          <string notr="true">QPushButton { background-color: #4F7575; color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none; } QPushButton:hover { background-color: #149999; }</string>
+         </property>
+         <property name="text">
+          <string>Ajout Utilisateur</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
+      <widget class="QWidget" name="connectPage">
+       <widget class="QLabel" name="label_5">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>30</y>
+          <width>171</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: #107c7c; font-size: 30px; font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Utilisateurs</string>
+        </property>
+       </widget>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>210</x>
+          <y>180</y>
+          <width>831</width>
+          <height>371</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLineEdit" name="lineEditNomUser">
+             <property name="styleSheet">
+              <string notr="true">background-color: #383838; border: 1px solid #555; color: #ffffff; padding: 8px; border-radius: 4px;</string>
+             </property>
+             <property name="placeholderText">
+              <string>nom d'utilisateur</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEditMDP">
+             <property name="styleSheet">
+              <string notr="true">background-color: #383838; border: 1px solid #555; color: #ffffff; padding: 8px; border-radius: 4px;</string>
+             </property>
+             <property name="placeholderText">
+              <string>mot de passe</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButtonSaveUser">
+             <property name="styleSheet">
+              <string notr="true">QPushButton { background-color: #35AB35; color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none; } QPushButton:hover { background-color: #149999; }</string>
+             </property>
+             <property name="text">
+              <string>Ajout Utilisateur</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QLabel" name="label_4">
+             <property name="styleSheet">
+              <string notr="true">color: #107c7c; font-size: 16px; font-weight: bold;</string>
+             </property>
+             <property name="text">
+              <string>Liste des Utilisateurs</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListWidget" name="listWidgetUser">
+             <property name="styleSheet">
+              <string notr="true">QListWidget { background-color: #383838; border: 1px solid #555; color: #ffffff; border-radius: 4px; } QListWidget::item { padding: 10px; border-bottom: 1px solid #444; } QListWidget::item:selected { background-color: #107c7c; color: white; }</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QPushButton" name="pushButtonEditUser">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton { background-color: #35AB35; color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none; } QPushButton:hover { background-color: #149999; }</string>
+             </property>
+             <property name="text">
+              <string>Modifier</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButtonDeleteUser">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton { background-color: #D91A09; color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none; } QPushButton:hover { background-color: #149999; }</string>
+             </property>
+             <property name="text">
+              <string>Supprimer</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </widget>
       <widget class="QWidget" name="listPage">
        <layout class="QHBoxLayout" name="listPageLayout">
         <property name="margin" stdset="0">
@@ -144,7 +282,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>597</width>
+                <width>1022</width>
                 <height>635</height>
                </rect>
               </property>

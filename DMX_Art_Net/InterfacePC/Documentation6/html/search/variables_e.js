@@ -6,5 +6,6 @@ var searchData=
   ['unititle_3',['uniTitle',['../classUi__InterfacePcClient.html#a0adb4389c67f01e424c465ee83294a8d',1,'Ui_InterfacePcClient']]],
   ['univers_4',['univers',['../structEquipmentData.html#af19820c5948b02aa2e66ecb6eea91047',1,'EquipmentData']]],
   ['universcombo_5',['universCombo',['../classUi__InterfacePcClient.html#a195b617676a3aa47557f9774cecbe442',1,'Ui_InterfacePcClient']]],
-  ['universlist_6',['universList',['../classInterfacePcClient.html#ae6a577d8fe6121e559261d93d1c49899',1,'InterfacePcClient']]]
+  ['universlist_6',['universList',['../classInterfacePcClient.html#ae6a577d8fe6121e559261d93d1c49899',1,'InterfacePcClient']]],
+  ['userlist_7',['userList',['../classInterfacePcClient.html#a3c67d380376145ecb3e5a28587d4b31f',1,'InterfacePcClient']]]
 ];

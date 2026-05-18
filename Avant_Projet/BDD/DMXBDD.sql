@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : lun. 04 mai 2026 à 15:38
+-- Généré le : lun. 18 mai 2026 à 12:39
 -- Version du serveur : 11.8.6-MariaDB-0+deb13u1 from Debian
 -- Version de PHP : 8.4.16
 
@@ -64,7 +64,14 @@ INSERT INTO `CANAUX` (`idCanal`, `numeroCanal`, `description`, `idEquipement`) V
 (203, 5, 'Bleu', 3),
 (204, 6, 'Zones', 3),
 (205, 7, 'Mode', 3),
-(206, 8, 'Effet', 3);
+(206, 8, 'Effet', 3),
+(235, 6, 'Pan', 46),
+(236, 7, 'Tilt / Barrel', 46),
+(237, 8, 'Shutter / Shaking', 46),
+(238, 9, 'Gobo', 46),
+(239, 10, 'Color', 46),
+(240, 11, 'Gobo Rotation', 46),
+(241, 12, 'Dimmer', 46);
 
 -- --------------------------------------------------------
 
@@ -91,7 +98,8 @@ INSERT INTO `EQUIPEMENTS` (`idEquipement`, `nomEquipement`, `adresseDepart`, `nb
 (6, 'Projecteur Contest 2', 1, 4, 2, '#9141ac'),
 (13, 'proj 3', 1, 4, 3, '#f5c211'),
 (14, 'proj contest 4', 3, 4, 3, '#ed333b'),
-(15, 'proj contest 5', 5, 4, 3, '#b5835a');
+(15, 'proj contest 5', 5, 4, 3, '#b5835a'),
+(46, 'iRock 7S/7B', 6, 7, 1, '#c01c28');
 
 -- --------------------------------------------------------
 
@@ -163,7 +171,52 @@ INSERT INTO `FONCTIONNALITE_CANAL` (`idFonctionnalite`, `valeurMin`, `valeurMax`
 (442, 154, 179, 'Police', 206),
 (443, 180, 204, 'WarpDrive', 206),
 (444, 205, 230, 'Breathing', 206),
-(445, 231, 255, 'Feu', 206);
+(445, 231, 255, 'Feu', 206),
+(626, 0, 255, 'Mouvement Horizontal', 235),
+(627, 0, 9, 'Stopped (7B)', 236),
+(628, 10, 10, 'Fastest speed counterclockwise (7B)', 236),
+(629, 120, 120, 'Slowest speed counterclockwise (7B)', 236),
+(630, 121, 134, 'Stopped (7B)', 236),
+(631, 135, 135, 'Slowest speed clockwise (7B)', 236),
+(632, 245, 245, 'Fastest speed clockwise (7B)', 236),
+(633, 246, 255, 'Stopped (7B)', 236),
+(634, 0, 7, 'Blackout', 237),
+(635, 8, 15, 'Open', 237),
+(636, 16, 16, 'Slowest speed shutter', 237),
+(637, 131, 131, 'Fastest speed shutter', 237),
+(638, 132, 132, 'Slowest speed shaking', 237),
+(639, 247, 247, 'Fastest speed shaking', 237),
+(640, 248, 255, 'Open', 237),
+(641, 0, 15, 'Open / White', 238),
+(642, 16, 31, 'Gobo 1', 238),
+(643, 32, 47, 'Gobo 2', 238),
+(644, 48, 63, 'Gobo 3', 238),
+(645, 64, 79, 'Gobo 4', 238),
+(646, 80, 95, 'Gobo 5', 238),
+(647, 96, 111, 'Gobo 6', 238),
+(648, 112, 127, 'Gobo 7', 238),
+(649, 128, 128, 'Slowest speed Gobo change', 238),
+(650, 255, 255, 'Fastest speed Gobo change', 238),
+(651, 0, 12, 'White', 239),
+(652, 13, 25, 'Green', 239),
+(653, 26, 38, 'Magenta', 239),
+(654, 39, 51, 'Light Blue', 239),
+(655, 52, 63, 'Yellow', 239),
+(656, 64, 76, 'Orange', 239),
+(657, 77, 89, 'Blue', 239),
+(658, 90, 102, 'UV Purple', 239),
+(659, 103, 115, 'Light Green', 239),
+(660, 116, 127, 'Pink', 239),
+(661, 128, 128, 'Slowest speed Rainbow effect', 239),
+(662, 255, 255, 'Fastest speed Rainbow effect', 239),
+(663, 0, 9, 'Stopped', 240),
+(664, 10, 10, 'Fastest speed counterclockwise', 240),
+(665, 120, 120, 'Slowest speed counterclockwise', 240),
+(666, 121, 134, 'Stopped', 240),
+(667, 135, 135, 'Slowest speed clockwise', 240),
+(668, 245, 245, 'Fastest speed clockwise', 240),
+(669, 246, 255, 'Stopped', 240),
+(670, 0, 255, 'Intensity 0-100%', 241);
 
 -- --------------------------------------------------------
 
@@ -191,7 +244,17 @@ INSERT INTO `PILOTE` (`idScene`, `idCanal`, `valeurCanaux`) VALUES
 (21, 132, 255),
 (21, 134, 255),
 (37, 131, 255),
-(37, 134, 187);
+(37, 134, 187),
+(38, 143, 255),
+(38, 144, 255),
+(38, 201, 127),
+(38, 202, 127),
+(38, 203, 255),
+(38, 204, 255),
+(38, 205, 97),
+(39, 204, 255),
+(39, 205, 255),
+(39, 206, 164);
 
 -- --------------------------------------------------------
 
@@ -211,7 +274,10 @@ CREATE TABLE `SCENES` (
 INSERT INTO `SCENES` (`idScene`, `nomScene`) VALUES
 (15, 'Univ3_3proj'),
 (21, 'Uni2_Vert'),
-(37, 'UNi2');
+(37, 'UNi2'),
+(38, 'Uni1_projRuban'),
+(39, 'Uni1_Police'),
+(40, 'BLACKOUT');
 
 -- --------------------------------------------------------
 
@@ -288,31 +354,31 @@ ALTER TABLE `UNIVERS`
 -- AUTO_INCREMENT pour la table `CANAUX`
 --
 ALTER TABLE `CANAUX`
-  MODIFY `idCanal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=207;
+  MODIFY `idCanal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=242;
 
 --
 -- AUTO_INCREMENT pour la table `EQUIPEMENTS`
 --
 ALTER TABLE `EQUIPEMENTS`
-  MODIFY `idEquipement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `idEquipement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT pour la table `FONCTIONNALITE_CANAL`
 --
 ALTER TABLE `FONCTIONNALITE_CANAL`
-  MODIFY `idFonctionnalite` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=446;
+  MODIFY `idFonctionnalite` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=671;
 
 --
 -- AUTO_INCREMENT pour la table `SCENES`
 --
 ALTER TABLE `SCENES`
-  MODIFY `idScene` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `idScene` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT pour la table `UNIVERS`
 --
 ALTER TABLE `UNIVERS`
-  MODIFY `idUnivers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `idUnivers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- Contraintes pour les tables déchargées

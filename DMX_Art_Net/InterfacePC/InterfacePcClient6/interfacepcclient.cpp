@@ -55,6 +55,8 @@ InterfacePcClient::InterfacePcClient(QWidget *parent)
 
     refreshUniversList();
     refreshEquipmentsGrid();
+    refreshUserList();
+    ui->stackedWidget->setCurrentWidget(ui->listPage);
 }
 
 /**
@@ -1103,5 +1105,108 @@ void InterfacePcClient::on_pushButtonImport_clicked()
         statusLabel->setText("❌ Fichier JSON vide");
         statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
     }
+    QTimer::singleShot(5000, this, [this]() {
+        statusLabel->setText("");
+    });
+}
+
+/**
+ * @brief InterfacePcClient::on_btnGoToConnect_clicked
+ * @details Navigue vers la page de gestion des connexions et utilisateurs.
+ */
+void InterfacePcClient::on_btnGoToConnect_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->connectPage);
+}
+
+/**
+ * @brief InterfacePcClient::refreshUserList
+ * @details Vide et recharge la liste des utilisateurs depuis la base de données.
+ */
+void InterfacePcClient::refreshUserList()
+{
+    ui->listWidgetUser->clear();
+    userList = bdd.chargerUser();
+    for (const auto& u : userList) {
+        QString display = QString("%1").arg(u.nom);
+        ui->listWidgetUser->addItem(display);
+    }
+    ui->btnEditUnivers->setEnabled(false);
+    ui->btnDeleteUnivers->setEnabled(false);
+}
+
+/**
+ * @brief InterfacePcClient::on_pushButtonSaveUser_clicked
+ * @details Enregistre un nouvel utilisateur en base si le nom et le mot de passe sont renseignés.
+ */
+void InterfacePcClient::on_pushButtonSaveUser_clicked()
+{
+    QString nom = ui->lineEditNomUser->text();
+    QString mdp = ui->lineEditMDP->text();
+    if (!mdp.isEmpty() && !nom.isEmpty()) {
+        if (bdd.enregistrerUser(nom, mdp)) {
+            statusLabel->setText("Utilisateur enregistré dans la base de données !");
+            statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
+            refreshUserList();
+            ui->lineEditNomUser->setText("");
+            ui->lineEditMDP->setText("");
+        } else {
+            statusLabel->setText("❌ Nom d'utilisateur ou mot de passe incorrects ou déjà utilisés");
+            statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
+        }
+    } else {
+        statusLabel->setText("❌ Nom d'utilisateur ou mot de passe vide");
+        statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
+    }
+    QTimer::singleShot(5000, this, [this]() {
+        statusLabel->setText("");
+    });
+}
+
+/**
+ * @brief InterfacePcClient::on_listWidgetUser_currentRowChanged
+ * @details Active ou désactive les boutons de modification et suppression selon la sélection.
+ * @param currentRow Index de la ligne actuellement sélectionnée.
+ */
+void InterfacePcClient::on_listWidgetUser_currentRowChanged(int currentRow)
+{
+    bool hasSelection = ui->listWidgetUser->currentRow() >= 0;
+    ui->pushButtonEditUser->setEnabled(hasSelection);
+    ui->pushButtonDeleteUser->setEnabled(hasSelection);
+}
+
+/**
+ * @brief InterfacePcClient::on_pushButtonDeleteUser_clicked
+ * @details Supprime l'utilisateur sélectionné après confirmation, puis rafraîchit la liste.
+ */
+void InterfacePcClient::on_pushButtonDeleteUser_clicked()
+{
+    int row = ui->listWidgetUser->currentRow();
+    if (row >= 0 && row < userList.size()) {
+        if (QMessageBox::question(this, "Confirmation",
+                                  "Supprimer cet utilisateur ?")
+                != QMessageBox::Yes) return;
+        if (bdd.supprimerUser(userList[row].id)) {
+            userList = bdd.chargerUser();
+            refreshUserList();
+            statusLabel->setText("✅ Utilisateur supprimé");
+            statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
+        } else {
+            statusLabel->setText("❌ Impossible de supprimer cet utilisateur");
+            statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
+        }
+        QTimer::singleShot(5000, this, [this]() {
+            statusLabel->setText("");
+        });
+    }
+}
+
+/**
+ * @brief InterfacePcClient::on_pushButtonEditUser_clicked
+ * @details Ouvre le formulaire de modification pour l'utilisateur sélectionné.
+ */
+void InterfacePcClient::on_pushButtonEditUser_clicked()
+{
+
 }
 

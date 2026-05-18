@@ -155,6 +155,15 @@ Fonctions membres publiques</h2></td></tr>
 <tr class="separator:a2c506b36f23de3e2c160762970126b10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5ee05e64b1e91799d3378ff3a2a90e2" id="r_ab5ee05e64b1e91799d3378ff3a2a90e2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAccessBDD.html#ab5ee05e64b1e91799d3378ff3a2a90e2">isConnected</a> ()</td></tr>
 <tr class="separator:ab5ee05e64b1e91799d3378ff3a2a90e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a124251d3cd00fe5ab7aafe8cdba62e56" id="r_a124251d3cd00fe5ab7aafe8cdba62e56"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAccessBDD.html#a124251d3cd00fe5ab7aafe8cdba62e56">enregistrerUser</a> (QString nom, QString mdp)</td></tr>
+<tr class="memdesc:a124251d3cd00fe5ab7aafe8cdba62e56"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classAccessBDD.html#a124251d3cd00fe5ab7aafe8cdba62e56" title="AccessBDD::enregistrerUser.">AccessBDD::enregistrerUser</a>.  <br /></td></tr>
+<tr class="separator:a124251d3cd00fe5ab7aafe8cdba62e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f8c7558cac4a6317fb99574d641d114" id="r_a7f8c7558cac4a6317fb99574d641d114"><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="structUserData.html">UserData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAccessBDD.html#a7f8c7558cac4a6317fb99574d641d114">chargerUser</a> ()</td></tr>
+<tr class="memdesc:a7f8c7558cac4a6317fb99574d641d114"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classAccessBDD.html#a7f8c7558cac4a6317fb99574d641d114" title="AccessBDD::chargerUser.">AccessBDD::chargerUser</a>.  <br /></td></tr>
+<tr class="separator:a7f8c7558cac4a6317fb99574d641d114"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06455e971214968493b1047285258247" id="r_a06455e971214968493b1047285258247"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAccessBDD.html#a06455e971214968493b1047285258247">supprimerUser</a> (int idUser)</td></tr>
+<tr class="memdesc:a06455e971214968493b1047285258247"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classAccessBDD.html#a06455e971214968493b1047285258247" title="AccessBDD::supprimerUser.">AccessBDD::supprimerUser</a>.  <br /></td></tr>
+<tr class="separator:a06455e971214968493b1047285258247"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Fonctions membres privées</h2></td></tr>
@@ -273,6 +282,26 @@ Attributs privés</h2></td></tr>
 
 <p><a class="el" href="classAccessBDD.html#a564f7da01c1ca7f8518ef614982c0d60" title="AccessBDD::chargerUnivers.">AccessBDD::chargerUnivers</a>. </p>
 <p>Exécute une requête SELECT pour récupérer la liste de tous les univers enregistrés en base, triés par numéro ascendant. </p><dl class="section return"><dt>Renvoie</dt><dd>QList&lt;UniversData&gt; Liste structurée des univers trouvés. </dd></dl>
+
+</div>
+</div>
+<a id="a7f8c7558cac4a6317fb99574d641d114" name="a7f8c7558cac4a6317fb99574d641d114"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f8c7558cac4a6317fb99574d641d114">&#9670;&#160;</a></span>chargerUser()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QList&lt; <a class="el" href="structUserData.html">UserData</a> &gt; AccessBDD::chargerUser </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><a class="el" href="classAccessBDD.html#a7f8c7558cac4a6317fb99574d641d114" title="AccessBDD::chargerUser.">AccessBDD::chargerUser</a>. </p>
+<p>Récupère la liste de tous les utilisateurs enregistrés, triés par nom. </p><dl class="section return"><dt>Renvoie</dt><dd>Liste de <a class="el" href="structUserData.html" title="Représente les paramètres d&#39;un utilisateur.">UserData</a> contenant l'identifiant et le nom de chaque utilisateur. </dd></dl>
 
 </div>
 </div>
@@ -414,6 +443,44 @@ Attributs privés</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Renvoie</dt><dd>bool True si l'insertion a réussi, sinon false. </dd></dl>
+
+</div>
+</div>
+<a id="a124251d3cd00fe5ab7aafe8cdba62e56" name="a124251d3cd00fe5ab7aafe8cdba62e56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a124251d3cd00fe5ab7aafe8cdba62e56">&#9670;&#160;</a></span>enregistrerUser()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool AccessBDD::enregistrerUser </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>nom</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>mdp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><a class="el" href="classAccessBDD.html#a124251d3cd00fe5ab7aafe8cdba62e56" title="AccessBDD::enregistrerUser.">AccessBDD::enregistrerUser</a>. </p>
+<p>Insère un nouvel utilisateur en base avec son nom et son mot de passe. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nom</td><td>Nom de l'utilisateur à enregistrer. </td></tr>
+    <tr><td class="paramname">mdp</td><td>Mot de passe associé à l'utilisateur. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>true si l'insertion a réussi, false sinon. </dd></dl>
 
 </div>
 </div>
@@ -727,6 +794,33 @@ Attributs privés</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Renvoie</dt><dd>bool True si la suppression est effective. </dd></dl>
+
+</div>
+</div>
+<a id="a06455e971214968493b1047285258247" name="a06455e971214968493b1047285258247"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06455e971214968493b1047285258247">&#9670;&#160;</a></span>supprimerUser()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool AccessBDD::supprimerUser </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>idUser</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><a class="el" href="classAccessBDD.html#a06455e971214968493b1047285258247" title="AccessBDD::supprimerUser.">AccessBDD::supprimerUser</a>. </p>
+<p>Supprime l'utilisateur correspondant à l'identifiant fourni. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idUser</td><td>Identifiant de l'utilisateur à supprimer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>true si la suppression a réussi, false sinon. </dd></dl>
 
 </div>
 </div>
