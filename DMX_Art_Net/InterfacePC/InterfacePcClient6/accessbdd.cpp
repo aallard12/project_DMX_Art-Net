@@ -272,7 +272,7 @@ bool AccessBDD::supprimerEquipment(int idEquipement) {
  * @brief AccessBDD::modifierEquipment
  * @details Met à jour un équipement en utilisant une transaction. La méthode met à jour
  * les infos de base, puis supprime tous les anciens canaux pour réinsérer la nouvelle
- * configuration (canaux et fonctionnalités). Utilise commit/rollback pour la sécurité.
+ * configuration (canaux et fonctionnalités).
  * @param idEquipement ID de l'équipement à modifier.
  * @param eq Nouvelles données de l'équipement.
  * @param idUniversSelectionne ID du nouvel univers (si changé).
@@ -546,7 +546,9 @@ QMap<int, int> AccessBDD::chargerValeursScene(int idScene) {
  * @param idScene ID de la scène.
  * @return int Numéro de l'univers correspondant.
  */
-int AccessBDD::getUniversDeScene(int idScene) {
+int AccessBDD::getUniversDeScene(int idScene)
+{
+    int numeroUnivers = 1;
     QSqlQuery query;
     query.prepare("SELECT U.numeroUnivers FROM PILOTE P "
                   "JOIN CANAUX C ON P.idCanal = C.idCanal "
@@ -554,7 +556,12 @@ int AccessBDD::getUniversDeScene(int idScene) {
                   "JOIN UNIVERS U ON E.idUnivers = U.idUnivers "
                   "WHERE P.idScene = :idS LIMIT 1");
     query.bindValue(":idS", idScene);
-    return (query.exec() && query.next()) ? query.value(0).toInt() : 1;
+    if (query.exec() && query.next()) {
+        numeroUnivers = query.value(0).toInt();
+    } else {
+        qDebug() << "Erreur getUniversDeScene :" << query.lastError().text();
+    }
+    return numeroUnivers;
 }
 
 /**
@@ -565,11 +572,17 @@ int AccessBDD::getUniversDeScene(int idScene) {
  * @return bool True si le renommage a réussi.
  */
 bool AccessBDD::renommerScene(int idScene, const QString& nouveauNom) {
+    bool succes = false;
     QSqlQuery query;
     query.prepare("UPDATE SCENES SET nomScene = :nom WHERE idScene = :id");
     query.bindValue(":nom", nouveauNom);
     query.bindValue(":id", idScene);
-    return query.exec();
+    if (query.exec()) {
+        succes = true;
+    } else {
+        qDebug() << "Erreur renommerScene : " << query.lastError().text();
+    }
+    return succes;
 }
 
 /**

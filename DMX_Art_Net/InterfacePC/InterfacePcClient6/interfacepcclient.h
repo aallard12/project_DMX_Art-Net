@@ -57,6 +57,7 @@ private slots:
     void on_btnAddMain_clicked();
     void on_btnGoToScenes_clicked();
     void on_btnGoToLive_clicked();
+
     void on_filterUniversCombo_currentIndexChanged(int index);
 
     void on_btnAddUnivers_clicked();

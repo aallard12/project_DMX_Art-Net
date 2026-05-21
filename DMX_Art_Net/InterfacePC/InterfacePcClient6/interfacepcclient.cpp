@@ -698,8 +698,6 @@ void InterfacePcClient::on_scenesUniversCombo_currentIndexChanged(int index)
 
     creerSliders(nombreCanaux);
 
-
-
     for (int i = 0; i < dmxSliders.size(); ++i) {
         int dmxChannel = i + 1;
         dmxSliders[i].idCanalDB       = -1;
@@ -995,7 +993,16 @@ void InterfacePcClient::lancerScene(int idScene)
 
     qDebug() << "Envoi JSON :" << data;
 
-    socketClient.write(data);
+    if (socketClient.write(data) >= 0) {
+        statusLabel->setText("Scène " + QString::number(idScene) + " envoyée");
+        statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
+    } else {
+        statusLabel->setText("❌ Erreur envoi de la scène");
+        statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
+    }
+    QTimer::singleShot(5000, this, [this]() {
+        statusLabel->setText("");
+    });
 }
 
 /**
