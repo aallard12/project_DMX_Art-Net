@@ -776,21 +776,28 @@ void InterfacePcClient::on_btnResetSliders_clicked()
 void InterfacePcClient::on_btnRenameScene_clicked()
 {
     int idScene = ui->scenesCombo->currentData().toInt();
+    QString nomScene = ui->scenesCombo->currentText();
     if (idScene == -1) {
         statusLabel->setText("❌ Aucune scène sélectionnée. Veuillez sélectionner une scène");
         statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
     } else {
         bool ok;
-        QString nouveauNom = QInputDialog::getText(this, "Renommer la scène",
-                                                   "Nouveau nom :", QLineEdit::Normal, ui->scenesCombo->currentText(), &ok);
-        if (ok && !nouveauNom.isEmpty() && bdd.renommerScene(idScene, nouveauNom)) {
-            refreshScenesList();
-            int index = ui->scenesCombo->findData(idScene);
-            if (index != -1) ui->scenesCombo->setCurrentIndex(index);
-            statusLabel->setText("✅ Modification du nom de la scène réussie");
-            statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
+        bool estProtegee = (nomScene == "BLACKOUT");
+        if (!estProtegee) {
+            QString nouveauNom = QInputDialog::getText(this, "Renommer la scène",
+                                                       "Nouveau nom :", QLineEdit::Normal, ui->scenesCombo->currentText(), &ok);
+            if (ok && !nouveauNom.isEmpty() && bdd.renommerScene(idScene, nouveauNom)) {
+                refreshScenesList();
+                int index = ui->scenesCombo->findData(idScene);
+                if (index != -1) ui->scenesCombo->setCurrentIndex(index);
+                statusLabel->setText("✅ Modification du nom de la scène réussie");
+                statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
+            } else {
+                statusLabel->setText("❌ Impossible de modifier le nom de la scène");
+                statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
+            }
         } else {
-            statusLabel->setText("❌ Impossible de modifier le nom de la scène");
+            statusLabel->setText("❌ Cette scène est protégée et ne peut pas être modifiée");
             statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         }
     }
@@ -974,35 +981,28 @@ void InterfacePcClient::on_liveScenesList_itemSelectionChanged()
  */
 void InterfacePcClient::on_btnLaunchLiveScene_clicked()
 {
-    if (selectedLiveSceneId != -1) lancerScene(selectedLiveSceneId);
-}
+    if (selectedLiveSceneId != -1)
+    {
+        QJsonObject obj;
+        obj["commande"] = "P";
+        obj["idScene"]  = selectedLiveSceneId;
 
-/**
- * @brief InterfacePcClient::lancerScene
- * @details Envoie au serveur via TCP un objet JSON {"commande":"P", "idScene": idScene}.
- * @param idScene Identifiant de la scène à lancer.
- */
-void InterfacePcClient::lancerScene(int idScene)
-{
-    QJsonObject obj;
-    obj["commande"] = "P";
-    obj["idScene"]  = idScene;
+        QJsonDocument doc(obj);
+        QByteArray data = doc.toJson(QJsonDocument::Compact);
 
-    QJsonDocument doc(obj);
-    QByteArray data = doc.toJson(QJsonDocument::Compact);
+        qDebug() << "Envoi JSON :" << data;
 
-    qDebug() << "Envoi JSON :" << data;
-
-    if (socketClient.write(data) >= 0) {
-        statusLabel->setText("Scène " + QString::number(idScene) + " envoyée");
-        statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
-    } else {
-        statusLabel->setText("❌ Erreur envoi de la scène");
-        statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
+        if (socketClient.write(data) >= 0) {
+            statusLabel->setText("Scène " + QString::number(selectedLiveSceneId) + " envoyée");
+            statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
+        } else {
+            statusLabel->setText("❌ Erreur envoi de la scène");
+            statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
+        }
+        QTimer::singleShot(5000, this, [this]() {
+            statusLabel->setText("");
+        });
     }
-    QTimer::singleShot(5000, this, [this]() {
-        statusLabel->setText("");
-    });
 }
 
 /**

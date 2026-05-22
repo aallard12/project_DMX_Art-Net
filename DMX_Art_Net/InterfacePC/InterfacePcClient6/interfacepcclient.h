@@ -87,7 +87,6 @@ private slots:
     void onQTcpSocket_disconnected();
     void on_liveScenesList_itemSelectionChanged();
     void on_btnLaunchLiveScene_clicked();
-    void lancerScene(int idScene);
     void on_liveUniversCombo_currentIndexChanged(int index);
     void refreshLiveScenesList(int idUniversFiltre);
 
