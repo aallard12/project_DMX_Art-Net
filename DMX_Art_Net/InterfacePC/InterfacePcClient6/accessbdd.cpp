@@ -556,8 +556,9 @@ int AccessBDD::getUniversDeScene(int idScene)
                   "JOIN UNIVERS U ON E.idUnivers = U.idUnivers "
                   "WHERE P.idScene = :idS LIMIT 1");
     query.bindValue(":idS", idScene);
-    if (query.exec() && query.next()) {
-        numeroUnivers = query.value(0).toInt();
+    if (query.exec()) {
+        if (query.next())
+            numeroUnivers = query.value(0).toInt();
     } else {
         qDebug() << "Erreur getUniversDeScene :" << query.lastError().text();
     }
@@ -616,7 +617,7 @@ bool AccessBDD::enregistrerUser(QString nom, QString mdp)
 {
     bool succes = false;
     QString mdpChiffre = QString(QCryptographicHash::hash(
-            mdp.toUtf8(), QCryptographicHash::Sha256).toHex());
+                                     mdp.toUtf8(), QCryptographicHash::Sha256).toHex());
     QSqlQuery query;
     query.prepare("INSERT INTO USERS(nomUtilisateur, mdp) VALUES(:nom, :mdp)");
     query.bindValue(":nom", nom);

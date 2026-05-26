@@ -1042,7 +1042,6 @@ void InterfacePcClient::refreshLiveScenesList(int idUniversFiltre)
     QList<SceneData> scenes = bdd.chargerLesScenes();
     for (const auto& scene : scenes) {
         int numeroUnivers = bdd.getUniversDeScene(scene.idScene);
-
         int idUniversScene = -1;
         for (const auto& u : universList) {
             if (u.numero == numeroUnivers)
