@@ -1,8 +1,0 @@
-optimisation des actions :
-- Empêcher de créer un équipement DMX sans canal
-- Faire en sorte que les canaux doivent avoir un nom et toutes les caractéristiques d'un canal
-
-- Mettre un cadre de couleur pour chaque équipement
-- Permettre de remplir un équipement directement via un json
-
-
