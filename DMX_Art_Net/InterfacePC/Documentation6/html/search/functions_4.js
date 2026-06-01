@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['getipunivers_0',['getIpUnivers',['../classDialogUnivers.html#a13abbd59960be22028392472c9904823',1,'DialogUnivers']]],
-  ['getnumunivers_1',['getNumUnivers',['../classDialogUnivers.html#a39fe08b40bba5c91ba35c7b47d731349',1,'DialogUnivers']]],
-  ['getuniversdescene_2',['getUniversDeScene',['../classAccessBDD.html#ad18f0bf6e09e8e39c01830a96e851106',1,'AccessBDD']]]
+  ['editequipment_0',['editEquipment',['../classInterfacePcClient.html#a724b9d34daff1dc638dfe592b2bb6cf3',1,'InterfacePcClient']]],
+  ['enregistrerequipment_1',['enregistrerEquipment',['../classAccessBDD.html#a370f646ebd0b12f2bb1463582b7597f6',1,'AccessBDD']]],
+  ['enregistrerscene_2',['enregistrerScene',['../classAccessBDD.html#ad9b35dd0addec706b7733a68aad6a08d',1,'AccessBDD']]],
+  ['enregistrerunivers_3',['enregistrerUnivers',['../classAccessBDD.html#abfc04d3385b49710031fc194142f909b',1,'AccessBDD']]],
+  ['enregistreruser_4',['enregistrerUser',['../classAccessBDD.html#a124251d3cd00fe5ab7aafe8cdba62e56',1,'AccessBDD']]]
 ];

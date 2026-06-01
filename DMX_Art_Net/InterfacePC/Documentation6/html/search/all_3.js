@@ -17,6 +17,7 @@ var searchData=
   ['couleur_14',['couleur',['../structEquipmentData.html#ad3c9d8dfb70fc175d2091dde1358e55b',1,'EquipmentData::couleur'],['../structDmxChannelInfo.html#a5dbc844ad6e3f9040ab7118bb23a4c39',1,'DmxChannelInfo::couleur'],['../structSliderWidgetSet.html#ab35a9996fa7181e1096f06682614b225',1,'SliderWidgetSet::couleur']]],
   ['couleuractuelle_15',['couleurActuelle',['../classInterfacePcClient.html#ad2e7aff2507231cfa54cb8f4ffe25be1',1,'InterfacePcClient']]],
   ['createequipmentcard_16',['createEquipmentCard',['../classInterfacePcClient.html#a6f3f9dfebb2d001ca5a918a899b3d430',1,'InterfacePcClient']]],
-  ['creersliders_17',['creerSliders',['../classInterfacePcClient.html#a17db6ac94c8817ca77e5fd2f7b38078e',1,'InterfacePcClient']]],
-  ['currenteditequipindex_18',['currentEditEquipIndex',['../classInterfacePcClient.html#aa57677fec56994141c0b6529533d401c',1,'InterfacePcClient']]]
+  ['creerblackoutunivers_17',['creerBlackoutUnivers',['../classAccessBDD.html#aa140b30810d18674ff7749c2d2c651f1',1,'AccessBDD']]],
+  ['creersliders_18',['creerSliders',['../classInterfacePcClient.html#a17db6ac94c8817ca77e5fd2f7b38078e',1,'InterfacePcClient']]],
+  ['currenteditequipindex_19',['currentEditEquipIndex',['../classInterfacePcClient.html#aa57677fec56994141c0b6529533d401c',1,'InterfacePcClient']]]
 ];

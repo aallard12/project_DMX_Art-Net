@@ -1,5 +1,7 @@
 var NAVTREEINDEX4 =
 {
+"moc__predefs_8h.html#a88cd3f961f8705563745c43024377efa":[2,0,0,10,393],
+"moc__predefs_8h.html#a8925e15bce319fa2f42c659f6a3e0199":[2,0,0,10,450],
 "moc__predefs_8h.html#a895181efde95bdfb3489ba3018c48582":[2,0,0,10,348],
 "moc__predefs_8h.html#a89cfc45cff96747b74ae03bdb2310814":[2,0,0,10,260],
 "moc__predefs_8h.html#a8bd657ce95940b7c6087cf5aa54d5280":[2,0,0,10,387],
@@ -247,7 +249,5 @@ var NAVTREEINDEX4 =
 "structSliderWidgetSet.html#ab35a9996fa7181e1096f06682614b225":[1,0,11,0],
 "structSliderWidgetSet.html#ac3bae261e3ef422d07234695489aa19b":[1,0,11,7],
 "structSliderWidgetSet.html#afc0befdca7d41ee33aa096dc0f432255":[1,0,11,3],
-"structUniversData.html":[1,0,14],
-"structUniversData.html#a3c127c5dc779cf2a5baf81850939f9b3":[1,0,14,1],
-"structUniversData.html#aa443cdbca420f7a45837970db80b62ba":[1,0,14,2]
+"structUniversData.html":[1,0,14]
 };

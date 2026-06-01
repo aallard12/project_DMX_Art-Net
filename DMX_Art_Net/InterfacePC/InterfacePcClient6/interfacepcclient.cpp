@@ -40,10 +40,10 @@ InterfacePcClient::InterfacePcClient(QWidget *parent)
     ui->statusBar->addPermanentWidget(statusLabel, 1);
 
     if (bdd.isConnected()) {
-        statusLabel->setText("✅ Base de données connectée");
+        statusLabel->setText("✅ Application connectée au serveur");
         statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
     } else {
-        statusLabel->setText("❌ Base de données non connectée");
+        statusLabel->setText("❌ Application non connectée au serveur");
         statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
     }
     QTimer::singleShot(5000, this, [this]() {
@@ -54,6 +54,10 @@ InterfacePcClient::InterfacePcClient(QWidget *parent)
     connect(&socketClient, &QTcpSocket::disconnected, this, &InterfacePcClient::onQTcpSocket_disconnected);
 
     refreshUniversList();
+    for (const auto& u : universList) {
+        if (!bdd.blackoutExistePourUnivers(u.idUnivers))
+            bdd.creerBlackoutUnivers(u.idUnivers);
+    }
     refreshEquipmentsGrid();
     refreshUserList();
     ui->stackedWidget->setCurrentWidget(ui->listPage);
@@ -143,6 +147,9 @@ void InterfacePcClient::on_btnAddUnivers_clicked()
     if (univers.exec() == QDialog::Accepted && univers.getNumUnivers() != 0 && !univers.getIpUnivers().isEmpty()){
         if (bdd.enregistrerUnivers(univers.getNumUnivers(), univers.getIpUnivers())){
             refreshUniversList();
+            int idNouvelUnivers = universList.last().idUnivers;
+            bdd.creerBlackoutUnivers(idNouvelUnivers);
+
             statusLabel->setText("✅ Univers ajouté à la base de données");
             statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
         } else {
@@ -782,7 +789,7 @@ void InterfacePcClient::on_btnRenameScene_clicked()
         statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
     } else {
         bool ok;
-        bool estProtegee = (nomScene == "BLACKOUT");
+        bool estProtegee = nomScene.startsWith("BLACKOUT");
         if (!estProtegee) {
             QString nouveauNom = QInputDialog::getText(this, "Renommer la scène",
                                                        "Nouveau nom :", QLineEdit::Normal, ui->scenesCombo->currentText(), &ok);
@@ -818,7 +825,7 @@ void InterfacePcClient::on_btnDeleteScene_clicked()
         statusLabel->setText("❌ Aucune scène sélectionnée. Veuillez sélectionner une scène");
         statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
     } else {
-        bool estProtegee = (nomScene == "BLACKOUT");
+        bool estProtegee = nomScene.startsWith("BLACKOUT");
         if (!estProtegee) {
             if (QMessageBox::question(this, "Confirmation", "Supprimer cette scène ?") == QMessageBox::Yes) {
                 if (bdd.supprimerScene(idScene)) {

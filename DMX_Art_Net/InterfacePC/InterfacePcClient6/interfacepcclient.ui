@@ -118,7 +118,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>4</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="connectPage">
        <widget class="QLabel" name="label_5">
@@ -547,7 +547,7 @@
                  <string notr="true">QPushButton {background-color: &quot;#26A269&quot; ;color: black; border-radius: 4px; padding: 8px; font-weight: bold;}</string>
                 </property>
                 <property name="text">
-                 <string>Importer JSON</string>
+                 <string>Importer Équipement</string>
                 </property>
                </widget>
               </item>
@@ -671,7 +671,7 @@
                <string notr="true">QPushButton { background-color: #555555; color: white; padding: 8px 16px; border-radius: 4px; font-weight: bold;}</string>
               </property>
               <property name="text">
-               <string>Reset 0</string>
+               <string>Réinitialiser les curseurs</string>
               </property>
              </widget>
             </item>

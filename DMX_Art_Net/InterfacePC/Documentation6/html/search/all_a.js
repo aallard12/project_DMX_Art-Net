@@ -9,7 +9,7 @@ var searchData=
   ['labelnum_6',['labelNum',['../classUi__DialogUnivers.html#a2d68a4dd43f8892671cc531f8046b88c',1,'Ui_DialogUnivers']]],
   ['labeltitre_7',['labelTitre',['../structSliderWidgetSet.html#a29a5ecb510d9a91e28e057fb398f6fbb',1,'SliderWidgetSet']]],
   ['labelvaleur_8',['labelValeur',['../structSliderWidgetSet.html#a8fe6262e311f58a5bdca7f7c98beedff',1,'SliderWidgetSet']]],
-  ['lancerscene_9',['lancerScene',['../classInterfacePcClient.html#aee297c31bcb8a0493175cfe74246ec8c',1,'InterfacePcClient']]],
+  ['layoutwidget_9',['layoutWidget',['../classUi__InterfacePcClient.html#a1650d0cecc8e2e078af0f4501566d7bd',1,'Ui_InterfacePcClient']]],
   ['lineeditip_10',['lineEditIP',['../classUi__InterfacePcClient.html#adc7675324370a0c05e0525755fe58f62',1,'Ui_InterfacePcClient']]],
   ['lineeditmdp_11',['lineEditMDP',['../classUi__InterfacePcClient.html#ad1fe01e28ca1897e6a6dcaebfa7746dc',1,'Ui_InterfacePcClient']]],
   ['lineeditnomuser_12',['lineEditNomUser',['../classUi__InterfacePcClient.html#a6819ab2a5dc702ffbd930711310b4bd6',1,'Ui_InterfacePcClient']]],

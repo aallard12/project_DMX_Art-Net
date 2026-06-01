@@ -48,6 +48,7 @@ var classUi__InterfacePcClient =
     [ "label_3", "classUi__InterfacePcClient.html#a403bfdf908c4821f422e36314c384020", null ],
     [ "label_4", "classUi__InterfacePcClient.html#aa6d4680bb766fdcd05141b0c4fde402d", null ],
     [ "label_5", "classUi__InterfacePcClient.html#a3cf79d363f6b4c8d0b8e4f75b18c98f3", null ],
+    [ "layoutWidget", "classUi__InterfacePcClient.html#a1650d0cecc8e2e078af0f4501566d7bd", null ],
     [ "lineEditIP", "classUi__InterfacePcClient.html#adc7675324370a0c05e0525755fe58f62", null ],
     [ "lineEditMDP", "classUi__InterfacePcClient.html#ad1fe01e28ca1897e6a6dcaebfa7746dc", null ],
     [ "lineEditNomUser", "classUi__InterfacePcClient.html#a6819ab2a5dc702ffbd930711310b4bd6", null ],
@@ -99,6 +100,5 @@ var classUi__InterfacePcClient =
     [ "verticalLayout", "classUi__InterfacePcClient.html#afc90c9cb117c948f3bb3e89a7f19e6d5", null ],
     [ "verticalLayout_2", "classUi__InterfacePcClient.html#a4cbd7070faec1407cba5a808aa809324", null ],
     [ "verticalLayout_3", "classUi__InterfacePcClient.html#af1b539ced226c0297b7ead3d71372242", null ],
-    [ "widget", "classUi__InterfacePcClient.html#ab1e5b038afc9b63d4df2c0da5bf920cc", null ],
-    [ "widget1", "classUi__InterfacePcClient.html#a029557f1538de95fb42ff9848ae5418e", null ]
+    [ "widget", "classUi__InterfacePcClient.html#ab1e5b038afc9b63d4df2c0da5bf920cc", null ]
 ];

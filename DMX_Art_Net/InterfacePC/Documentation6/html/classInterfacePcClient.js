@@ -9,7 +9,6 @@ var classInterfacePcClient =
     [ "creerSliders", "classInterfacePcClient.html#a17db6ac94c8817ca77e5fd2f7b38078e", null ],
     [ "deleteEquipment", "classInterfacePcClient.html#ad24b0543f8b49f059a8d718354d4aee3", null ],
     [ "editEquipment", "classInterfacePcClient.html#a724b9d34daff1dc638dfe592b2bb6cf3", null ],
-    [ "lancerScene", "classInterfacePcClient.html#aee297c31bcb8a0493175cfe74246ec8c", null ],
     [ "on_btnAddChannelGlobal_clicked", "classInterfacePcClient.html#afb19da03ecd277cf5f890826e4462660", null ],
     [ "on_btnAddMain_clicked", "classInterfacePcClient.html#a4e3c34f947b8e3ac3cfdb080f24ab3b7", null ],
     [ "on_btnAddUnivers_clicked", "classInterfacePcClient.html#ae224cf74e83f981bdecc43eec7e56790", null ],

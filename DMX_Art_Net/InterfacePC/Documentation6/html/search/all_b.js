@@ -9,7 +9,8 @@ var searchData=
   ['min_6',['min',['../structFunctionData.html#ac3f149bdd8587cb6193d9feff2e2970d',1,'FunctionData::min'],['../structDmxFunctionInfo.html#a8272b2b0787b1dad8a3c6bbd9882a09d',1,'DmxFunctionInfo::min']]],
   ['moc_5fdialogunivers_2ecpp_7',['moc_dialogunivers.cpp',['../build_2Desktop__Qt__6__9__1-Debug_2moc__dialogunivers_8cpp.html',1,'(Espace de nommage global)'],['../moc__dialogunivers_8cpp.html',1,'(Espace de nommage global)']]],
   ['moc_5finterfacepcclient_2ecpp_8',['moc_interfacepcclient.cpp',['../moc__interfacepcclient_8cpp.html',1,'(Espace de nommage global)'],['../build_2Desktop__Qt__6__9__1-Debug_2moc__interfacepcclient_8cpp.html',1,'(Espace de nommage global)']]],
-  ['moc_5fpredefs_2eh_9',['moc_predefs.h',['../build_2Desktop__Qt__6__9__1-Debug_2moc__predefs_8h.html',1,'(Espace de nommage global)'],['../moc__predefs_8h.html',1,'(Espace de nommage global)']]],
+  ['moc_5fpredefs_2eh_9',['moc_predefs.h',['../moc__predefs_8h.html',1,'(Espace de nommage global)'],['../build_2Desktop__Qt__6__9__1-Debug_2moc__predefs_8h.html',1,'(Espace de nommage global)']]],
   ['modifierequipment_10',['modifierEquipment',['../classAccessBDD.html#ad49944beca2acf29f4d7b28702f1f343',1,'AccessBDD']]],
-  ['modifierunivers_11',['modifierUnivers',['../classAccessBDD.html#adb9de194ff0ed426ab0de6d384d0572c',1,'AccessBDD']]]
+  ['modifierunivers_11',['modifierUnivers',['../classAccessBDD.html#adb9de194ff0ed426ab0de6d384d0572c',1,'AccessBDD']]],
+  ['modifieruser_12',['modifierUser',['../classAccessBDD.html#a7a3b971dbf19c2d8d0f41c87f3ab69ba',1,'AccessBDD']]]
 ];

@@ -1,5 +1,7 @@
 var NAVTREEINDEX5 =
 {
+"structUniversData.html#a3c127c5dc779cf2a5baf81850939f9b3":[1,0,14,1],
+"structUniversData.html#aa443cdbca420f7a45837970db80b62ba":[1,0,14,2],
 "structUniversData.html#ac655ccb532a04880f734837d3bb82c92":[1,0,14,0],
 "structUserData.html":[1,0,15],
 "structUserData.html#a08604a649d160e1160fc9f3f8eb54e01":[1,0,15,1],

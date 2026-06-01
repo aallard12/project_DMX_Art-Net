@@ -694,3 +694,56 @@ bool AccessBDD::modifierUser(int id, const QString &nom, const QString &mdp)
     }
     return retour;
 }
+
+/**
+ * @brief AccessBDD::creerBlackoutUnivers
+ * @details Creer dans la base de données des scènes Blackout pour chaque univers afin de
+ * réinitialiser les leds de chaque équipement de chaque univers
+ * @param idUnivers
+ * @return
+ */
+bool AccessBDD::creerBlackoutUnivers(int idUnivers)
+{
+    bool succes = false;
+    QMap<int, DmxChannelInfo> mapCanaux = chargerMapUnivers(idUnivers);
+    QSqlQuery qUnivers;
+    qUnivers.prepare("SELECT numeroUnivers FROM UNIVERS WHERE idUnivers = :id");
+    qUnivers.bindValue(":id", idUnivers);
+
+    if (qUnivers.exec() && qUnivers.next()) {
+        int numeroUnivers = qUnivers.value(0).toInt();
+        QString nomScene  = QString("BLACKOUT Univers %1").arg(numeroUnivers);
+
+        QMap<int, int> valeursZero;
+        for (auto it = mapCanaux.begin(); it != mapCanaux.end(); ++it)
+            valeursZero.insert(it.value().idCanal, 0);
+
+        succes = enregistrerScene(nomScene, valeursZero);
+    } else {
+        qDebug() << "Erreur creerBlackoutUnivers :" << qUnivers.lastError().text();
+    }
+    return succes;
+}
+
+/**
+ * @brief AccessBDD::blackoutExistePourUnivers
+ * @details Vérifie s'il existe une scène blackout pour l'univers avec l'identifiant sélectionné
+ * @param idUnivers
+ * @return
+ */
+bool AccessBDD::blackoutExistePourUnivers(int idUnivers)
+{
+    bool existe = false;
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(*) FROM SCENES S "
+                  "JOIN PILOTE P ON S.idScene = P.idScene "
+                  "JOIN CANAUX C ON P.idCanal = C.idCanal "
+                  "JOIN EQUIPEMENTS E ON C.idEquipement = E.idEquipement "
+                  "WHERE E.idUnivers = :id AND S.nomScene LIKE 'BLACKOUT%'");
+    query.bindValue(":id", idUnivers);
+    if (query.exec() && query.next())
+        existe = query.value(0).toInt() > 0;
+    else
+        qDebug() << "Erreur blackoutExistePourUnivers :" << query.lastError().text();
+    return existe;
+}

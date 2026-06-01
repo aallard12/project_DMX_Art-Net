@@ -135,6 +135,9 @@ public:
     QList<UserData> chargerUser();
     bool modifierUser(int id, const QString &nom, const QString &mdp);
     bool supprimerUser(int idUser);
+
+    bool creerBlackoutUnivers(int idUnivers);
+    bool blackoutExistePourUnivers(int idUnivers);
 };
 
 #endif
