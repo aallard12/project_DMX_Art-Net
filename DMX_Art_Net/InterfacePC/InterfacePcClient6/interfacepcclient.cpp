@@ -40,10 +40,10 @@ InterfacePcClient::InterfacePcClient(QWidget *parent)
     ui->statusBar->addPermanentWidget(statusLabel, 1);
 
     if (bdd.isConnected()) {
-        statusLabel->setText("✅ Application connectée au serveur");
+        statusLabel->setText(" Application connectée au serveur");
         statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
     } else {
-        statusLabel->setText("❌ Application non connectée au serveur");
+        statusLabel->setText(" Application non connectée au serveur");
         statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
     }
     QTimer::singleShot(5000, this, [this]() {
@@ -150,10 +150,10 @@ void InterfacePcClient::on_btnAddUnivers_clicked()
             int idNouvelUnivers = universList.last().idUnivers;
             bdd.creerBlackoutUnivers(idNouvelUnivers);
 
-            statusLabel->setText("✅ Univers ajouté à la base de données");
+            statusLabel->setText(" Univers ajouté à la base de données");
             statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
         } else {
-            statusLabel->setText("❌ Impossible d'ajouter l'univers");
+            statusLabel->setText(" Impossible d'ajouter l'univers");
             statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         }
 
@@ -200,10 +200,10 @@ void InterfacePcClient::on_btnEditUnivers_clicked()
     if (univers.exec() == QDialog::Accepted && univers.getNumUnivers() != 0 && !univers.getIpUnivers().isEmpty()){
         if (bdd.modifierUnivers(u.idUnivers, univers.getNumUnivers(), univers.getIpUnivers())){
             refreshUniversList();
-            statusLabel->setText("✅ Modification de l'univers réussie");
+            statusLabel->setText(" Modification de l'univers réussie");
             statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
         }else {
-            statusLabel->setText("❌ Impossible de modifier l'univers");
+            statusLabel->setText(" Impossible de modifier l'univers");
             statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         }
         QTimer::singleShot(5000, this, [this]() {
@@ -230,7 +230,7 @@ void InterfacePcClient::on_btnDeleteUnivers_clicked()
                     bdd.modifierUnivers(universList[i].idUnivers, i + 1, universList[i].ip);
             }
             refreshUniversList();
-            statusLabel->setText("✅ Univers supprimé et liste réindexée");
+            statusLabel->setText(" Univers supprimé et liste réindexée");
             statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
         }
         QTimer::singleShot(5000, this, [this]() {
@@ -246,7 +246,7 @@ void InterfacePcClient::on_btnDeleteUnivers_clicked()
  */
 void InterfacePcClient::on_uiUniversList_currentRowChanged(int currentRow)
 {
-    bool hasSelection = ui->uiUniversList->currentRow() >= 0;
+    bool hasSelection = currentRow >= 0;
     ui->btnEditUnivers->setEnabled(hasSelection);
     ui->btnDeleteUnivers->setEnabled(hasSelection);
 }
@@ -368,10 +368,10 @@ void InterfacePcClient::deleteEquipment(int index)
         if (QMessageBox::question(this, "Confirmation", "Supprimer cet équipement ?") != QMessageBox::Yes) return;
         if (bdd.supprimerEquipment(equipmentsList[index].idEquipement)) {
             refreshEquipmentsGrid();
-            statusLabel->setText("✅ Suppression de l'équipement réussie");
+            statusLabel->setText(" Suppression de l'équipement réussie");
             statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
         } else {
-            statusLabel->setText("❌ Impossible de supprimer l'équipement");
+            statusLabel->setText(" Impossible de supprimer l'équipement");
             statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         }
         QTimer::singleShot(5000, this, [this]() {
@@ -667,7 +667,7 @@ void InterfacePcClient::on_btnSave_clicked()
     }
     QString erreurValidation;
     if (!validerFonctionsCanaux(eq.canaux, erreurValidation)) {
-        statusLabel->setText("❌ " + erreurValidation);
+        statusLabel->setText(" " + erreurValidation);
         statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 20px;");
         QTimer::singleShot(5000, this, [this]() { statusLabel->setText(""); });
     } else {
@@ -680,10 +680,10 @@ void InterfacePcClient::on_btnSave_clicked()
         if (resultat) {
             refreshEquipmentsGrid();
             on_btnCancel_clicked();
-            statusLabel->setText("✅ Enregistrement de l'équipement réussi");
+            statusLabel->setText(" Enregistrement de l'équipement réussi");
             statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
         } else {
-            statusLabel->setText("❌ Impossible d'enregistrer l'équipement");
+            statusLabel->setText(" Impossible d'enregistrer l'équipement");
             statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         }
         QTimer::singleShot(5000, this, [this]() {
@@ -785,7 +785,7 @@ void InterfacePcClient::on_btnRenameScene_clicked()
     int idScene = ui->scenesCombo->currentData().toInt();
     QString nomScene = ui->scenesCombo->currentText();
     if (idScene == -1) {
-        statusLabel->setText("❌ Aucune scène sélectionnée. Veuillez sélectionner une scène");
+        statusLabel->setText(" Aucune scène sélectionnée. Veuillez sélectionner une scène");
         statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
     } else {
         bool ok;
@@ -797,14 +797,14 @@ void InterfacePcClient::on_btnRenameScene_clicked()
                 refreshScenesList();
                 int index = ui->scenesCombo->findData(idScene);
                 if (index != -1) ui->scenesCombo->setCurrentIndex(index);
-                statusLabel->setText("✅ Modification du nom de la scène réussie");
+                statusLabel->setText(" Modification du nom de la scène réussie");
                 statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
             } else {
-                statusLabel->setText("❌ Impossible de modifier le nom de la scène");
+                statusLabel->setText(" Impossible de modifier le nom de la scène");
                 statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
             }
         } else {
-            statusLabel->setText("❌ Cette scène est protégée et ne peut pas être modifiée");
+            statusLabel->setText(" Cette scène est protégée et ne peut pas être modifiée");
             statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         }
     }
@@ -822,7 +822,7 @@ void InterfacePcClient::on_btnDeleteScene_clicked()
     int idScene = ui->scenesCombo->currentData().toInt();
     QString nomScene = ui->scenesCombo->currentText();
     if (idScene == -1) {
-        statusLabel->setText("❌ Aucune scène sélectionnée. Veuillez sélectionner une scène");
+        statusLabel->setText(" Aucune scène sélectionnée. Veuillez sélectionner une scène");
         statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
     } else {
         bool estProtegee = nomScene.startsWith("BLACKOUT");
@@ -830,15 +830,15 @@ void InterfacePcClient::on_btnDeleteScene_clicked()
             if (QMessageBox::question(this, "Confirmation", "Supprimer cette scène ?") == QMessageBox::Yes) {
                 if (bdd.supprimerScene(idScene)) {
                     refreshScenesList();
-                    statusLabel->setText("✅ Scène supprimée");
+                    statusLabel->setText(" Scène supprimée");
                     statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
                 } else {
-                    statusLabel->setText("❌ Impossible de supprimer la scène");
+                    statusLabel->setText(" Impossible de supprimer la scène");
                     statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
                 }
             }
         } else {
-            statusLabel->setText("❌ Cette scène est protégée et ne peut pas être supprimée");
+            statusLabel->setText(" Cette scène est protégée et ne peut pas être supprimée");
             statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         }
     }
@@ -853,7 +853,7 @@ void InterfacePcClient::on_btnDeleteScene_clicked()
 void InterfacePcClient::on_btnSaveScene_clicked()
 {
     if (ui->scenesUniversCombo->count() == 0) {
-        statusLabel->setText("❌ Aucun univers enregistré");
+        statusLabel->setText(" Aucun univers enregistré");
         statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
     } else {
         bool ok;
@@ -872,7 +872,7 @@ void InterfacePcClient::on_btnSaveScene_clicked()
                 statusLabel->setStyleSheet("color: white; font-weight: bold; font-size: 30px;");
                 refreshScenesList();
             } else {
-                statusLabel->setText("❌ Impossible d'enregistre la scène");
+                statusLabel->setText(" Impossible d'enregistre la scène");
                 statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
             }
         }
@@ -908,7 +908,7 @@ void InterfacePcClient::on_btnConnectTCP_clicked()
         QString ip   = ui->lineEditIP->text();
         int     port = ui->spinBoxPort->value();
         if (ip.isEmpty() || port <= 0) {
-            statusLabel->setText("❌ Mauvaise adresse IP ou port invalide !");
+            statusLabel->setText(" Mauvaise adresse IP ou port invalide !");
             statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         } else {
             socketClient.connectToHost(ip, port);
@@ -932,7 +932,7 @@ void InterfacePcClient::onQTcpSocket_connected()
     ui->btnConnectTCP->setStyleSheet(" QPushButton#btnGreen { background-color: #388e3c;  color: white; border-radius: 4px; padding: 8px 16px; font-weight: bold; border: none; }"
                                      " QPushButton#btnGreen:hover { background-color: #4caf50; }");
     ui->btnConnectTCP->style()->polish(ui->btnConnectTCP);
-    statusLabel->setText("✅ Connexion au serveur établie");
+    statusLabel->setText(" Connexion au serveur établie");
     statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
     QTimer::singleShot(5000, this, [this]() {
         statusLabel->setText("");
@@ -951,7 +951,7 @@ void InterfacePcClient::onQTcpSocket_disconnected()
                                      " QPushButton#btnGrey:hover  { background-color: #666666; }");
     ui->btnConnectTCP->style()->polish(ui->btnConnectTCP);
     ui->btnLaunchLiveScene->setEnabled(false);
-    statusLabel->setText("❌ Perte de la connexion au serveur");
+    statusLabel->setText(" Perte de la connexion au serveur");
     statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
     QTimer::singleShot(5000, this, [this]() {
         statusLabel->setText("");
@@ -1003,7 +1003,7 @@ void InterfacePcClient::on_btnLaunchLiveScene_clicked()
             statusLabel->setText("Scène " + QString::number(selectedLiveSceneId) + " envoyée");
             statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
         } else {
-            statusLabel->setText("❌ Erreur envoi de la scène");
+            statusLabel->setText(" Erreur envoi de la scène");
             statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         }
         QTimer::singleShot(5000, this, [this]() {
@@ -1107,15 +1107,15 @@ void InterfacePcClient::on_pushButtonImport_clicked()
                     addChannelToForm(&cd);
                 }
             } else {
-                statusLabel->setText("❌ Fichier JSON invalide");
+                statusLabel->setText(" Fichier JSON invalide");
                 statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
             }
         } else {
-            statusLabel->setText("❌ Impossible d'ouvrir le fichier");
+            statusLabel->setText(" Impossible d'ouvrir le fichier");
             statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         }
     } else {
-        statusLabel->setText("❌ Fichier JSON vide");
+        statusLabel->setText(" Fichier JSON vide");
         statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
     }
     QTimer::singleShot(5000, this, [this]() {
@@ -1164,11 +1164,11 @@ void InterfacePcClient::on_pushButtonSaveUser_clicked()
             ui->lineEditNomUser->setText("");
             ui->lineEditMDP->setText("");
         } else {
-            statusLabel->setText("❌ Nom d'utilisateur ou mot de passe incorrects ou déjà utilisés");
+            statusLabel->setText(" Nom d'utilisateur ou mot de passe incorrects ou déjà utilisés");
             statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         }
     } else {
-        statusLabel->setText("❌ Nom d'utilisateur ou mot de passe vide");
+        statusLabel->setText(" Nom d'utilisateur ou mot de passe vide");
         statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
     }
     QTimer::singleShot(5000, this, [this]() {
@@ -1183,7 +1183,7 @@ void InterfacePcClient::on_pushButtonSaveUser_clicked()
  */
 void InterfacePcClient::on_listWidgetUser_currentRowChanged(int currentRow)
 {
-    bool hasSelection = ui->listWidgetUser->currentRow() >= 0;
+    bool hasSelection = currentRow >= 0;
     ui->pushButtonEditUser->setEnabled(hasSelection);
     ui->pushButtonDeleteUser->setEnabled(hasSelection);
 }
@@ -1202,10 +1202,10 @@ void InterfacePcClient::on_pushButtonDeleteUser_clicked()
         if (bdd.supprimerUser(userList[row].id)) {
             userList = bdd.chargerUser();
             refreshUserList();
-            statusLabel->setText("✅ Utilisateur supprimé");
+            statusLabel->setText(" Utilisateur supprimé");
             statusLabel->setStyleSheet("color: green; font-weight: bold; font-size: 30px;");
         } else {
-            statusLabel->setText("❌ Impossible de supprimer cet utilisateur");
+            statusLabel->setText(" Impossible de supprimer cet utilisateur");
             statusLabel->setStyleSheet("color: red; font-weight: bold; font-size: 30px;");
         }
         QTimer::singleShot(5000, this, [this]() {

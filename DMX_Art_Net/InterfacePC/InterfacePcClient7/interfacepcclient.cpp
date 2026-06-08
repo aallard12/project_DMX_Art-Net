@@ -865,7 +865,7 @@ void InterfacePcClient::on_btnSaveScene_clicked()
                                                   "Entrez le nom de la scène :", QLineEdit::Normal, "", &ok);
         if (ok && !sceneName.trimmed().isEmpty()) {
             QMap<int, int> valeursAEnregistrer;
-            for (int i = 0; i < dmxSliders.size(); ++i) {
+            for (int i = 0; i < dmxSliders.size(); i++) {
                 int idCanalDB = dmxSliders[i].idCanalDB;
                 int valeur    = dmxSliders[i].slider->value();
                 if (idCanalDB != -1 && valeur != 0)

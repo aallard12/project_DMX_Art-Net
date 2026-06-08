@@ -1,0 +1,19 @@
+<map id="/home/USERS/ELEVES/CIEL2024/aallard/Cours/ANNEE2/Projet_Git/DMX_Art_Net/InterfacePC/InterfacePcClient7/dialogunivers.h" name="/home/USERS/ELEVES/CIEL2024/aallard/Cours/ANNEE2/Projet_Git/DMX_Art_Net/InterfacePC/InterfacePcClient7/dialogunivers.h">
+<area shape="rect" id="Node000001" title="Déclaration de la classe DialogUnivers." alt="" coords="369,5,588,89"/>
+<area shape="rect" id="Node000002" href="$build_2Desktop__Qt__6__9__1-Debug_2moc__dialogunivers_8cpp.html" title=" " alt="" coords="5,137,224,236"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="357,95,237,140,225,144,223,139,235,135,355,90"/>
+<area shape="rect" id="Node000003" href="$dialogunivers_8cpp.html" title="Implémentation de la classe DialogUnivers." alt="" coords="248,145,467,229"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="435,101,396,146,392,143,431,98"/>
+<area shape="rect" id="Node000004" href="$interfacepcclient_8h.html" title="Déclaration de la classe InterfacePcClient." alt="" coords="491,145,709,229"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="526,98,566,143,562,146,522,101"/>
+<area shape="rect" id="Node000009" href="$moc__dialogunivers_8cpp.html" title=" " alt="" coords="733,145,952,229"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="602,90,722,135,741,142,739,147,720,140,600,95"/>
+<area shape="rect" id="Node000005" href="$build_2Desktop__Qt__6__9__1-Debug_2moc__interfacepcclient_8cpp.html" title=" " alt="" coords="111,284,345,383"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="485,236,480,238,346,290,344,285,478,234,483,231"/>
+<area shape="rect" id="Node000006" href="$interfacepcclient_8cpp.html" title="Implémentation de la classe InterfacePcClient." alt="" coords="369,291,588,375"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="559,241,515,293,511,289,555,237"/>
+<area shape="rect" id="Node000007" href="$main_8cpp.html" title=" " alt="" coords="612,291,831,375"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="645,237,689,289,685,293,641,241"/>
+<area shape="rect" id="Node000008" href="$moc__interfacepcclient_8cpp.html" title=" " alt="" coords="855,291,1073,375"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="717,231,862,289,860,294,715,236"/>
+</map>
