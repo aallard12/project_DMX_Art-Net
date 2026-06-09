@@ -63,10 +63,10 @@ void executerPOST() {
   Serial.print("   [ROUTAGE] Frontiere stricte Z1/Z2   : ");
   int testZoneDebut = 0;
   int testValeurDmx = 50; 
-  switch (testValeurDmx) {
-    case 0 ... 49:  testZoneDebut = 0; break;
-    case 50 ... 99: testZoneDebut = 15; break;
-  }
+  
+  if (testValeurDmx >= 0 && testValeurDmx <= 49) { testZoneDebut = 0; }
+  if (testValeurDmx >= 50 && testValeurDmx <= 99) { testZoneDebut = 15; }
+  
   if (testZoneDebut == 15) { Serial.println("OK"); testsLogicielsReussis++; } else { Serial.println("ECHEC"); }
   Serial.println("   Bilan logiciel : " + String(testsLogicielsReussis) + "/4 tests reussis.\n");
 
@@ -115,10 +115,10 @@ void setup() {
       if (touche >= '0' && touche <= '9') {
         if (saisie.length() < 3) saisie += touche; 
       } 
-      else if (touche == '*') {
+      if (touche == '*') {
         saisie = ""; 
       } 
-      else if (touche == '#') { 
+      if (touche == '#') { 
         if (saisie.length() > 0) {
           int adresseTest = saisie.toInt();
           if (adresseTest >= 1 && adresseTest <= 507) {
@@ -133,8 +133,12 @@ void setup() {
           validee = true; 
         }
       }
-      if (!validee) monEcran.afficherMessage("Saisir Adresse DMX :", saisie + "_ (# pour valider)");
+      
+      if (!validee) {
+        monEcran.afficherMessage("Saisir Adresse DMX :", saisie + "_ (# pour valider)");
+      }
     }
+    
     // Timeout (Test d'ergonomie/crash-test utilisateur)
     if (millis() - debutSaisie > 10000 && saisie == "") {
       adresseDMX = 1; 
@@ -159,6 +163,7 @@ void loop() {
   static unsigned long tempsDerniereTrame = millis();
   static long tramesPrecedentes = -1;
   long tramesActuelles = monDMX.getTramesRecues();
+  bool signalPerdu = false;
 
   // Si on a reçu une nouvelle trame, on remet le compteur à zéro
   if (tramesActuelles != tramesPrecedentes) {
@@ -178,107 +183,103 @@ void loop() {
       Serial.println("[ALERTE] Failsafe active : Coupure de la lumiere (Blackout).");
       dernierLogAlerte = millis();
     }
-    return; // /!\ IMPORTANT : On stoppe la boucle ici en attendant le signal
+    
+    signalPerdu = true; // Remplace l'ancien "return;"
   }
   // ----------------------------------------------------
 
-  // Lecture des 6 canaux
-  uint8_t r         = monDMX.lireCanal(adresseDMX);     
-  uint8_t g         = monDMX.lireCanal(adresseDMX + 1); 
-  uint8_t b         = monDMX.lireCanal(adresseDMX + 2); 
-  uint8_t ch_zone   = monDMX.lireCanal(adresseDMX + 3); 
-  uint8_t ch_mode   = monDMX.lireCanal(adresseDMX + 4); 
-  uint8_t ch_effets = monDMX.lireCanal(adresseDMX + 5); 
+  // On n'exécute la suite du programme QUE si le signal est présent
+  if (!signalPerdu) {
+    
+    // Lecture des 6 canaux
+    uint8_t r         = monDMX.lireCanal(adresseDMX);     
+    uint8_t g         = monDMX.lireCanal(adresseDMX + 1); 
+    uint8_t b         = monDMX.lireCanal(adresseDMX + 2); 
+    uint8_t ch_zone   = monDMX.lireCanal(adresseDMX + 3); 
+    uint8_t ch_mode   = monDMX.lireCanal(adresseDMX + 4); 
+    uint8_t ch_effets = monDMX.lireCanal(adresseDMX + 5); 
 
-  // 2. DÉCODAGE DU CANAL ZONE (CH4)
-  int idxDebut = 0, idxFin = 0, indexSauvegarde = -1;
-  String nomZone = "";
+    // 2. DÉCODAGE DU CANAL ZONE (CH4)
+    int idxDebut = 0, idxFin = 0, indexSauvegarde = -1;
+    String nomZone = "";
 
-  switch (ch_zone) {
-    case 0 ... 49:     idxDebut = 0;  idxFin = 15; nomZone = "Z1 (1-15)";  indexSauvegarde = 0; break;
-    case 50 ... 99:    idxDebut = 15; idxFin = 30; nomZone = "Z2 (16-30)"; indexSauvegarde = 1; break;
-    case 100 ... 149:  idxDebut = 30; idxFin = 45; nomZone = "Z3 (31-45)"; indexSauvegarde = 2; break;
-    case 150 ... 199:  idxDebut = 45; idxFin = 60; nomZone = "Z4 (46-60)"; indexSauvegarde = 3; break;
-    case 200 ... 249:  idxDebut = 0;  idxFin = 60; nomZone = "Z1+2+3+4 Memoire"; break;
-    case 250 ... 255:  idxDebut = 0;  idxFin = 60; nomZone = "Z1+2+3+4 Unifiees"; break;
-  }
+    if (ch_zone >= 0 && ch_zone <= 49)     { idxDebut = 0;  idxFin = 15; nomZone = "Z1 (1-15)";  indexSauvegarde = 0; }
+    if (ch_zone >= 50 && ch_zone <= 99)    { idxDebut = 15; idxFin = 30; nomZone = "Z2 (16-30)"; indexSauvegarde = 1; }
+    if (ch_zone >= 100 && ch_zone <= 149)  { idxDebut = 30; idxFin = 45; nomZone = "Z3 (31-45)"; indexSauvegarde = 2; }
+    if (ch_zone >= 150 && ch_zone <= 199)  { idxDebut = 45; idxFin = 60; nomZone = "Z4 (46-60)"; indexSauvegarde = 3; }
+    if (ch_zone >= 200 && ch_zone <= 249)  { idxDebut = 0;  idxFin = 60; nomZone = "Z1+2+3+4 Memoire"; }
+    if (ch_zone >= 250 && ch_zone <= 255)  { idxDebut = 0;  idxFin = 60; nomZone = "Z1+2+3+4 Unifiees"; }
 
-  if (idxFin > NB_PIXELS) idxFin = NB_PIXELS;
-  if (indexSauvegarde != -1) monRuban.sauvegarderCouleurZone(indexSauvegarde, r, g, b);
+    if (idxFin > NB_PIXELS) idxFin = NB_PIXELS;
+    if (indexSauvegarde != -1) monRuban.sauvegarderCouleurZone(indexSauvegarde, r, g, b);
 
-  // 3. APPLICATION DE LA COULEUR DE BASE
-  monRuban.toutEteindre();
+    // 3. APPLICATION DE LA COULEUR DE BASE
+    monRuban.toutEteindre();
 
-  switch (ch_zone) {
-    case 0 ... 199:
-    case 250 ... 255:
+    if ((ch_zone >= 0 && ch_zone <= 199) || (ch_zone >= 250 && ch_zone <= 255)) {
       monRuban.peindreZoneFixe(idxDebut, idxFin, r, g, b);
-      break;
-    case 200 ... 249:
+    }
+    if (ch_zone >= 200 && ch_zone <= 249) {
       monRuban.peindreToutesZonesMemorisees();
-      break;
-  }
+    }
 
-  // 4. APPLICATION DU MODE ET DES EFFETS (CH5 & CH6)
-  String nomMode = "DIMMER";
-  String infoEffet = "";
+    // 4. APPLICATION DU MODE ET DES EFFETS (CH5 & CH6)
+    String nomMode = "DIMMER";
+    String infoEffet = "";
 
-  switch (ch_mode) {
-    case 250 ... 255:
+    if (ch_mode >= 250 && ch_mode <= 255) {
       nomMode = "EFFETS (CH6)";
       infoEffet = String(ch_effets); 
-      switch (ch_effets) {
-        case 0 ... 25:    monRuban.effet01_Rainbow(idxDebut, idxFin); break;
-        case 26 ... 51:   monRuban.effet02_Chenillard(idxDebut, idxFin); break;
-        case 52 ... 76:   monRuban.effet03_Confetti(idxDebut, idxFin); break;
-        case 77 ... 102:  monRuban.effet04_Sinelon(idxDebut, idxFin); break;
-        case 103 ... 127: monRuban.effet05_BPM(idxDebut, idxFin); break;
-        case 128 ... 153: monRuban.effet06_Juggle(idxDebut, idxFin); break;
-        case 154 ... 179: monRuban.effet07_Police(idxDebut, idxFin); break;
-        case 180 ... 204: monRuban.effet08_WarpDrive(idxDebut, idxFin); break;
-        case 205 ... 230: monRuban.effet09_Breathing(idxDebut, idxFin); break;
-        case 231 ... 255: monRuban.effet10_Feu(idxDebut, idxFin); break;
-      }
-      break;
-
-    case 150 ... 249:
+      
+      if (ch_effets >= 0 && ch_effets <= 25)     { monRuban.effet01_Rainbow(idxDebut, idxFin); }
+      if (ch_effets >= 26 && ch_effets <= 51)    { monRuban.effet02_Chenillard(idxDebut, idxFin); }
+      if (ch_effets >= 52 && ch_effets <= 76)    { monRuban.effet03_Confetti(idxDebut, idxFin); }
+      if (ch_effets >= 77 && ch_effets <= 102)   { monRuban.effet04_Sinelon(idxDebut, idxFin); }
+      if (ch_effets >= 103 && ch_effets <= 127)  { monRuban.effet05_BPM(idxDebut, idxFin); }
+      if (ch_effets >= 128 && ch_effets <= 153)  { monRuban.effet06_Juggle(idxDebut, idxFin); }
+      if (ch_effets >= 154 && ch_effets <= 179)  { monRuban.effet07_Police(idxDebut, idxFin); }
+      if (ch_effets >= 180 && ch_effets <= 204)  { monRuban.effet08_WarpDrive(idxDebut, idxFin); }
+      if (ch_effets >= 205 && ch_effets <= 230)  { monRuban.effet09_Breathing(idxDebut, idxFin); }
+      if (ch_effets >= 231 && ch_effets <= 255)  { monRuban.effet10_Feu(idxDebut, idxFin); }
+    }
+    
+    if (ch_mode >= 150 && ch_mode <= 249) {
       nomMode = "STROBE";
       monRuban.appliquerStrobe(idxDebut, idxFin, ch_mode);
-      break;
-
-    case 0 ... 149:
+    }
+    
+    if (ch_mode >= 0 && ch_mode <= 149) {
       nomMode = "DIMMER";
       monRuban.appliquerDimmerGlobal(map(ch_mode, 0, 149, 0, 255));
-      break;
-  }
+    }
 
-  // 5. RENDU PHYSIQUE ET AFFICHAGE MONITEUR
-  monRuban.afficher(); 
-  monEcran.actualiser(nomZone, nomMode, infoEffet, monDMX.getTramesRecues());
+    // 5. RENDU PHYSIQUE ET AFFICHAGE MONITEUR
+    monRuban.afficher(); 
+    monEcran.actualiser(nomZone, nomMode, infoEffet, monDMX.getTramesRecues());
 
-  // ==========================================================
-  // MODE ESPION (AFFICHAGE SUR LE MONITEUR SÉRIE)
-  // ==========================================================
-  
-  // 1. Affichage continu du réseau (S'actualise tout seul 1 fois par seconde)
-  static unsigned long dernierLogReseau = 0;
-  if (millis() - dernierLogReseau > 1000) {
-    Serial.printf("[RESEAU] Trames DMX validees reçues : %ld\n", monDMX.getTramesRecues());
-    dernierLogReseau = millis();
-  }
-
-  // 2. Affichage des commandes (Ne s'affiche QUE si on bouge un curseur)
-  static uint8_t old_r = 0, old_g = 0, old_b = 0, old_zone = 0, old_mode = 0, old_effets = 0;
-  
-  if (r != old_r || g != old_g || b != old_b || ch_zone != old_zone || ch_mode != old_mode || ch_effets != old_effets) {
-    Serial.println("\n--- NOUVELLE COMMANDE DETECTEE ---");
-    Serial.printf("[RECEPTION] Valeurs DMX (RGB) reçues : %d, %d, %d\n", r, g, b);
-    Serial.printf("[CONVERSION] CH Zone (%d) -> Converti en : %s (Index LED : %d a %d)\n", ch_zone, nomZone.c_str(), idxDebut, idxFin);
-    Serial.printf("[CONVERSION] CH Mode (%d) -> Converti en : %s\n", ch_mode, nomMode.c_str());
-    Serial.println("[ENVOI] Mise a jour du ruban LED effectuee.");
-    Serial.println("----------------------------------");
+    // ==========================================================
+    // MODE ESPION (AFFICHAGE SUR LE MONITEUR SÉRIE)
+    // ==========================================================
     
-    // On mémorise les valeurs pour la prochaine comparaison
-    old_r = r; old_g = g; old_b = b; old_zone = ch_zone; old_mode = ch_mode; old_effets = ch_effets;
-  }
-}
+    // 1. Affichage continu du réseau
+    static unsigned long dernierLogReseau = 0;
+    if (millis() - dernierLogReseau > 1000) {
+      Serial.printf("[RESEAU] Trames DMX validees reçues : %ld\n", monDMX.getTramesRecues());
+      dernierLogReseau = millis();
+    }
+
+    // 2. Affichage des commandes 
+    static uint8_t old_r = 0, old_g = 0, old_b = 0, old_zone = 0, old_mode = 0, old_effets = 0;
+    
+    if (r != old_r || g != old_g || b != old_b || ch_zone != old_zone || ch_mode != old_mode || ch_effets != old_effets) {
+      Serial.println("\n--- NOUVELLE COMMANDE DETECTEE ---");
+      Serial.printf("[RECEPTION] Valeurs DMX (RGB) reçues : %d, %d, %d\n", r, g, b);
+      Serial.printf("[CONVERSION] CH Zone (%d) -> Converti en : %s (Index LED : %d a %d)\n", ch_zone, nomZone.c_str(), idxDebut, idxFin);
+      Serial.printf("[CONVERSION] CH Mode (%d) -> Converti en : %s\n", ch_mode, nomMode.c_str());
+      Serial.println("[ENVOI] Mise a jour du ruban LED effectuee.");
+      Serial.println("----------------------------------");
+      
+      old_r = r; old_g = g; old_b = b; old_zone = ch_zone; old_mode = ch_mode; old_effets = ch_effets;
+    }
+  } // Fin du bloc !signalPerdu
+} // Fin de la boucle principale

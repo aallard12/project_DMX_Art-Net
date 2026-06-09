@@ -54,6 +54,7 @@ void afficherAttenteWifi() {
  */
 void afficherStatutWifi(bool connecte, String ip) {
   afficheurOLED.clear();
+  
   if (connecte) {
     afficheurOLED.setFont(ArialMT_Plain_24);
     afficheurOLED.drawString(45, 0, "OK");
@@ -63,6 +64,7 @@ void afficherStatutWifi(bool connecte, String ip) {
     afficheurOLED.setFont(ArialMT_Plain_24);
     afficheurOLED.drawString(30, 0, "NO WIFI");
   }
+  
   afficheurOLED.display();
 }
 

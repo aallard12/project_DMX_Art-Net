@@ -39,7 +39,9 @@ void RecepteurDMX::initialiser(int pinRx) {
  * global est incrémenté.
  */
 bool RecepteurDMX::ecouter() {
+  bool trameValide = false; // Déclaration d'une variable unique pour le retour
   dmx_packet_t packet;
+  
   // dmx_receive avec un timeout de 0 : on regarde juste s'il y a quelque chose
   if (dmx_receive(dmxPort, &packet, 0)) {
     // On s'assure qu'il n'y a pas eu de micro-coupure ou d'erreur électrique
@@ -47,10 +49,11 @@ bool RecepteurDMX::ecouter() {
       // Transfert des données du matériel vers notre mémoire vive (RAM)
       dmx_read(dmxPort, dmxData, packet.size);
       tramesRecues++;
-      return true;
+      trameValide = true; // On valide la trame
     }
   }
-  return false;
+  
+  return trameValide; // Un seul point de sortie à la toute fin
 }
 
 /**
@@ -61,8 +64,13 @@ bool RecepteurDMX::ecouter() {
  * pour éviter les plantages (Segmentation Fault) si on demande un canal invalide.
  */
 uint8_t RecepteurDMX::lireCanal(int canal) {
-  if (canal >= 1 && canal < 513) return dmxData[canal];
-  return 0; // Valeur par défaut en cas d'erreur
+  uint8_t valeurRetour = 0; // Valeur par défaut en cas d'erreur
+  
+  if (canal >= 1 && canal < 513) {
+    valeurRetour = dmxData[canal]; // Affectation si la condition est remplie
+  }
+  
+  return valeurRetour; // Un seul point de sortie
 }
 
 /**

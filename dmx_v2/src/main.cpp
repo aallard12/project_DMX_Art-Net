@@ -3,7 +3,7 @@
  * @brief Programme principal du nœud Wi-Fi Art-Net vers DMX.
  * @details Ce fichier connecte l'ESP32 au réseau Wi-Fi, écoute les paquets UDP 
  * (Art-Net), décode les valeurs et les transmet au contrôleur DMX matériel.
- * Il intègre un test matériel (POST) qui fait flasher les projecteurs en RGB.
+ * Il intègre un système Failsafe : si le Wi-Fi coupe, les projecteurs s'éteignent.
  */
 
 #include <Arduino.h>
@@ -26,11 +26,6 @@ long paquetsRecus = 0;
 // ==========================================================
 // SÉQUENCE POST (Power-On Self-Test) : PASSERELLE DMX
 // ==========================================================
-/**
- * @brief Exécute une série de tests au démarrage pour valider la passerelle.
- * @details Valide la mémoire, l'écran, le bus RS485 et envoie une séquence 
- * Rouge/Vert/Bleu sur le réseau DMX pour tester les projecteurs connectés.
- */
 void executerPOST_Passerelle() {
   Serial.println("\n=====================================");
   Serial.println("  DIAGNOSTIC DE DEMARRAGE (POST) : DMX");
@@ -106,13 +101,12 @@ void setup() {
   Serial.begin(115200);
   delay(1000);
 
-  // 1. Exécution du test de démarrage (Flash RGB)
   executerPOST_Passerelle();
-  
   afficherAttenteWifi();
 
-  // 2. Connexion au réseau Wi-Fi
+  // Configuration réseau avec reconnexion automatique matérielle
   WiFi.mode(WIFI_STA);
+  WiFi.setAutoReconnect(true); // Active la reconnexion automatique en arrière-plan
   WiFi.begin(ssid, password);
   
   int tentatives = 0;
@@ -122,14 +116,13 @@ void setup() {
     Serial.print(".");
   }
 
-  // 3. Résultat de la connexion
   if (WiFi.status() == WL_CONNECTED) {
     afficherStatutWifi(true, WiFi.localIP().toString());
     udp.begin(artNetPort);
-    Serial.println("\n[RESEAU] Connecte. Ecoute UDP (Art-Net) active.");
+    Serial.println("\n[RESEAU] Connecte. Ecoute UDP active.");
   } else {
     afficherStatutWifi(false, "");
-    Serial.println("\n[ERREUR] Wi-Fi indisponible.");
+    Serial.println("\n[ERREUR] Wi-Fi indisponible au demarrage.");
   }
 }
 
@@ -137,63 +130,82 @@ void setup() {
 // BOUCLE PRINCIPALE
 // ==========================================================
 void loop() {
-  // TEST DE PERFORMANCE : Début du chronomètre CPU
   unsigned long chronoDebut = micros();
-
-  // Sécurité : on attend d'avoir le Wi-Fi
-  if (WiFi.status() != WL_CONNECTED) return;
-
-  // ==========================================================
-  // 1. ÉCOUTE DU RÉSEAU UDP (TRAMES ART-NET)
-  // ==========================================================
-  int packetSize = udp.parsePacket();
   
-  if (packetSize > 0 && packetSize <= 530) {
-    udp.read(packetBuffer, 530);
+  // Variable statique pour mémoriser l'état du réseau d'un tour de boucle à l'autre
+  static bool reseauPerdu = false;
+
+  // CAS 1 : LE WI-FI EST CONNECTÉ (Fonctionnement normal)
+  if (WiFi.status() == WL_CONNECTED) {
+
+    // Si le réseau vient tout juste de revenir, on remet l'écran "OK" et l'IP
+    if (reseauPerdu) {
+      afficherStatutWifi(true, WiFi.localIP().toString());
+      reseauPerdu = false;
+      Serial.println("[RESEAU] Connexion retablie !");
+    }
+
+    // --- ÉCOUTE DU RÉSEAU UDP (TRAMES ART-NET) ---
+    int packetSize = udp.parsePacket();
     
-    // Vérification de la signature Art-Net
-    if (memcmp(packetBuffer, "Art-Net\0", 8) == 0) {
-      uint16_t opcode = packetBuffer[8] | (packetBuffer[9] << 8);
+    if (packetSize > 0 && packetSize <= 530) {
+      udp.read(packetBuffer, 530);
       
-      // 0x5000 correspond au protocole ArtDmx
-      if (opcode == 0x5000) { 
-        uint16_t dmxLength = (packetBuffer[16] << 8) | packetBuffer[17];
+      // Vérification de la signature Art-Net
+      if (memcmp(packetBuffer, "Art-Net\0", 8) == 0) {
+        uint16_t opcode = packetBuffer[8] | (packetBuffer[9] << 8);
         
-        if (dmxLength > 0 && dmxLength <= 512) {
+        if (opcode == 0x5000) { 
+          uint16_t dmxLength = (packetBuffer[16] << 8) | packetBuffer[17];
           
-          // Copie des valeurs reçues dans notre tableau DMX matériel
-          memcpy(dmxData + 1, packetBuffer + 18, dmxLength);
-          ecrireDonneesDMX(dmxData, 513);
-          paquetsRecus++;
-
-          // ==========================================================
-          // 2. MODE ESPION INTELLIGENT (Sur le port Série)
-          // ==========================================================
-          static unsigned long dernierAffichage = 0;
-          if (millis() - dernierAffichage > 1000) {
-            unsigned long tempsDeCycle = micros() - chronoDebut;
-
-            Serial.println("\n--- TRAME ART-NET VALIDEE ---");
-            Serial.printf("[RESEAU] Paquet n° : %ld | Taille : %d octets\n", paquetsRecus, packetSize);
-            Serial.printf("[CPU] Temps de traitement trame : %lu us\n", tempsDeCycle);
+          if (dmxLength > 0 && dmxLength <= 512) {
             
-            // Affichage des 16 premiers canaux
-            Serial.print("[DATA] Canaux 1 a 16 : ");
-            for(int i = 1; i <= 16; i++) {
-              Serial.printf("%3d ", dmxData[i]);
+            // Copie et préparation des données
+            memcpy(dmxData + 1, packetBuffer + 18, dmxLength);
+            ecrireDonneesDMX(dmxData, 513);
+            paquetsRecus++;
+
+            // Mode Espion (Affichage Série)
+            static unsigned long dernierAffichage = 0;
+            if (millis() - dernierAffichage > 1000) {
+              unsigned long tempsDeCycle = micros() - chronoDebut;
+              Serial.println("\n--- TRAME ART-NET VALIDEE ---");
+              Serial.printf("[RESEAU] Paquet n° : %ld | Taille : %d octets\n", paquetsRecus, packetSize);
+              Serial.printf("[CPU] Temps de traitement : %lu us\n", tempsDeCycle);
+              dernierAffichage = millis();
             }
-            Serial.println("\n-----------------------------");
-            
-            dernierAffichage = millis();
           }
         }
       }
     }
-  }
 
-  // ==========================================================
-  // 3. ENVOI PHYSIQUE ET IHM
-  // ==========================================================
-  envoyerSignalDMX();
-  rafraichirEcran(paquetsRecus);
+    // --- ENVOI PHYSIQUE ET IHM ---
+    envoyerSignalDMX();
+    rafraichirEcran(paquetsRecus);
+
+  } 
+  // CAS 2 : LE WI-FI EST COUPÉ (Mode Failsafe)
+  else {
+    
+    // On déclenche le Failsafe UNE SEULE FOIS au moment de la coupure
+    if (!reseauPerdu) {
+      Serial.println("[ALERTE] Perte du signal Wi-Fi. Activation du mode Failsafe (Blackout).");
+      
+      afficherStatutWifi(false, "");  // Affiche instantanément "NO WIFI" sur l'OLED
+      
+      memset(dmxData, 0, 513);        // Met tous les canaux à 0 (Extinction)
+      ecrireDonneesDMX(dmxData, 513); // Prépare l'envoi
+      envoyerSignalDMX();             // Force l'extinction des projecteurs
+      
+      reseauPerdu = true;             // Verrouille l'état pour ne pas recommencer en boucle
+    }
+
+    // Tentative de reconnexion logicielle forcée toutes les 5 secondes (Non bloquant)
+    static unsigned long dernierEssai = 0;
+    if (millis() - dernierEssai > 5000) {
+      Serial.println("[RESEAU] Tentative de reconnexion au Wi-Fi...");
+      WiFi.reconnect(); 
+      dernierEssai = millis();
+    }
+  }
 }

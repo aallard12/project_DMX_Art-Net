@@ -16,7 +16,9 @@ ProjecteurLED::ProjecteurLED() {
   gHue = 0;
   dernierStrobe = 0;
   etatStrobe = false;
-  for (int i = 0; i < 4; i++) savedColors[i] = CRGB::Black;
+  for (int i = 0; i < 4; i++) {
+    savedColors[i] = CRGB::Black;
+  }
 }
 
 /**
@@ -61,7 +63,9 @@ void ProjecteurLED::afficher() {
  * actuelle de chaque pixel sans perdre la proportion RGB d'origine.
  */
 void ProjecteurLED::appliquerDimmerGlobal(uint8_t luminosite) {
-  for (int i = 0; i < NB_PIXELS; i++) leds[i].nscale8(luminosite);
+  for (int i = 0; i < NB_PIXELS; i++) {
+    leds[i].nscale8(luminosite);
+  }
 }
 
 /**
@@ -70,7 +74,9 @@ void ProjecteurLED::appliquerDimmerGlobal(uint8_t luminosite) {
  * @param r,g,b Code couleur.
  */
 void ProjecteurLED::sauvegarderCouleurZone(int indexZone, uint8_t r, uint8_t g, uint8_t b) {
-  if (indexZone >= 0 && indexZone < 4) savedColors[indexZone] = CRGB(r, g, b);
+  if (indexZone >= 0 && indexZone < 4) {
+    savedColors[indexZone] = CRGB(r, g, b);
+  }
 }
 
 /**
@@ -80,7 +86,9 @@ void ProjecteurLED::sauvegarderCouleurZone(int indexZone, uint8_t r, uint8_t g, 
  * @param r,g,b Code couleur.
  */
 void ProjecteurLED::peindreZoneFixe(int debut, int fin, uint8_t r, uint8_t g, uint8_t b) {
-  for (int i = debut; i < fin; i++) leds[i] = CRGB(r, g, b);
+  for (int i = debut; i < fin; i++) {
+    leds[i] = CRGB(r, g, b);
+  }
 }
 
 /**
@@ -88,10 +96,10 @@ void ProjecteurLED::peindreZoneFixe(int debut, int fin, uint8_t r, uint8_t g, ui
  * @details Les découpages sont fixes : 0-14, 15-29, 30-44, 45-59.
  */
 void ProjecteurLED::peindreToutesZonesMemorisees() {
-  for (int i = 0; i < 15; i++)  leds[i] = savedColors[0];
-  for (int i = 15; i < 30; i++) leds[i] = savedColors[1];
-  for (int i = 30; i < 45; i++) leds[i] = savedColors[2];
-  for (int i = 45; i < 60; i++) leds[i] = savedColors[3];
+  for (int i = 0; i < 15; i++)  { leds[i] = savedColors[0]; }
+  for (int i = 15; i < 30; i++) { leds[i] = savedColors[1]; }
+  for (int i = 30; i < 45; i++) { leds[i] = savedColors[2]; }
+  for (int i = 45; i < 60; i++) { leds[i] = savedColors[3]; }
 }
 
 /**
@@ -103,13 +111,17 @@ void ProjecteurLED::peindreToutesZonesMemorisees() {
  */
 void ProjecteurLED::appliquerStrobe(int debut, int fin, uint8_t valeurDMX) {
   int vitesseStrobe = map(valeurDMX, 150, 249, 500, 25);
+  
   if (millis() - dernierStrobe > vitesseStrobe) {
     dernierStrobe = millis();
     etatStrobe = !etatStrobe;
   }
+  
   // Si le stroboscope est dans son cycle "éteint", on écrase la couleur avec du noir
   if (!etatStrobe) {
-    for (int i = debut; i < fin; i++) leds[i] = CRGB::Black;
+    for (int i = debut; i < fin; i++) {
+      leds[i] = CRGB::Black;
+    }
   }
 }
 
@@ -131,6 +143,7 @@ void ProjecteurLED::effet02_Chenillard(int debut, int fin) {
   int nbLeds = fin - debut;
   fill_solid(&leds[debut], nbLeds, CRGB::Black);
   uint8_t offset = (millis() / 80) % 3; 
+  
   for (int i = offset; i < nbLeds; i += 3) { 
     leds[debut + i] = CHSV(gHue - (i * 5), 255, 255); 
   } 
@@ -160,8 +173,10 @@ void ProjecteurLED::effet04_Sinelon(int debut, int fin) {
  */
 void ProjecteurLED::effet05_BPM(int debut, int fin) { 
   uint8_t beat = beatsin8(62, 64, 255); 
-  for (int i = debut; i < fin; i++) 
+  
+  for (int i = debut; i < fin; i++) {
     leds[i] = ColorFromPalette(RainbowColors_p, gHue + (i * 2), beat - gHue + (i * 10)); 
+  }
 }
 
 /**
@@ -171,6 +186,7 @@ void ProjecteurLED::effet06_Juggle(int debut, int fin) {
   int nbLeds = fin - debut; 
   fadeToBlackBy(&leds[debut], nbLeds, 20); 
   uint8_t dothue = 0; 
+  
   for (int i = 0; i < 8; i++) { 
     leds[debut + beatsin16(i + 7, 0, nbLeds - 1)] |= CHSV(dothue, 200, 255); 
     dothue += 32; 
@@ -182,7 +198,12 @@ void ProjecteurLED::effet06_Juggle(int debut, int fin) {
  */
 void ProjecteurLED::effet07_Police(int debut, int fin) { 
   uint8_t beat = beat8(150); 
-  fill_solid(&leds[debut], fin - debut, (beat < 128) ? CRGB::Red : CRGB::Blue); 
+  
+  if (beat < 128) {
+    fill_solid(&leds[debut], fin - debut, CRGB::Red);
+  } else {
+    fill_solid(&leds[debut], fin - debut, CRGB::Blue);
+  }
 }
 
 /**
@@ -191,12 +212,23 @@ void ProjecteurLED::effet07_Police(int debut, int fin) {
 void ProjecteurLED::effet08_WarpDrive(int debut, int fin) { 
   int nbLeds = fin - debut; 
   int centre = nbLeds / 2; 
+  
   for (int i = 0; i <= centre; i++) { 
     uint8_t onde = sin8((i * 20) - (millis() / 4)); 
-    uint8_t luminosite = (onde > 127) ? map(onde, 127, 255, 0, 255) : 0; 
+    uint8_t luminosite = 0;
+    
+    if (onde > 127) {
+      luminosite = map(onde, 127, 255, 0, 255);
+    }
+    
     CRGB couleur = CHSV(gHue - (i * 3), 255, luminosite); 
-    if (centre + i < nbLeds) leds[debut + centre + i] = couleur; 
-    if (centre - i >= 0) leds[debut + centre - i] = couleur; 
+    
+    if (centre + i < nbLeds) {
+      leds[debut + centre + i] = couleur;
+    }
+    if (centre - i >= 0) {
+      leds[debut + centre - i] = couleur; 
+    }
   } 
 }
 
