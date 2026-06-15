@@ -1,0 +1,7 @@
+<map id="networkmanager.h" name="networkmanager.h">
+<area shape="rect" id="Node000001" title="En&#45;tête de la classe NetworkManager." alt="" coords="45,5,173,31"/>
+<area shape="rect" id="Node000002" href="$main_8cpp.html" title="Point d&#39;entrée de l&#39;application Tablette DMX." alt="" coords="5,79,80,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,43,55,80,52,77,87,39"/>
+<area shape="rect" id="Node000003" href="$networkmanager_8cpp.html" title="Implémentation de la classe NetworkManager." alt="" coords="105,79,247,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="132,39,167,77,163,80,128,43"/>
+</map>

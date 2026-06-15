@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>DMX_DOXYGEN:  Fichier source de networkmanager.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="dmx.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">DMX_DOXYGEN<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">doxygen</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('networkmanager_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">networkmanager.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="networkmanager_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#ifndef NETWORKMANAGER_H</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#define NETWORKMANAGER_H</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;QObject&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;QTcpSocket&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;QJsonDocument&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;QJsonObject&gt;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;QJsonArray&gt;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;QVariantList&gt;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;QBuffer&gt;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &lt;QDataStream&gt;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;QByteArray&gt;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="foldopen" id="foldopen00029" data-start="{" data-end="};">
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="classNetworkManager.html">   29</a></span><span class="keyword">class </span><a class="code hl_class" href="classNetworkManager.html">NetworkManager</a> : <span class="keyword">public</span> QObject {</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    Q_OBJECT</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classNetworkManager.html#a2f40b55304c14b308bf93766729f3c99">   35</a></span>    Q_PROPERTY(<span class="keywordtype">bool</span> <a class="code hl_property" href="classNetworkManager.html#a2f40b55304c14b308bf93766729f3c99">isConnected</a> READ <a class="code hl_property" href="classNetworkManager.html#a2f40b55304c14b308bf93766729f3c99">isConnected</a> NOTIFY <a class="code hl_signal" href="classNetworkManager.html#a63f17e322ae0d09f6c0c1d8b9c54a0b5">connectionChanged</a>)</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keyword">explicit</span> <a class="code hl_class" href="classNetworkManager.html">NetworkManager</a>(QObject *parent = <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classNetworkManager.html#a74b0f1f9ba9ae4b498c46b47f130773d">   48</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classNetworkManager.html#a74b0f1f9ba9ae4b498c46b47f130773d">isConnected</a>();</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    Q_INVOKABLE <span class="keywordtype">void</span> <a class="code hl_function" href="classNetworkManager.html#aa699c5106e7534a33644c1be41dfe63d">fetchUniverses</a>();</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    Q_INVOKABLE <span class="keywordtype">void</span> <a class="code hl_function" href="classNetworkManager.html#ae2bc74e861dad4a31912da20e5e4bfad">fetchScenes</a>(<span class="keywordtype">int</span> idUnivers = -1);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    Q_INVOKABLE <span class="keywordtype">void</span> <a class="code hl_function" href="classNetworkManager.html#a3697fd9ebe8299b9c4dbadf53dfbec6a">fetchSceneValues</a>(<span class="keywordtype">int</span> idScene);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    Q_INVOKABLE <span class="keywordtype">void</span> <a class="code hl_function" href="classNetworkManager.html#a555c574d77f79f83432bb874cdb847bb">connectToTcpServer</a>(<span class="keyword">const</span> QString &amp;ip, <span class="keywordtype">int</span> port);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    Q_INVOKABLE <span class="keywordtype">void</span> <a class="code hl_function" href="classNetworkManager.html#a3365da8e229453b6aa24cb5c76f0bbe3">lancerSceneTCP</a>(<span class="keywordtype">int</span> idScene);</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    Q_INVOKABLE <span class="keywordtype">void</span> <a class="code hl_function" href="classNetworkManager.html#a0feff541218ad26ace5993ad743f35cf">setDmxValueTCP</a>(<span class="keywordtype">int</span> univers, <span class="keywordtype">int</span> projecteur, <span class="keywordtype">int</span> canal, <span class="keywordtype">int</span> valeur);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    Q_INVOKABLE <span class="keywordtype">void</span> <a class="code hl_function" href="classNetworkManager.html#a31d17b60b743b2d5a84d7e59dca5fb83">sendLoginTCP</a>(<span class="keyword">const</span> QString &amp;username, <span class="keyword">const</span> QString &amp;password);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>signals:</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="classNetworkManager.html#a63f17e322ae0d09f6c0c1d8b9c54a0b5">   99</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="classNetworkManager.html#a63f17e322ae0d09f6c0c1d8b9c54a0b5">connectionChanged</a>();</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="classNetworkManager.html#aa31e83a5af4ff4dd170c68ff2e53ccc8">  105</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="classNetworkManager.html#aa31e83a5af4ff4dd170c68ff2e53ccc8">universesReceived</a>(QVariantList data);</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="classNetworkManager.html#aaed8c9d8a0e84a9f6a58dc427e8a8a61">  111</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="classNetworkManager.html#aaed8c9d8a0e84a9f6a58dc427e8a8a61">scenesReceived</a>(QVariantList data);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno"><a class="line" href="classNetworkManager.html#a7b0d3b3685f72fd0009e5922c07cfc0f">  117</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="classNetworkManager.html#a7b0d3b3685f72fd0009e5922c07cfc0f">sceneValuesReceived</a>(QVariantList data);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="classNetworkManager.html#aa5edf4919549027638d0d4249877e1d7">  123</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="classNetworkManager.html#aa5edf4919549027638d0d4249877e1d7">loginResponseReceived</a>(<span class="keywordtype">bool</span> success);</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="keyword">private</span> slots:</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="classNetworkManager.html#a6c3d26819349989e6c60b88c0cd16316">onTcpReadyRead</a>();</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno"><a class="line" href="classNetworkManager.html#abaf428f2fc25da951638145073a2564c">  133</a></span>    QTcpSocket <a class="code hl_variable" href="classNetworkManager.html#abaf428f2fc25da951638145073a2564c">tcpSocket</a>;   </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno"><a class="line" href="classNetworkManager.html#a681edcad3c1f2a8b6929bd83d245b886">  134</a></span>    QByteArray <a class="code hl_variable" href="classNetworkManager.html#a681edcad3c1f2a8b6929bd83d245b886">tcpBuffer</a>;   </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>};</div>
+</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclassNetworkManager_html"><div class="ttname"><a href="classNetworkManager.html">NetworkManager</a></div><div class="ttdoc">Classe responsable des échanges réseau avec le serveur DMX.</div><div class="ttdef"><b>Definition</b> networkmanager.h:29</div></div>
+<div class="ttc" id="aclassNetworkManager_html_a0feff541218ad26ace5993ad743f35cf"><div class="ttname"><a href="classNetworkManager.html#a0feff541218ad26ace5993ad743f35cf">NetworkManager::setDmxValueTCP</a></div><div class="ttdeci">Q_INVOKABLE void setDmxValueTCP(int univers, int projecteur, int canal, int valeur)</div><div class="ttdoc">Envoie une trame binaire au serveur pour modifier la valeur d'un canal DMX.</div><div class="ttdef"><b>Definition</b> networkmanager.cpp:132</div></div>
+<div class="ttc" id="aclassNetworkManager_html_a2f40b55304c14b308bf93766729f3c99"><div class="ttname"><a href="classNetworkManager.html#a2f40b55304c14b308bf93766729f3c99">NetworkManager::isConnected</a></div><div class="ttdeci">bool isConnected</div><div class="ttdoc">Indique l'état actuel de la connexion TCP. Exposée au QML.</div><div class="ttdef"><b>Definition</b> networkmanager.h:35</div></div>
+<div class="ttc" id="aclassNetworkManager_html_a31d17b60b743b2d5a84d7e59dca5fb83"><div class="ttname"><a href="classNetworkManager.html#a31d17b60b743b2d5a84d7e59dca5fb83">NetworkManager::sendLoginTCP</a></div><div class="ttdeci">Q_INVOKABLE void sendLoginTCP(const QString &amp;username, const QString &amp;password)</div><div class="ttdoc">Envoie une demande d'authentification au serveur.</div><div class="ttdef"><b>Definition</b> networkmanager.cpp:66</div></div>
+<div class="ttc" id="aclassNetworkManager_html_a3365da8e229453b6aa24cb5c76f0bbe3"><div class="ttname"><a href="classNetworkManager.html#a3365da8e229453b6aa24cb5c76f0bbe3">NetworkManager::lancerSceneTCP</a></div><div class="ttdeci">Q_INVOKABLE void lancerSceneTCP(int idScene)</div><div class="ttdoc">Demande au serveur le lancement d'une scène spécifique.</div><div class="ttdef"><b>Definition</b> networkmanager.cpp:123</div></div>
+<div class="ttc" id="aclassNetworkManager_html_a3697fd9ebe8299b9c4dbadf53dfbec6a"><div class="ttname"><a href="classNetworkManager.html#a3697fd9ebe8299b9c4dbadf53dfbec6a">NetworkManager::fetchSceneValues</a></div><div class="ttdeci">Q_INVOKABLE void fetchSceneValues(int idScene)</div><div class="ttdoc">Demande au serveur les valeurs des canaux associées à une scène.</div><div class="ttdef"><b>Definition</b> networkmanager.cpp:57</div></div>
+<div class="ttc" id="aclassNetworkManager_html_a555c574d77f79f83432bb874cdb847bb"><div class="ttname"><a href="classNetworkManager.html#a555c574d77f79f83432bb874cdb847bb">NetworkManager::connectToTcpServer</a></div><div class="ttdeci">Q_INVOKABLE void connectToTcpServer(const QString &amp;ip, int port)</div><div class="ttdoc">Établit une connexion TCP avec le serveur DMX.</div><div class="ttdef"><b>Definition</b> networkmanager.cpp:31</div></div>
+<div class="ttc" id="aclassNetworkManager_html_a63f17e322ae0d09f6c0c1d8b9c54a0b5"><div class="ttname"><a href="classNetworkManager.html#a63f17e322ae0d09f6c0c1d8b9c54a0b5">NetworkManager::connectionChanged</a></div><div class="ttdeci">void connectionChanged()</div><div class="ttdoc">Signal émis lorsque l'état de la connexion change.</div></div>
+<div class="ttc" id="aclassNetworkManager_html_a681edcad3c1f2a8b6929bd83d245b886"><div class="ttname"><a href="classNetworkManager.html#a681edcad3c1f2a8b6929bd83d245b886">NetworkManager::tcpBuffer</a></div><div class="ttdeci">QByteArray tcpBuffer</div><div class="ttdoc">Tampon de réception pour gérer la fragmentation des paquets.</div><div class="ttdef"><b>Definition</b> networkmanager.h:134</div></div>
+<div class="ttc" id="aclassNetworkManager_html_a6c3d26819349989e6c60b88c0cd16316"><div class="ttname"><a href="classNetworkManager.html#a6c3d26819349989e6c60b88c0cd16316">NetworkManager::onTcpReadyRead</a></div><div class="ttdeci">void onTcpReadyRead()</div><div class="ttdoc">Slot déclenché automatiquement lors de la réception de données TCP.</div><div class="ttdef"><b>Definition</b> networkmanager.cpp:76</div></div>
+<div class="ttc" id="aclassNetworkManager_html_a74b0f1f9ba9ae4b498c46b47f130773d"><div class="ttname"><a href="classNetworkManager.html#a74b0f1f9ba9ae4b498c46b47f130773d">NetworkManager::isConnected</a></div><div class="ttdeci">bool isConnected()</div><div class="ttdoc">Vérifie si la socket est actuellement connectée au serveur.</div></div>
+<div class="ttc" id="aclassNetworkManager_html_a7b0d3b3685f72fd0009e5922c07cfc0f"><div class="ttname"><a href="classNetworkManager.html#a7b0d3b3685f72fd0009e5922c07cfc0f">NetworkManager::sceneValuesReceived</a></div><div class="ttdeci">void sceneValuesReceived(QVariantList data)</div><div class="ttdoc">Signal émis lors de la réception des valeurs d'une scène.</div></div>
+<div class="ttc" id="aclassNetworkManager_html_aa31e83a5af4ff4dd170c68ff2e53ccc8"><div class="ttname"><a href="classNetworkManager.html#aa31e83a5af4ff4dd170c68ff2e53ccc8">NetworkManager::universesReceived</a></div><div class="ttdeci">void universesReceived(QVariantList data)</div><div class="ttdoc">Signal émis lors de la réception de l'arborescence des univers.</div></div>
+<div class="ttc" id="aclassNetworkManager_html_aa5edf4919549027638d0d4249877e1d7"><div class="ttname"><a href="classNetworkManager.html#aa5edf4919549027638d0d4249877e1d7">NetworkManager::loginResponseReceived</a></div><div class="ttdeci">void loginResponseReceived(bool success)</div><div class="ttdoc">Signal émis lors de la réception de la réponse d'authentification.</div></div>
+<div class="ttc" id="aclassNetworkManager_html_aa699c5106e7534a33644c1be41dfe63d"><div class="ttname"><a href="classNetworkManager.html#aa699c5106e7534a33644c1be41dfe63d">NetworkManager::fetchUniverses</a></div><div class="ttdeci">Q_INVOKABLE void fetchUniverses()</div><div class="ttdoc">Demande au serveur l'arborescence complète des univers et équipements.</div><div class="ttdef"><b>Definition</b> networkmanager.cpp:39</div></div>
+<div class="ttc" id="aclassNetworkManager_html_aaed8c9d8a0e84a9f6a58dc427e8a8a61"><div class="ttname"><a href="classNetworkManager.html#aaed8c9d8a0e84a9f6a58dc427e8a8a61">NetworkManager::scenesReceived</a></div><div class="ttdeci">void scenesReceived(QVariantList data)</div><div class="ttdoc">Signal émis lors de la réception de la liste des scènes.</div></div>
+<div class="ttc" id="aclassNetworkManager_html_abaf428f2fc25da951638145073a2564c"><div class="ttname"><a href="classNetworkManager.html#abaf428f2fc25da951638145073a2564c">NetworkManager::tcpSocket</a></div><div class="ttdeci">QTcpSocket tcpSocket</div><div class="ttdoc">Socket TCP pour la communication avec le serveur.</div><div class="ttdef"><b>Definition</b> networkmanager.h:133</div></div>
+<div class="ttc" id="aclassNetworkManager_html_ae2bc74e861dad4a31912da20e5e4bfad"><div class="ttname"><a href="classNetworkManager.html#ae2bc74e861dad4a31912da20e5e4bfad">NetworkManager::fetchScenes</a></div><div class="ttdeci">Q_INVOKABLE void fetchScenes(int idUnivers=-1)</div><div class="ttdoc">Demande au serveur la liste des scènes disponibles.</div><div class="ttdef"><b>Definition</b> networkmanager.cpp:48</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="networkmanager_8h.html">networkmanager.h</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<map id="networkmanager.cpp" name="networkmanager.cpp">
+<area shape="rect" id="Node000001" title="Implémentation de la classe NetworkManager." alt="" coords="461,5,603,31"/>
+<area shape="rect" id="Node000002" href="$networkmanager_8h.html" title="En&#45;tête de la classe NetworkManager." alt="" coords="468,79,596,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="535,31,535,65,529,65,529,31"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="5,152,104,177"/>
+<area shape="poly" id="edge12_Node000001_Node000006" title=" " alt="" coords="495,33,106,151,105,145,493,28"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="936,152,1027,177"/>
+<area shape="poly" id="edge11_Node000001_Node000007" title=" " alt="" coords="568,28,933,145,932,150,567,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="129,152,199,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="468,106,214,154,213,149,467,101"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="224,152,317,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="491,107,327,151,326,146,489,101"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="341,152,461,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="512,106,436,148,433,143,510,102"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="468,104,118,154,117,149,467,98"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="597,99,923,149,922,154,596,104"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="485,152,579,177"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="535,104,535,138,529,138,529,104"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="603,152,669,177"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="550,102,609,142,606,146,547,106"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="694,152,797,177"/>
+<area shape="poly" id="edge9_Node000002_Node000010" title=" " alt="" coords="567,101,699,145,697,150,565,107"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="821,152,912,177"/>
+<area shape="poly" id="edge10_Node000002_Node000011" title=" " alt="" coords="586,101,808,148,807,154,585,107"/>
+</map>

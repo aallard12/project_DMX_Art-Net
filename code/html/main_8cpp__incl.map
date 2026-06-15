@@ -1,0 +1,27 @@
+<map id="main.cpp" name="main.cpp">
+<area shape="rect" id="Node000001" title="Point d&#39;entrée de l&#39;application Tablette DMX." alt="" coords="325,5,399,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="141,79,257,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="337,33,240,75,237,71,335,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="282,79,442,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="365,31,365,65,359,65,359,31"/>
+<area shape="rect" id="Node000004" href="$networkmanager_8h.html" title="En&#45;tête de la classe NetworkManager." alt="" coords="466,79,594,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="390,28,491,71,489,76,388,33"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,152,76,177"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="466,105,454,107,274,128,193,138,90,155,89,149,193,133,273,123,454,101,465,100"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="101,152,194,177"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="467,107,208,154,207,149,466,101"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="218,152,338,177"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="490,107,333,151,331,146,489,101"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="362,152,461,177"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="512,106,444,147,441,142,510,102"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="485,152,575,177"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="533,104,533,138,527,138,527,104"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="599,152,693,177"/>
+<area shape="poly" id="edge9_Node000004_Node000010" title=" " alt="" coords="550,102,617,142,614,147,547,106"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="717,152,783,177"/>
+<area shape="poly" id="edge10_Node000004_Node000011" title=" " alt="" coords="566,101,705,146,703,151,565,107"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="808,152,911,177"/>
+<area shape="poly" id="edge11_Node000004_Node000012" title=" " alt="" coords="583,101,795,147,794,152,582,107"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="935,152,1026,177"/>
+<area shape="poly" id="edge12_Node000004_Node000013" title=" " alt="" coords="595,99,922,149,921,154,594,104"/>
+</map>
